@@ -1,0 +1,43 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  padding: 20px 80px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  z-index: 10;
+  color: white;
+}
+
+/* logo */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* menu */
+.nav {
+  display: flex;
+  gap: 30px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+
+/* nút login */
+.login-btn {
+  padding: 8px 16px;
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
