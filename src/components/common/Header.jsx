@@ -1,27 +1,27 @@
-import "./Header.css";
-import { useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-function Header() {
-  const navigate = useNavigate();
+import Sidebar from "../components/common/Sidebar";
 
+import "./MainLayout.css";
+
+function MainLayout() {
   return (
-    <header className="header">
-      <div className="logo">RentHub</div>
+    <div className="app-layout">
 
-      <nav className="nav">
-        <a href="#">Trang chủ</a>
-        <a href="#">Về chúng tôi</a>
-        <a href="#">Tính năng</a>
-        <a href="#">Liên hệ</a>
-      </nav>
+      {/* SIDEBAR - CHỈ 1 CÁI */}
+      <Sidebar />
 
-      <button
-        className="login-btn"
-        onClick={() => navigate("/login")}
-      >
-        Đăng nhập
-      </button>
-    </header>
+      {/* NỘI DUNG */}
+      <div className="app-main">
+
+        <main className="page-content">
+          <Outlet />
+        </main>
+
+      </div>
+
+    </div>
   );
 }
-export default Header;
+
+export default MainLayout;

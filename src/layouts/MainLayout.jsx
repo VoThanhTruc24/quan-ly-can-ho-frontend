@@ -1,18 +1,27 @@
-import Sidebar from "../components/common/Sidebar";
-import Header from "../components/common/Header";
 import { Outlet } from "react-router-dom";
 
-const MainLayout = () => {
+import Sidebar from "../components/common/Sidebar";
+
+import "./MainLayout.css";
+
+function MainLayout() {
   return (
-    <div style={{ display: "flex" }}>
+    <div className="app-layout">
+
+      {/* Sidebar duy nhất */}
       <Sidebar />
 
-      <div style={{ flex: 1 }}>
-        <Header />
-        <Outlet />
+      {/* Nội dung bên phải */}
+      <div className="app-main">
+
+        <main className="page-content">
+          <Outlet />
+        </main>
+
       </div>
+
     </div>
   );
-};
+}
 
 export default MainLayout;

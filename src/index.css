@@ -1,26 +1,31 @@
-/* RESET TOÀN BỘ - BẮT BUỘC */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
-}
-
-body {
-  background: #f4f7fe;
-}
-* {
-  margin: 0;
-  padding: 0;
+﻿* {
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-/* ❗ QUAN TRỌNG */
 body {
-  overflow-x: hidden;
+  font-family:
+    "Inter",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  background: #f5f7fb;
+
+  color: #102a43;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }

@@ -1,14 +1,7 @@
-import Sidebar from './Sidebar'
-import Dashboard from './Dashboard'
-import './App.css'
+import AppRoutes from "./routes";
 
 function App() {
-  return (
-    <div className="layout">
-      <Sidebar />
-      <Dashboard />
-    </div>
-  )
+  return <AppRoutes />;
 }
 
-export default App
+export default App;

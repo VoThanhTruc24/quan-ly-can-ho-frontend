@@ -1,35 +1,49 @@
-.header {
-  position: absolute;
+﻿.header {
+  position: fixed;
   top: 0;
   left: 0;
-
   width: 100%;
   padding: 20px 80px;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  z-index: 10;
+  z-index: 20;
   color: white;
+  margin: 0;
+  box-sizing: border-box;
+  background: transparent;
 }
 
 /* logo */
 .logo {
   font-size: 24px;
   font-weight: bold;
+  color: #3b82f6;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* menu */
 .nav {
   display: flex;
   gap: 30px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .nav a {
   text-decoration: none;
   color: white;
   font-size: 16px;
+  transition: color 0.3s ease;
+  margin: 0;
+  padding: 0;
+}
+
+.nav a:hover {
+  color: #fbbf24;
 }
 
 /* nút login */
@@ -40,4 +54,14 @@
   color: white;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin: 0;
+  height: fit-content;
+}
+
+.login-btn:hover {
+  background: white;
+  color: #1e40af;
 }
