@@ -7,6 +7,7 @@
 
 import MainLayout from "../layouts/MainLayout";
 
+import Home from "../pages/home/Home";
 import Login from "../pages/auth/Login";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Customers from "../pages/dashboard/Customers";
@@ -17,6 +18,12 @@ function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+
+        {/* TRANG HOME */}
+        <Route
+          path="/"
+          element={<Home />}
+        />
 
         {/* LOGIN - không có Sidebar */}
         <Route
@@ -49,15 +56,10 @@ function AppRoutes() {
 
         </Route>
 
-        {/* Mặc định */}
+        {/* Các đường dẫn không tồn tại */}
         <Route
-          path="/"
-          element={
-            <Navigate
-              to="/dashboard"
-              replace
-            />
-          }
+          path="*"
+          element={<Navigate to="/" replace />}
         />
 
       </Routes>
