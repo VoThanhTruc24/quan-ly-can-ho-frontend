@@ -1,8 +1,12 @@
 ﻿const API_BASE_URL = "http://localhost:8080/api";
 
 const contractService = {
-  // Lấy tất cả hợp đồng
+
+  // ==============================
+  // GET ALL CONTRACTS
+  // ==============================
   getAllContracts: async () => {
+
     const token = localStorage.getItem("token");
 
     const response = await fetch(
@@ -25,8 +29,12 @@ const contractService = {
     return await response.json();
   },
 
-  // Lấy hợp đồng theo ID
+
+  // ==============================
+  // GET CONTRACT BY ID
+  // ==============================
   getContractById: async (id) => {
+
     const token = localStorage.getItem("token");
 
     const response = await fetch(
@@ -49,23 +57,38 @@ const contractService = {
     return await response.json();
   },
 
-  // Tạo hợp đồng
+
+  // ==============================
+  // CREATE CONTRACT
+  // ==============================
   createContract: async (contractData) => {
+
     const token = localStorage.getItem("token");
 
     const response = await fetch(
       `${API_BASE_URL}/contracts`,
       {
         method: "POST",
+
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify(contractData),
       }
     );
 
     if (!response.ok) {
+
+      const text = await response.text();
+
+      console.error(
+        "CREATE CONTRACT ERROR:",
+        response.status,
+        text
+      );
+
       throw new Error(
         `Lỗi tạo hợp đồng: ${response.status}`
       );
@@ -74,23 +97,38 @@ const contractService = {
     return await response.json();
   },
 
-  // Cập nhật hợp đồng
+
+  // ==============================
+  // UPDATE CONTRACT
+  // ==============================
   updateContract: async (id, contractData) => {
+
     const token = localStorage.getItem("token");
 
     const response = await fetch(
       `${API_BASE_URL}/contracts/${id}`,
       {
         method: "PUT",
+
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
+
         body: JSON.stringify(contractData),
       }
     );
 
     if (!response.ok) {
+
+      const text = await response.text();
+
+      console.error(
+        "UPDATE CONTRACT ERROR:",
+        response.status,
+        text
+      );
+
       throw new Error(
         `Lỗi cập nhật hợp đồng: ${response.status}`
       );
@@ -99,14 +137,19 @@ const contractService = {
     return await response.json();
   },
 
-  // Xóa hợp đồng
+
+  // ==============================
+  // DELETE CONTRACT
+  // ==============================
   deleteContract: async (id) => {
+
     const token = localStorage.getItem("token");
 
     const response = await fetch(
       `${API_BASE_URL}/contracts/${id}`,
       {
         method: "DELETE",
+
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

@@ -8,6 +8,10 @@ import "./Dashboard.css";
 function Dashboard() {
   const navigate = useNavigate();
 
+  // ==========================================
+  // 1. DASHBOARD STATISTICS
+  // ==========================================
+
   const [stats, setStats] = useState({
     totalCustomers: 0,
     totalApartments: 0,
@@ -15,12 +19,31 @@ function Dashboard() {
     revenue: 0,
   });
 
+  // ==========================================
+  // 2. DOANH THU THEO THÁNG
+  // ==========================================
+
+  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+
+  // ==========================================
+  // 3. LOADING
+  // ==========================================
+
   const [loading, setLoading] = useState(true);
+
+  // ==========================================
+  // 4. LẤY DỮ LIỆU DASHBOARD
+  // ==========================================
 
   const fetchStats = async () => {
     try {
-      const data =
-        await dashboardService.getDashboardStats();
+      const data = await dashboardService.getDashboardStats();
+
+      console.log("Dashboard API:", data);
+
+      // ----------------------------------------
+      // Thống kê tổng quan
+      // ----------------------------------------
 
       setStats({
         totalCustomers:
@@ -32,23 +55,53 @@ function Dashboard() {
         totalContracts:
           data?.totalContracts ?? 0,
 
+        // QUAN TRỌNG:
+        // Backend trả totalRevenue
+        // chứ không phải revenue
         revenue:
-          data?.revenue ?? 0,
+          data?.totalRevenue ?? 0,
       });
+
+      // ----------------------------------------
+      // Doanh thu theo tháng
+      // ----------------------------------------
+
+      setMonthlyRevenue(
+        data?.monthlyRevenue ?? []
+      );
 
     } catch (error) {
       console.error(
         "Error fetching stats:",
         error
       );
+
+      // Nếu API lỗi thì đưa dữ liệu về 0
+      setStats({
+        totalCustomers: 0,
+        totalApartments: 0,
+        totalContracts: 0,
+        revenue: 0,
+      });
+
+      setMonthlyRevenue([]);
+
     } finally {
       setLoading(false);
     }
   };
 
+  // ==========================================
+  // 5. GỌI API KHI MỞ DASHBOARD
+  // ==========================================
+
   useEffect(() => {
     fetchStats();
   }, []);
+
+  // ==========================================
+  // 6. SEARCH
+  // ==========================================
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
@@ -64,17 +117,109 @@ function Dashboard() {
     }
   };
 
+  // ==========================================
+  // 7. FORMAT TIỀN
+  // ==========================================
+
   const formatMoney = (value) => {
     return (
-      Number(value || 0).toLocaleString("vi-VN") +
-      " đ"
+      Number(value || 0).toLocaleString(
+        "vi-VN"
+      ) + " đ"
     );
   };
+
+  // ==========================================
+  // 8. DANH SÁCH 12 THÁNG
+  // ==========================================
+
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  // ==========================================
+  // 9. TÍNH CHIỀU CAO BIỂU ĐỒ
+  // ==========================================
+
+  /*
+    Backend trả:
+
+    [
+      {
+        month: 1,
+        revenue: 0
+      },
+      {
+        month: 8,
+        revenue: 18000000
+      }
+    ]
+
+    Nhưng CSS cần:
+
+    height: 0% -> 100%
+
+    Vì vậy phải chuyển doanh thu
+    thành phần trăm.
+  */
+
+  const revenueValues = months.map(
+    (_, index) => {
+      const monthData =
+        monthlyRevenue.find(
+          (item) =>
+            Number(item.month) ===
+            index + 1
+        );
+
+      return Number(
+        monthData?.revenue || 0
+      );
+    }
+  );
+
+  // Doanh thu lớn nhất trong 12 tháng
+  const maxRevenue = Math.max(
+    ...revenueValues,
+    1
+  );
+
+  // Chuyển doanh thu thành %
+  const chartHeights =
+    revenueValues.map(
+      (revenue) => {
+        if (revenue === 0) {
+          return 0;
+        }
+
+        return (
+          (revenue / maxRevenue) *
+          100
+        );
+      }
+    );
+
+  // ==========================================
+  // 10. RETURN GIAO DIỆN
+  // ==========================================
 
   return (
     <div className="dashboard-page">
 
-      {/* HEADER */}
+      {/* =====================================
+          HEADER
+      ====================================== */}
 
       <header className="dashboard-topbar">
 
@@ -88,7 +233,10 @@ function Dashboard() {
 
         <div className="dashboard-topbar-right">
 
+          {/* SEARCH */}
+
           <div className="dashboard-search">
+
             <span>🔍</span>
 
             <input
@@ -96,7 +244,10 @@ function Dashboard() {
               placeholder="Tìm kiếm..."
               onKeyDown={handleSearch}
             />
+
           </div>
+
+          {/* ACCOUNT */}
 
           <div className="dashboard-account">
 
@@ -105,6 +256,7 @@ function Dashboard() {
             </div>
 
             <div className="dashboard-account-info">
+
               <strong>
                 Quản trị viên
               </strong>
@@ -112,6 +264,7 @@ function Dashboard() {
               <span>
                 Admin
               </span>
+
             </div>
 
           </div>
@@ -120,13 +273,22 @@ function Dashboard() {
 
       </header>
 
-      {/* CONTENT */}
+
+      {/* =====================================
+          CONTENT
+      ====================================== */}
 
       <section className="dashboard-content">
 
-        {/* STAT CARDS */}
+
+        {/* ===================================
+            STAT CARDS
+        ==================================== */}
 
         <div className="stats-grid">
+
+
+          {/* KHÁCH HÀNG */}
 
           <div className="stat-card">
 
@@ -141,9 +303,11 @@ function Dashboard() {
               </span>
 
               <strong className="stat-value">
+
                 {loading
                   ? "..."
                   : stats.totalCustomers}
+
               </strong>
 
               <span className="stat-description">
@@ -153,6 +317,9 @@ function Dashboard() {
             </div>
 
           </div>
+
+
+          {/* CĂN HỘ */}
 
           <div className="stat-card">
 
@@ -167,9 +334,11 @@ function Dashboard() {
               </span>
 
               <strong className="stat-value">
+
                 {loading
                   ? "..."
                   : stats.totalApartments}
+
               </strong>
 
               <span className="stat-description">
@@ -179,6 +348,9 @@ function Dashboard() {
             </div>
 
           </div>
+
+
+          {/* HỢP ĐỒNG */}
 
           <div className="stat-card">
 
@@ -193,9 +365,11 @@ function Dashboard() {
               </span>
 
               <strong className="stat-value">
+
                 {loading
                   ? "..."
                   : stats.totalContracts}
+
               </strong>
 
               <span className="stat-description">
@@ -205,6 +379,9 @@ function Dashboard() {
             </div>
 
           </div>
+
+
+          {/* DOANH THU */}
 
           <div className="stat-card">
 
@@ -219,9 +396,13 @@ function Dashboard() {
               </span>
 
               <strong className="stat-value">
+
                 {loading
                   ? "..."
-                  : formatMoney(stats.revenue)}
+                  : formatMoney(
+                      stats.revenue
+                    )}
+
               </strong>
 
               <span className="stat-description">
@@ -234,17 +415,24 @@ function Dashboard() {
 
         </div>
 
-        {/* LOWER CONTENT */}
+
+        {/* ===================================
+            LOWER CONTENT
+        ==================================== */}
 
         <div className="dashboard-grid">
 
-          {/* REVENUE */}
+
+          {/* =================================
+              REVENUE CHART
+          ================================== */}
 
           <div className="dashboard-card revenue-card">
 
             <div className="card-header">
 
               <div>
+
                 <h2>
                   Báo cáo doanh thu
                 </h2>
@@ -252,6 +440,7 @@ function Dashboard() {
                 <p>
                   Doanh thu theo tháng
                 </p>
+
               </div>
 
               <button className="card-action">
@@ -260,64 +449,101 @@ function Dashboard() {
 
             </div>
 
+
+            {/* ===============================
+                CHART
+            ================================ */}
+
             <div className="chart">
 
+
+              {/* Y AXIS */}
+
               <div className="chart-y">
+
                 <span>100%</span>
                 <span>75%</span>
                 <span>50%</span>
                 <span>25%</span>
                 <span>0%</span>
+
               </div>
+
+
+              {/* CHART AREA */}
 
               <div className="chart-area">
 
+
+                {/* GRID LINES */}
+
                 <div className="chart-lines">
+
                   <span></span>
                   <span></span>
                   <span></span>
                   <span></span>
                   <span></span>
+
                 </div>
+
+
+                {/* ===========================
+                    BARS
+                ============================ */}
 
                 <div className="chart-bars">
 
-                  {[35, 50, 42, 68, 58, 78, 65, 88, 72, 92, 80, 96].map(
-                    (height, index) => (
-                      <div
-                        key={index}
-                        className="chart-bar"
-                        style={{
-                          height: `${height}%`,
-                        }}
-                      >
-                        <span></span>
-                      </div>
-                    )
+                  {chartHeights.map(
+                    (height, index) => {
+
+                      const revenue =
+                        revenueValues[index];
+
+                      return (
+                        <div
+                          key={index}
+                          className="chart-bar"
+                          style={{
+                            height:
+                              `${height}%`,
+                          }}
+                          title={
+                            `${months[index]}: ` +
+                            `${formatMoney(
+                              revenue
+                            )}`
+                          }
+                        >
+
+                          <span></span>
+
+                        </div>
+                      );
+
+                    }
                   )}
 
                 </div>
 
+
+                {/* ===========================
+                    MONTHS
+                ============================ */}
+
                 <div className="chart-months">
 
-                  {[
-                    "Jan",
-                    "Feb",
-                    "Mar",
-                    "Apr",
-                    "May",
-                    "Jun",
-                    "Jul",
-                    "Aug",
-                    "Sep",
-                    "Oct",
-                    "Nov",
-                    "Dec",
-                  ].map((month) => (
-                    <span key={month}>
-                      {month}
-                    </span>
-                  ))}
+                  {months.map(
+                    (month) => (
+
+                      <span
+                        key={month}
+                      >
+                        {month}
+                      </span>
+
+                    )
+                  )}
 
                 </div>
 
@@ -327,13 +553,17 @@ function Dashboard() {
 
           </div>
 
-          {/* OVERVIEW */}
+
+          {/* =================================
+              OVERVIEW
+          ================================== */}
 
           <div className="dashboard-card overview-card">
 
             <div className="card-header">
 
               <div>
+
                 <h2>
                   Tổng quan
                 </h2>
@@ -341,14 +571,21 @@ function Dashboard() {
                 <p>
                   Tình trạng hệ thống
                 </p>
+
               </div>
 
             </div>
 
+
             <div className="overview-list">
 
+
+              {/* KHÁCH HÀNG */}
+
               <div className="overview-item">
+
                 <div className="overview-left">
+
                   <span className="overview-icon">
                     👤
                   </span>
@@ -356,15 +593,22 @@ function Dashboard() {
                   <span>
                     Khách hàng
                   </span>
+
                 </div>
 
                 <strong>
                   {stats.totalCustomers}
                 </strong>
+
               </div>
 
+
+              {/* CĂN HỘ */}
+
               <div className="overview-item">
+
                 <div className="overview-left">
+
                   <span className="overview-icon">
                     🏢
                   </span>
@@ -372,15 +616,22 @@ function Dashboard() {
                   <span>
                     Căn hộ
                   </span>
+
                 </div>
 
                 <strong>
                   {stats.totalApartments}
                 </strong>
+
               </div>
 
+
+              {/* HỢP ĐỒNG */}
+
               <div className="overview-item">
+
                 <div className="overview-left">
+
                   <span className="overview-icon">
                     📄
                   </span>
@@ -388,15 +639,22 @@ function Dashboard() {
                   <span>
                     Hợp đồng
                   </span>
+
                 </div>
 
                 <strong>
                   {stats.totalContracts}
                 </strong>
+
               </div>
 
+
+              {/* DOANH THU */}
+
               <div className="overview-item">
+
                 <div className="overview-left">
+
                   <span className="overview-icon">
                     💰
                   </span>
@@ -404,12 +662,17 @@ function Dashboard() {
                   <span>
                     Doanh thu
                   </span>
+
                 </div>
 
                 <strong>
-                  {formatMoney(stats.revenue)}
+                  {formatMoney(
+                    stats.revenue
+                  )}
                 </strong>
+
               </div>
+
 
             </div>
 
@@ -417,7 +680,10 @@ function Dashboard() {
 
         </div>
 
-        {/* QUICK ACTIONS */}
+
+        {/* ===================================
+            QUICK ACTIONS
+        ==================================== */}
 
         <div className="quick-section">
 
@@ -433,16 +699,22 @@ function Dashboard() {
 
           </div>
 
+
           <div className="quick-actions">
+
+
+            {/* KHÁCH HÀNG */}
 
             <button
               onClick={() =>
                 navigate("/customers")
               }
             >
+
               <span>👤</span>
 
               <div>
+
                 <strong>
                   Khách hàng
                 </strong>
@@ -450,17 +722,24 @@ function Dashboard() {
                 <small>
                   Quản lý khách hàng
                 </small>
+
               </div>
+
             </button>
+
+
+            {/* CĂN HỘ */}
 
             <button
               onClick={() =>
                 navigate("/apartments")
               }
             >
+
               <span>🏢</span>
 
               <div>
+
                 <strong>
                   Căn hộ
                 </strong>
@@ -468,17 +747,24 @@ function Dashboard() {
                 <small>
                   Quản lý căn hộ cho thuê
                 </small>
+
               </div>
+
             </button>
+
+
+            {/* HỢP ĐỒNG */}
 
             <button
               onClick={() =>
                 navigate("/contracts")
               }
             >
+
               <span>📄</span>
 
               <div>
+
                 <strong>
                   Hợp đồng
                 </strong>
@@ -486,12 +772,16 @@ function Dashboard() {
                 <small>
                   Quản lý hợp đồng
                 </small>
+
               </div>
+
             </button>
+
 
           </div>
 
         </div>
+
 
       </section>
 
