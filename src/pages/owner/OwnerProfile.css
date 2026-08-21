@@ -1,0 +1,466 @@
+.owner-page {
+  min-height: 100vh;
+
+  display: flex;
+
+  background: #f5f7fb;
+}
+
+
+/* ================= SIDEBAR ================= */
+
+.owner-sidebar {
+
+  width: 280px;
+
+  min-height: 100vh;
+
+  background: white;
+
+  padding: 28px 20px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  box-sizing: border-box;
+}
+
+
+.owner-logo {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 40px;
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+
+.owner-logo-icon {
+
+  width: 48px;
+
+  height: 48px;
+
+  border-radius: 12px;
+
+  background: #2563eb;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 25px;
+}
+
+
+.owner-nav {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+.owner-menu {
+
+  width: 100%;
+
+  border: none;
+
+  background: transparent;
+
+  padding: 16px;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  font-size: 16px;
+
+  color: #64748b;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+
+.owner-menu:hover {
+
+  background: #f1f5f9;
+}
+
+
+.owner-menu.active {
+
+  background: #eaf2ff;
+
+  color: #2563eb;
+
+  font-weight: 600;
+}
+
+
+.menu-icon {
+
+  font-size: 20px;
+}
+
+
+/* ================= LOGOUT ================= */
+
+.owner-logout {
+
+  margin-top: auto;
+
+  border: none;
+
+  background: #fff1f2;
+
+  color: #ef4444;
+
+  padding: 16px;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  font-size: 16px;
+
+  cursor: pointer;
+}
+
+
+/* ================= MAIN ================= */
+
+.owner-main {
+
+  flex: 1;
+
+  padding: 45px 50px;
+
+  box-sizing: border-box;
+}
+
+
+/* ================= HEADER ================= */
+
+.owner-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 35px;
+}
+
+
+.owner-header h1 {
+
+  margin: 0;
+
+  font-size: 36px;
+
+  color: #0f2747;
+}
+
+
+.owner-header p {
+
+  margin-top: 10px;
+
+  color: #94a3b8;
+
+  font-size: 16px;
+}
+
+
+.owner-header-user {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+
+.owner-avatar {
+
+  width: 52px;
+
+  height: 52px;
+
+  border-radius: 50%;
+
+  background: #2563eb;
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 20px;
+
+  font-weight: 600;
+}
+
+
+.owner-user-info {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.owner-user-info strong {
+
+  color: #0f2747;
+}
+
+
+.owner-user-info span {
+
+  color: #94a3b8;
+}
+
+
+/* ================= PROFILE ================= */
+
+.profile-card {
+
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 35px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0, 0, 0, 0.04);
+}
+
+
+/* ================= PROFILE TOP ================= */
+
+.profile-top {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding-bottom: 30px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+
+.profile-avatar {
+
+  width: 85px;
+
+  height: 85px;
+
+  border-radius: 50%;
+
+  background: #2563eb;
+
+  color: white;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 34px;
+
+  font-weight: 600;
+}
+
+
+.profile-top h2 {
+
+  margin: 0;
+
+  color: #0f2747;
+
+  font-size: 25px;
+}
+
+
+.profile-top p {
+
+  margin-top: 8px;
+
+  color: #94a3b8;
+}
+
+
+/* ================= SECTION ================= */
+
+.profile-section {
+
+  padding: 30px 0;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+
+.profile-section:last-child {
+
+  border-bottom: none;
+
+  padding-bottom: 0;
+}
+
+
+.profile-section h3 {
+
+  margin: 0 0 25px;
+
+  color: #0f2747;
+
+  font-size: 20px;
+}
+
+
+/* ================= GRID ================= */
+
+.profile-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 22px;
+}
+
+
+.profile-field {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 9px;
+}
+
+
+.profile-field label {
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  font-weight: 500;
+}
+
+
+.profile-input {
+
+  padding: 14px 16px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  background: #f8fafc;
+
+  color: #0f2747;
+
+  font-size: 15px;
+}
+
+
+.profile-input.status {
+
+  color: #16a34a;
+
+  font-weight: 600;
+}
+
+
+/* ================= APARTMENT ================= */
+
+.apartment-profile-box {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 20px;
+
+  background: #f8fafc;
+
+  border-radius: 14px;
+}
+
+
+.apartment-profile-icon {
+
+  width: 60px;
+
+  height: 60px;
+
+  border-radius: 14px;
+
+  background: #eff6ff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 28px;
+}
+
+
+.apartment-profile-box strong {
+
+  color: #0f2747;
+
+  font-size: 18px;
+}
+
+
+.apartment-profile-box p {
+
+  margin-top: 6px;
+
+  color: #94a3b8;
+}
