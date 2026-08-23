@@ -1,16 +1,95 @@
 import "./OwnerInvoice.css";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { getCurrentOwner } from "../../services/ownerService";
 
 function OwnerInvoice() {
 
   const navigate = useNavigate();
 
-  const username = localStorage.getItem("username");
-  const fullName = localStorage.getItem("fullName");
+  // ==============================
+  // STATE
+  // ==============================
+
+  const [owner, setOwner] = useState(null);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+
+  // ==============================
+  // LOAD OWNER
+  // ==============================
+
+  useEffect(() => {
+
+    const loadOwner = async () => {
+
+      const token =
+        localStorage.getItem("token");
+
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      try {
+
+        setLoading(true);
+        setError("");
+
+        const ownerData =
+          await getCurrentOwner();
+
+        console.log(
+          "✅ INVOICE OWNER:",
+          ownerData
+        );
+
+        setOwner(ownerData);
+
+      } catch (err) {
+
+        console.error(
+          "❌ INVOICE OWNER ERROR:",
+          err
+        );
+
+        setError(
+          err.message ||
+          "Không thể tải thông tin Owner"
+        );
+
+      } finally {
+
+        setLoading(false);
+
+      }
+
+    };
+
+
+    loadOwner();
+
+  }, [navigate]);
+
+
+  // ==============================
+  // DISPLAY NAME
+  // ==============================
 
   const displayName =
-    fullName || username || "Chủ căn hộ";
+    owner?.fullName ||
+    owner?.username ||
+    localStorage.getItem("fullName") ||
+    localStorage.getItem("username") ||
+    "Chủ căn hộ";
 
+
+  // ==============================
+  // LOGOUT
+  // ==============================
 
   const handleLogout = () => {
 
@@ -20,11 +99,144 @@ function OwnerInvoice() {
     localStorage.removeItem("fullName");
 
     navigate("/login");
+
   };
 
 
+  // ==============================
+  // LOADING
+  // ==============================
+
+  if (loading) {
+
+    return (
+
+      <div className="owner-page">
+
+        <aside className="owner-sidebar">
+
+          <div className="owner-logo">
+
+            <div className="owner-logo-icon">
+              🏢
+            </div>
+
+            <span>
+              Quản Lý Căn Hộ
+            </span>
+
+          </div>
+
+        </aside>
+
+
+        <main className="owner-main">
+
+          <div
+            style={{
+              padding: "50px",
+              fontSize: "20px",
+            }}
+          >
+            Đang tải dữ liệu hóa đơn...
+          </div>
+
+        </main>
+
+      </div>
+
+    );
+
+  }
+
+
+  // ==============================
+  // ERROR
+  // ==============================
+
+  if (error) {
+
+    return (
+
+      <div className="owner-page">
+
+        <aside className="owner-sidebar">
+
+          <div className="owner-logo">
+
+            <div className="owner-logo-icon">
+              🏢
+            </div>
+
+            <span>
+              Quản Lý Căn Hộ
+            </span>
+
+          </div>
+
+
+          <button
+            className="owner-logout"
+            onClick={handleLogout}
+          >
+
+            <span className="menu-icon">
+              🚪
+            </span>
+
+            <span>
+              Đăng xuất
+            </span>
+
+          </button>
+
+        </aside>
+
+
+        <main className="owner-main">
+
+          <div
+            style={{
+              padding: "50px",
+              color: "red",
+            }}
+          >
+
+            <h2>
+              Không thể tải dữ liệu
+            </h2>
+
+            <p>
+              {error}
+            </p>
+
+            <button
+              onClick={() =>
+                window.location.reload()
+              }
+            >
+              Thử lại
+            </button>
+
+          </div>
+
+        </main>
+
+      </div>
+
+    );
+
+  }
+
+
+  // ==============================
+  // UI
+  // ==============================
+
   return (
+
     <div className="owner-page">
+
 
       {/* ================= SIDEBAR ================= */}
 
@@ -45,12 +257,16 @@ function OwnerInvoice() {
 
         <nav className="owner-nav">
 
-          {/* Trang chủ */}
+
+          {/* TRANG CHỦ */}
 
           <button
             className="owner-menu"
-            onClick={() => navigate("/owner")}
+            onClick={() =>
+              navigate("/owner")
+            }
           >
+
             <span className="menu-icon">
               🏠
             </span>
@@ -58,10 +274,11 @@ function OwnerInvoice() {
             <span>
               Trang chủ
             </span>
+
           </button>
 
 
-          {/* Căn hộ */}
+          {/* CĂN HỘ */}
 
           <button
             className="owner-menu"
@@ -69,6 +286,7 @@ function OwnerInvoice() {
               navigate("/owner/apartment")
             }
           >
+
             <span className="menu-icon">
               🏢
             </span>
@@ -76,10 +294,11 @@ function OwnerInvoice() {
             <span>
               Căn hộ của tôi
             </span>
+
           </button>
 
 
-          {/* Hợp đồng */}
+          {/* HỢP ĐỒNG */}
 
           <button
             className="owner-menu"
@@ -87,6 +306,7 @@ function OwnerInvoice() {
               navigate("/owner/contract")
             }
           >
+
             <span className="menu-icon">
               📄
             </span>
@@ -94,14 +314,16 @@ function OwnerInvoice() {
             <span>
               Hợp đồng
             </span>
+
           </button>
 
 
-          {/* Hóa đơn */}
+          {/* HÓA ĐƠN */}
 
           <button
             className="owner-menu active"
           >
+
             <span className="menu-icon">
               💰
             </span>
@@ -109,10 +331,11 @@ function OwnerInvoice() {
             <span>
               Hóa đơn
             </span>
+
           </button>
 
 
-          {/* Cá nhân */}
+          {/* CÁ NHÂN */}
 
           <button
             className="owner-menu"
@@ -120,6 +343,7 @@ function OwnerInvoice() {
               navigate("/owner/profile")
             }
           >
+
             <span className="menu-icon">
               👤
             </span>
@@ -127,12 +351,13 @@ function OwnerInvoice() {
             <span>
               Cá nhân
             </span>
+
           </button>
 
         </nav>
 
 
-        {/* Đăng xuất */}
+        {/* LOGOUT */}
 
         <button
           className="owner-logout"
@@ -220,7 +445,7 @@ function OwnerInvoice() {
               </span>
 
               <strong>
-                3
+                0
               </strong>
 
             </div>
@@ -241,7 +466,7 @@ function OwnerInvoice() {
               </span>
 
               <strong>
-                2
+                0
               </strong>
 
             </div>
@@ -262,12 +487,13 @@ function OwnerInvoice() {
               </span>
 
               <strong>
-                1
+                0
               </strong>
 
             </div>
 
           </div>
+
 
         </section>
 
@@ -275,6 +501,7 @@ function OwnerInvoice() {
         {/* ================= INVOICE LIST ================= */}
 
         <section className="invoice-container">
+
 
           <div className="invoice-title">
 
@@ -293,7 +520,7 @@ function OwnerInvoice() {
           </div>
 
 
-          {/* HÓA ĐƠN 1 */}
+          {/* ================= EMPTY ================= */}
 
           <div className="invoice-item">
 
@@ -303,18 +530,21 @@ function OwnerInvoice() {
                 💰
               </div>
 
+
               <div>
 
                 <h3>
-                  Hóa đơn tháng 08/2026
+                  Chưa có dữ liệu hóa đơn
                 </h3>
 
                 <p>
-                  Căn hộ A102
+                  Hệ thống chưa cung cấp API
+                  hóa đơn cho Owner.
                 </p>
 
                 <small>
-                  Hạn thanh toán: 31/08/2026
+                  Vui lòng kiểm tra lại sau khi
+                  backend triển khai chức năng hóa đơn.
                 </small>
 
               </div>
@@ -325,110 +555,25 @@ function OwnerInvoice() {
             <div className="invoice-right">
 
               <strong>
-                20.000.000 đ
-              </strong>
-
-              <span className="invoice-paid">
-                Đã thanh toán
-              </span>
-
-            </div>
-
-          </div>
-
-
-          {/* HÓA ĐƠN 2 */}
-
-          <div className="invoice-item">
-
-            <div className="invoice-left">
-
-              <div className="invoice-icon">
-                💰
-              </div>
-
-              <div>
-
-                <h3>
-                  Hóa đơn tháng 07/2026
-                </h3>
-
-                <p>
-                  Căn hộ A102
-                </p>
-
-                <small>
-                  Hạn thanh toán: 31/07/2026
-                </small>
-
-              </div>
-
-            </div>
-
-
-            <div className="invoice-right">
-
-              <strong>
-                20.000.000 đ
-              </strong>
-
-              <span className="invoice-paid">
-                Đã thanh toán
-              </span>
-
-            </div>
-
-          </div>
-
-
-          {/* HÓA ĐƠN 3 */}
-
-          <div className="invoice-item">
-
-            <div className="invoice-left">
-
-              <div className="invoice-icon">
-                💰
-              </div>
-
-              <div>
-
-                <h3>
-                  Hóa đơn tháng 06/2026
-                </h3>
-
-                <p>
-                  Căn hộ A102
-                </p>
-
-                <small>
-                  Hạn thanh toán: 30/06/2026
-                </small>
-
-              </div>
-
-            </div>
-
-
-            <div className="invoice-right">
-
-              <strong>
-                20.000.000 đ
+                --
               </strong>
 
               <span className="invoice-unpaid">
-                Chưa thanh toán
+                Chưa có dữ liệu
               </span>
 
             </div>
 
           </div>
 
+
         </section>
+
 
       </main>
 
     </div>
+
   );
 }
 

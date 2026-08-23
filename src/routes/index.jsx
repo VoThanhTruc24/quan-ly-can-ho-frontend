@@ -13,6 +13,7 @@ import Dashboard from "../pages/dashboard/Dashboard";
 import Customers from "../pages/dashboard/Customers";
 import Apartments from "../pages/dashboard/Apartments";
 import Contracts from "../pages/dashboard/Contracts";
+import Owners from "../pages/dashboard/Owners";
 
 
 // ===============================
@@ -93,6 +94,11 @@ function AppRoutes() {
           <Route
             path="/dashboard"
             element={<Dashboard />}
+          />
+
+          <Route
+            path="/owners"
+            element={<Owners />}
           />
 
           <Route

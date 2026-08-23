@@ -24,6 +24,13 @@ function Sidebar() {
       icon: "🏢",
       path: "/apartments",
     },
+
+    {
+      name: "Quản lý Owner",
+      icon: "👥",
+      path: "/owners",
+    },
+    
     {
       name: "Hợp đồng",
       icon: "📄",

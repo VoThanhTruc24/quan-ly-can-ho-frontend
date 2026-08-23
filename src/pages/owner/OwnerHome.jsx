@@ -1,22 +1,168 @@
 import "./OwnerHome.css";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+const API_BASE_URL = "http://localhost:8080/api";
 
 function OwnerHome() {
   const navigate = useNavigate();
 
-  // ==========================================
-  // LẤY THÔNG TIN USER TỪ LOCAL STORAGE
-  // ==========================================
+  // ==============================
+  // STATE
+  // ==============================
 
-  const username =
-    localStorage.getItem("username");
+  const [owner, setOwner] = useState(null);
+  const [apartments, setApartments] = useState([]);
+  const [contracts, setContracts] = useState([]);
 
-  const fullName =
-    localStorage.getItem("fullName");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // ==========================================
+  // ==============================
+  // LẤY TOKEN
+  // ==============================
+
+  const getToken = () => {
+    return localStorage.getItem("token");
+  };
+
+  // ==============================
+  // GỌI API
+  // ==============================
+
+  useEffect(() => {
+    const loadOwnerData = async () => {
+      console.log("🔥 OWNER HOME ĐÃ LOAD");
+
+      const token = getToken();
+
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError("");
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+
+        // ==============================
+        // 1. LẤY THÔNG TIN OWNER
+        // ==============================
+
+        console.log("🔥 GET /owner/me");
+
+        const ownerResponse = await fetch(
+          `${API_BASE_URL}/owner/me`,
+          {
+            method: "GET",
+            headers,
+          }
+        );
+
+        if (!ownerResponse.ok) {
+          throw new Error(
+            `Không lấy được thông tin Owner: ${ownerResponse.status}`
+          );
+        }
+
+        const ownerData = await ownerResponse.json();
+
+        console.log("✅ OWNER:", ownerData);
+
+        setOwner(ownerData);
+
+        // ==============================
+        // 2. LẤY CĂN HỘ CỦA OWNER
+        // ==============================
+
+        console.log("🔥 GET /owner/me/apartments");
+
+        const apartmentResponse = await fetch(
+          `${API_BASE_URL}/owner/me/apartments`,
+          {
+            method: "GET",
+            headers,
+          }
+        );
+
+        if (!apartmentResponse.ok) {
+          throw new Error(
+            `Không lấy được căn hộ: ${apartmentResponse.status}`
+          );
+        }
+
+        const apartmentData =
+          await apartmentResponse.json();
+
+        console.log(
+          "✅ APARTMENTS:",
+          apartmentData
+        );
+
+        setApartments(
+          Array.isArray(apartmentData)
+            ? apartmentData
+            : []
+        );
+
+        // ==============================
+        // 3. LẤY HỢP ĐỒNG
+        // ==============================
+
+        console.log("🔥 GET /owner/me/contracts");
+
+        const contractResponse = await fetch(
+          `${API_BASE_URL}/owner/me/contracts`,
+          {
+            method: "GET",
+            headers,
+          }
+        );
+
+        if (!contractResponse.ok) {
+          throw new Error(
+            `Không lấy được hợp đồng: ${contractResponse.status}`
+          );
+        }
+
+        const contractData =
+          await contractResponse.json();
+
+        console.log(
+          "✅ CONTRACTS:",
+          contractData
+        );
+
+        setContracts(
+          Array.isArray(contractData)
+            ? contractData
+            : []
+        );
+
+      } catch (err) {
+        console.error("❌ OWNER DATA ERROR:", err);
+
+        setError(
+          err.message ||
+          "Không thể tải dữ liệu Owner"
+        );
+
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadOwnerData();
+  }, [navigate]);
+
+  // ==============================
   // LOGOUT
-  // ==========================================
+  // ==============================
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -27,29 +173,182 @@ function OwnerHome() {
     navigate("/login");
   };
 
-  // ==========================================
-  // USER NAME HIỂN THỊ
-  // ==========================================
+  // ==============================
+  // OWNER NAME
+  // ==============================
 
   const displayName =
-    fullName ||
-    username ||
-    "Người dùng";
+    owner?.fullName ||
+    owner?.username ||
+    "Chủ căn hộ";
 
-  // ==========================================
+  // ==============================
+  // CĂN HỘ ĐẦU TIÊN
+  // ==============================
+
+  const apartment =
+    apartments.length > 0
+      ? apartments[0]
+      : null;
+
+  // ==============================
+  // HỢP ĐỒNG ĐẦU TIÊN
+  // ==============================
+
+  const contract =
+    contracts.length > 0
+      ? contracts[0]
+      : null;
+
+  // ==============================
+  // FORMAT TIỀN
+  // ==============================
+
+  const formatMoney = (value) => {
+    if (
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+      return "Chưa có dữ liệu";
+    }
+
+    const number = Number(value);
+
+    if (Number.isNaN(number)) {
+      return value;
+    }
+
+    return number.toLocaleString("vi-VN") + " đ";
+  };
+
+  // ==============================
+  // FORMAT DATE
+  // ==============================
+
+  const formatDate = (value) => {
+    if (!value) {
+      return "Chưa có dữ liệu";
+    }
+
+    try {
+      return new Date(value).toLocaleDateString(
+        "vi-VN"
+      );
+    } catch {
+      return value;
+    }
+  };
+
+  // ==============================
+  // LOADING
+  // ==============================
+
+  if (loading) {
+    return (
+      <div className="owner-page">
+        <aside className="owner-sidebar">
+
+          <div className="owner-logo">
+            <div className="owner-logo-icon">
+              🏢
+            </div>
+
+            <span>
+              Quản Lý Căn Hộ
+            </span>
+          </div>
+
+        </aside>
+
+        <main className="owner-main">
+          <div
+            style={{
+              padding: "50px",
+              fontSize: "20px",
+            }}
+          >
+            Đang tải dữ liệu Owner...
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  // ==============================
+  // ERROR
+  // ==============================
+
+  if (error) {
+    return (
+      <div className="owner-page">
+        <aside className="owner-sidebar">
+
+          <div className="owner-logo">
+            <div className="owner-logo-icon">
+              🏢
+            </div>
+
+            <span>
+              Quản Lý Căn Hộ
+            </span>
+          </div>
+
+          <button
+            className="owner-logout"
+            onClick={handleLogout}
+          >
+            <span className="menu-icon">
+              🚪
+            </span>
+
+            <span>
+              Đăng xuất
+            </span>
+          </button>
+
+        </aside>
+
+        <main className="owner-main">
+
+          <div
+            style={{
+              padding: "50px",
+              color: "red",
+            }}
+          >
+            <h2>
+              Không thể tải dữ liệu
+            </h2>
+
+            <p>{error}</p>
+
+            <button
+              onClick={() =>
+                window.location.reload()
+              }
+            >
+              Thử lại
+            </button>
+          </div>
+
+        </main>
+      </div>
+    );
+  }
+
+  // ==============================
   // UI
-  // ==========================================
+  // ==============================
 
   return (
     <div className="owner-page">
 
-      {/* =================================================
+      {/* ==========================================
           SIDEBAR
-      ================================================= */}
+      ========================================== */}
 
       <aside className="owner-sidebar">
-
-        {/* LOGO */}
 
         <div className="owner-logo">
 
@@ -63,11 +362,7 @@ function OwnerHome() {
 
         </div>
 
-        {/* MENU */}
-
         <nav className="owner-nav">
-
-          {/* TRANG CHỦ */}
 
           <button
             className="owner-menu active"
@@ -84,8 +379,6 @@ function OwnerHome() {
             </span>
           </button>
 
-          {/* CĂN HỘ */}
-
           <button
             className="owner-menu"
             onClick={() =>
@@ -100,8 +393,6 @@ function OwnerHome() {
               Căn hộ của tôi
             </span>
           </button>
-
-          {/* HỢP ĐỒNG */}
 
           <button
             className="owner-menu"
@@ -118,8 +409,6 @@ function OwnerHome() {
             </span>
           </button>
 
-          {/* HÓA ĐƠN */}
-
           <button
             className="owner-menu"
             onClick={() =>
@@ -134,8 +423,6 @@ function OwnerHome() {
               Hóa đơn
             </span>
           </button>
-
-          {/* HỒ SƠ */}
 
           <button
             className="owner-menu"
@@ -154,8 +441,6 @@ function OwnerHome() {
 
         </nav>
 
-        {/* LOGOUT */}
-
         <button
           className="owner-logout"
           onClick={handleLogout}
@@ -171,9 +456,9 @@ function OwnerHome() {
 
       </aside>
 
-      {/* =================================================
-          MAIN CONTENT
-      ================================================= */}
+      {/* ==========================================
+          MAIN
+      ========================================== */}
 
       <main className="owner-main">
 
@@ -193,8 +478,6 @@ function OwnerHome() {
             </p>
 
           </div>
-
-          {/* USER */}
 
           <div className="owner-header-user">
 
@@ -220,9 +503,9 @@ function OwnerHome() {
 
         </header>
 
-        {/* =================================================
+        {/* ==========================================
             WELCOME
-        ================================================= */}
+        ========================================== */}
 
         <section className="owner-welcome">
 
@@ -245,9 +528,9 @@ function OwnerHome() {
 
         </section>
 
-        {/* =================================================
+        {/* ==========================================
             STATISTICS
-        ================================================= */}
+        ========================================== */}
 
         <section className="owner-statistics">
 
@@ -266,7 +549,7 @@ function OwnerHome() {
               </span>
 
               <strong>
-                1
+                {apartments.length}
               </strong>
 
             </div>
@@ -288,7 +571,7 @@ function OwnerHome() {
               </span>
 
               <strong>
-                1
+                {contracts.length}
               </strong>
 
             </div>
@@ -310,7 +593,11 @@ function OwnerHome() {
               </span>
 
               <strong>
-                20.000.000 đ
+                {contract?.rentPrice
+                  ? formatMoney(
+                      contract.rentPrice
+                    )
+                  : "Chưa có dữ liệu"}
               </strong>
 
             </div>
@@ -319,9 +606,9 @@ function OwnerHome() {
 
         </section>
 
-        {/* =================================================
-            THÔNG TIN CĂN HỘ
-        ================================================= */}
+        {/* ==========================================
+            CĂN HỘ
+        ========================================== */}
 
         <section className="owner-section">
 
@@ -334,7 +621,7 @@ function OwnerHome() {
               </h2>
 
               <p>
-                Thông tin căn hộ đang thuê
+                Thông tin căn hộ của bạn
               </p>
 
             </div>
@@ -351,97 +638,127 @@ function OwnerHome() {
 
           </div>
 
-          {/* APARTMENT CARD */}
+          {apartment ? (
 
-          <div className="owner-apartment-card">
+            <div className="owner-apartment-card">
 
-            <div className="apartment-image">
-              🏢
-            </div>
+              <div className="apartment-image">
+                🏢
+              </div>
 
-            <div className="apartment-main-info">
+              <div className="apartment-main-info">
 
-              <div className="apartment-title-row">
+                <div className="apartment-title-row">
 
-                <div>
+                  <div>
 
-                  <h3>
-                    Căn hộ A102
-                  </h3>
+                    <h3>
+                      {apartment.name ||
+                        "Chưa có tên căn hộ"}
+                    </h3>
 
-                  <p>
-                    Chung cư ABC
-                  </p>
+                    <p>
+                      {apartment.floor?.block
+                        ?.name ||
+                        "Chưa có thông tin tòa nhà"}
+                    </p>
+
+                  </div>
+
+                  <span className="active-badge">
+                    {apartment.status ||
+                      "Chưa có trạng thái"}
+                  </span>
 
                 </div>
 
-                <span className="active-badge">
-                  Đang thuê
-                </span>
+                <div className="apartment-details">
+
+                  <div>
+
+                    <span>
+                      📍 Vị trí
+                    </span>
+
+                    <strong>
+                      {apartment.floor?.name ||
+                        "Chưa có dữ liệu"}
+                    </strong>
+
+                  </div>
+
+                  <div>
+
+                    <span>
+                      🏢 Tòa nhà
+                    </span>
+
+                    <strong>
+                      {apartment.floor?.block
+                        ?.name ||
+                        "Chưa có dữ liệu"}
+                    </strong>
+
+                  </div>
+
+                  <div>
+
+                    <span>
+                      📐 Diện tích
+                    </span>
+
+                    <strong>
+                      {apartment.area !== null &&
+                      apartment.area !== undefined
+                        ? `${apartment.area} m²`
+                        : "Chưa có dữ liệu"}
+                    </strong>
+
+                  </div>
+
+                  <div>
+
+                    <span>
+                      💰 Giá thuê
+                    </span>
+
+                    <strong className="rent-price">
+                      {contract?.rentPrice
+                        ? `${formatMoney(
+                            contract.rentPrice
+                          )}/tháng`
+                        : "Chưa có dữ liệu"}
+                    </strong>
+
+                  </div>
+
+                </div>
 
               </div>
 
-              <div className="apartment-details">
-
-                <div>
-
-                  <span>
-                    📍 Vị trí
-                  </span>
-
-                  <strong>
-                    Tầng 1
-                  </strong>
-
-                </div>
-
-                <div>
-
-                  <span>
-                    🛏️ Phòng
-                  </span>
-
-                  <strong>
-                    2 phòng ngủ
-                  </strong>
-
-                </div>
-
-                <div>
-
-                  <span>
-                    📐 Diện tích
-                  </span>
-
-                  <strong>
-                    70 m²
-                  </strong>
-
-                </div>
-
-                <div>
-
-                  <span>
-                    💰 Giá thuê
-                  </span>
-
-                  <strong className="rent-price">
-                    20.000.000 đ/tháng
-                  </strong>
-
-                </div>
-
-              </div>
-
             </div>
 
-          </div>
+          ) : (
+
+            <div
+              className="owner-apartment-card"
+              style={{
+                justifyContent: "center",
+                padding: "40px",
+              }}
+            >
+              <strong>
+                Bạn chưa được gán căn hộ.
+              </strong>
+            </div>
+
+          )}
 
         </section>
 
-        {/* =================================================
+        {/* ==========================================
             HỢP ĐỒNG
-        ================================================= */}
+        ========================================== */}
 
         <section className="owner-section">
 
@@ -471,79 +788,109 @@ function OwnerHome() {
 
           </div>
 
-          <div className="owner-contract-card">
+          {contract ? (
 
-            <div className="contract-icon">
-              📄
-            </div>
+            <div className="owner-contract-card">
 
-            <div className="contract-main">
-
-              <div>
-
-                <h3>
-                  Hợp đồng thuê căn hộ A102
-                </h3>
-
-                <p>
-                  Mã hợp đồng: HD001
-                </p>
-
+              <div className="contract-icon">
+                📄
               </div>
 
-              <span className="active-badge">
-                Đang hiệu lực
-              </span>
+              <div className="contract-main">
 
-            </div>
+                <div>
 
-            <div className="contract-details">
+                  <h3>
+                    Hợp đồng thuê{" "}
+                    {apartment?.name || ""}
+                  </h3>
 
-              <div>
+                  <p>
+                    Mã hợp đồng:{" "}
+                    {contract.id ||
+                      "Chưa có mã"}
+                  </p>
 
-                <span>
-                  Ngày bắt đầu
+                </div>
+
+                <span className="active-badge">
+                  {contract.status ||
+                    "Đang hiệu lực"}
                 </span>
 
-                <strong>
-                  20/08/2026
-                </strong>
-
               </div>
 
-              <div>
+              <div className="contract-details">
 
-                <span>
-                  Ngày kết thúc
-                </span>
+                <div>
 
-                <strong>
-                  20/08/2027
-                </strong>
+                  <span>
+                    Ngày bắt đầu
+                  </span>
 
-              </div>
+                  <strong>
+                    {formatDate(
+                      contract.startDate
+                    )}
+                  </strong>
 
-              <div>
+                </div>
 
-                <span>
-                  Tiền thuê
-                </span>
+                <div>
 
-                <strong className="rent-price">
-                  20.000.000 đ/tháng
-                </strong>
+                  <span>
+                    Ngày kết thúc
+                  </span>
+
+                  <strong>
+                    {formatDate(
+                      contract.endDate
+                    )}
+                  </strong>
+
+                </div>
+
+                <div>
+
+                  <span>
+                    Tiền thuê
+                  </span>
+
+                  <strong className="rent-price">
+                    {contract.rentPrice
+                      ? `${formatMoney(
+                          contract.rentPrice
+                        )}/tháng`
+                      : "Chưa có dữ liệu"}
+                  </strong>
+
+                </div>
 
               </div>
 
             </div>
 
-          </div>
+          ) : (
+
+            <div
+              className="owner-contract-card"
+              style={{
+                justifyContent: "center",
+                padding: "40px",
+              }}
+            >
+              <strong>
+                Chưa có hợp đồng.
+              </strong>
+            </div>
+
+          )}
 
         </section>
 
-        {/* =================================================
-            HÓA ĐƠN GẦN NHẤT
-        ================================================= */}
+        {/* ==========================================
+            HÓA ĐƠN
+        ========================================== */}
 
         <section className="owner-section">
 
@@ -582,11 +929,12 @@ function OwnerHome() {
             <div className="invoice-main">
 
               <h3>
-                Tiền thuê tháng 08/2026
+                Chưa có dữ liệu hóa đơn
               </h3>
 
               <p>
-                Hạn thanh toán: 31/08/2026
+                Hệ thống chưa có API hóa đơn
+                cho Owner.
               </p>
 
             </div>
@@ -594,12 +942,8 @@ function OwnerHome() {
             <div className="invoice-amount">
 
               <strong>
-                20.000.000 đ
+                --
               </strong>
-
-              <span className="paid-badge">
-                Đã thanh toán
-              </span>
 
             </div>
 
