@@ -19,6 +19,7 @@ const getToken = () => {
 
 // =====================================================
 // LẤY THÔNG TIN OWNER ĐANG LOGIN
+// GET /api/owner/me
 // =====================================================
 
 export const getCurrentOwner = async () => {
@@ -37,9 +38,11 @@ export const getCurrentOwner = async () => {
     }
   );
 
+
   if (!response.ok) {
 
-    const text = await response.text();
+    const text =
+      await response.text();
 
     throw new Error(
       text ||
@@ -47,12 +50,14 @@ export const getCurrentOwner = async () => {
     );
   }
 
+
   return await response.json();
 };
 
 
 // =====================================================
 // LẤY CĂN HỘ CỦA OWNER
+// GET /api/owner/me/apartments
 // =====================================================
 
 export const getMyApartments = async () => {
@@ -71,9 +76,11 @@ export const getMyApartments = async () => {
     }
   );
 
+
   if (!response.ok) {
 
-    const text = await response.text();
+    const text =
+      await response.text();
 
     throw new Error(
       text ||
@@ -81,12 +88,14 @@ export const getMyApartments = async () => {
     );
   }
 
+
   return await response.json();
 };
 
 
 // =====================================================
 // LẤY HỢP ĐỒNG CỦA OWNER
+// GET /api/owner/me/contracts
 // =====================================================
 
 export const getMyContracts = async () => {
@@ -105,9 +114,11 @@ export const getMyContracts = async () => {
     }
   );
 
+
   if (!response.ok) {
 
-    const text = await response.text();
+    const text =
+      await response.text();
 
     throw new Error(
       text ||
@@ -115,12 +126,14 @@ export const getMyContracts = async () => {
     );
   }
 
+
   return await response.json();
 };
 
 
 // =====================================================
 // LẤY HÓA ĐƠN CỦA OWNER
+// GET /api/owner/me/invoices
 // =====================================================
 
 export const getMyInvoices = async () => {
@@ -139,9 +152,11 @@ export const getMyInvoices = async () => {
     }
   );
 
+
   if (!response.ok) {
 
-    const text = await response.text();
+    const text =
+      await response.text();
 
     throw new Error(
       text ||
@@ -149,7 +164,131 @@ export const getMyInvoices = async () => {
     );
   }
 
+
   return await response.json();
+};
+
+
+// =====================================================
+// THANH TOÁN HÓA ĐƠN
+//
+// PUT
+// /api/owner/invoices/{invoiceId}/pay
+// =====================================================
+
+export const payInvoice = async (
+  invoiceId,
+  paymentMethod
+) => {
+
+  const token = getToken();
+
+
+  // ------------------------------------------
+  // KIỂM TRA TOKEN
+  // ------------------------------------------
+
+  if (!token) {
+
+    throw new Error(
+      "Phiên đăng nhập đã hết. Vui lòng đăng nhập lại."
+    );
+  }
+
+
+  // ------------------------------------------
+  // KIỂM TRA INVOICE
+  // ------------------------------------------
+
+  if (!invoiceId) {
+
+    throw new Error(
+      "Không xác định được hóa đơn cần thanh toán."
+    );
+  }
+
+
+  // ------------------------------------------
+  // KIỂM TRA PAYMENT METHOD
+  // ------------------------------------------
+
+  if (!paymentMethod) {
+
+    throw new Error(
+      "Vui lòng chọn phương thức thanh toán."
+    );
+  }
+
+
+  // ------------------------------------------
+  // GỌI API
+  // ------------------------------------------
+
+  const response = await fetch(
+    `${API_BASE_URL}/owner/invoices/${invoiceId}/pay`,
+    {
+      method: "PUT",
+
+      headers: {
+        Authorization:
+          `Bearer ${token}`,
+
+        "Content-Type":
+          "application/json",
+      },
+
+      body: JSON.stringify({
+        paymentMethod:
+          paymentMethod,
+      }),
+    }
+  );
+
+
+  // ------------------------------------------
+  // ĐỌC RESPONSE
+  // ------------------------------------------
+
+  const text =
+    await response.text();
+
+
+  let data;
+
+
+  try {
+
+    data =
+      text
+        ? JSON.parse(text)
+        : null;
+
+  } catch {
+
+    data = text;
+  }
+
+
+  // ------------------------------------------
+  // XỬ LÝ LỖI
+  // ------------------------------------------
+
+  if (!response.ok) {
+
+    throw new Error(
+      typeof data === "string"
+        ? data
+        : data?.message ||
+          `Thanh toán thất bại: ${response.status}`
+    );
+  }
+
+
+  // ------------------------------------------
+  // THÀNH CÔNG
+  // ------------------------------------------
+
+  return data;
 };
 
 
@@ -181,15 +320,18 @@ export const getOwners = async () => {
     }
   );
 
+
   if (!response.ok) {
 
-    const text = await response.text();
+    const text =
+      await response.text();
 
     throw new Error(
       text ||
       `Lỗi lấy danh sách Owner: ${response.status}`
     );
   }
+
 
   return await response.json();
 };
@@ -200,7 +342,9 @@ export const getOwners = async () => {
 // POST /api/admin/owners
 // =====================================================
 
-export const createOwner = async (ownerData) => {
+export const createOwner = async (
+  ownerData
+) => {
 
   const token = getToken();
 
@@ -228,7 +372,10 @@ export const createOwner = async (ownerData) => {
 
   try {
 
-    data = JSON.parse(text);
+    data =
+      text
+        ? JSON.parse(text)
+        : null;
 
   } catch {
 
@@ -240,6 +387,7 @@ export const createOwner = async (ownerData) => {
     "CREATE OWNER STATUS:",
     response.status
   );
+
 
   console.log(
     "CREATE OWNER RESPONSE:",
@@ -264,7 +412,8 @@ export const createOwner = async (ownerData) => {
 
 // =====================================================
 // LẤY CĂN HỘ CỦA OWNER
-// GET /api/admin/owners/{ownerId}/apartments
+// GET
+// /api/admin/owners/{ownerId}/apartments
 // =====================================================
 
 export const getOwnerApartments = async (
@@ -273,14 +422,26 @@ export const getOwnerApartments = async (
 
   const token = getToken();
 
+
+  if (!ownerId) {
+
+    throw new Error(
+      "Không xác định được Owner."
+    );
+  }
+
+
   const response = await fetch(
     `${API_BASE_URL}/admin/owners/${ownerId}/apartments`,
     {
       method: "GET",
 
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        Authorization:
+          `Bearer ${token}`,
+
+        "Content-Type":
+          "application/json",
       },
     }
   );
@@ -304,7 +465,8 @@ export const getOwnerApartments = async (
 
 // =====================================================
 // GÁN CĂN HỘ CHO OWNER
-// PUT /api/admin/owners/{ownerId}/apartments/{apartmentId}
+// PUT
+// /api/admin/owners/{ownerId}/apartments/{apartmentId}
 // =====================================================
 
 export const assignApartmentToOwner = async (
@@ -314,14 +476,34 @@ export const assignApartmentToOwner = async (
 
   const token = getToken();
 
+
+  if (!ownerId) {
+
+    throw new Error(
+      "Không xác định được Owner."
+    );
+  }
+
+
+  if (!apartmentId) {
+
+    throw new Error(
+      "Không xác định được căn hộ."
+    );
+  }
+
+
   const response = await fetch(
     `${API_BASE_URL}/admin/owners/${ownerId}/apartments/${apartmentId}`,
     {
       method: "PUT",
 
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        Authorization:
+          `Bearer ${token}`,
+
+        "Content-Type":
+          "application/json",
       },
     }
   );
@@ -342,7 +524,9 @@ export const assignApartmentToOwner = async (
 
   try {
 
-    return JSON.parse(text);
+    return text
+      ? JSON.parse(text)
+      : null;
 
   } catch {
 
@@ -353,7 +537,8 @@ export const assignApartmentToOwner = async (
 
 // =====================================================
 // BỎ GÁN CĂN HỘ KHỎI OWNER
-// PUT /api/admin/owners/{ownerId}/apartments/{apartmentId}/unassign
+// PUT
+// /api/admin/owners/{ownerId}/apartments/{apartmentId}/unassign
 // =====================================================
 
 export const unassignApartmentFromOwner = async (
@@ -363,14 +548,34 @@ export const unassignApartmentFromOwner = async (
 
   const token = getToken();
 
+
+  if (!ownerId) {
+
+    throw new Error(
+      "Không xác định được Owner."
+    );
+  }
+
+
+  if (!apartmentId) {
+
+    throw new Error(
+      "Không xác định được căn hộ."
+    );
+  }
+
+
   const response = await fetch(
     `${API_BASE_URL}/admin/owners/${ownerId}/apartments/${apartmentId}/unassign`,
     {
       method: "PUT",
 
       headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        Authorization:
+          `Bearer ${token}`,
+
+        "Content-Type":
+          "application/json",
       },
     }
   );
@@ -391,7 +596,9 @@ export const unassignApartmentFromOwner = async (
 
   try {
 
-    return JSON.parse(text);
+    return text
+      ? JSON.parse(text)
+      : null;
 
   } catch {
 
