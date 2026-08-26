@@ -470,3 +470,431 @@
 
   color: #ea580c;
 }
+/* =====================================================
+   RENTHUB THEME - OWNER INVOICE
+===================================================== */
+
+.owner-page {
+  background:
+    radial-gradient(
+      circle at 92% 5%,
+      rgba(255, 174, 39, 0.17),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 5% 95%,
+      rgba(74, 70, 232, 0.13),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f9fafc,
+      #f3f5fa 55%,
+      #eef1fb
+    );
+}
+
+.invoice-summary-card,
+.invoice-container,
+.invoice-item {
+  background: rgba(255, 255, 255, 0.90) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+
+  box-shadow:
+    0 12px 35px rgba(23, 42, 77, 0.07);
+
+  backdrop-filter: blur(12px);
+}
+
+.invoice-summary-icon.blue {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(74, 70, 232, 0.12),
+      rgba(91, 75, 234, 0.18)
+    ) !important;
+}
+
+.invoice-summary-icon.green {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.12),
+      rgba(16, 185, 129, 0.18)
+    ) !important;
+}
+
+.invoice-summary-icon.orange {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.12),
+      rgba(255, 181, 46, 0.20)
+    ) !important;
+}
+
+.invoice-title h2 {
+  color: #172a4d !important;
+}
+
+.invoice-title p {
+  color: #94a3b8 !important;
+}
+
+.invoice-item {
+  transition: 0.2s ease;
+}
+
+.invoice-item:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 16px 38px rgba(23, 42, 77, 0.10);
+}
+
+.invoice-icon {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.10),
+      rgba(34, 197, 94, 0.12)
+    ) !important;
+}
+
+.invoice-left h3 {
+  color: #172a4d !important;
+}
+
+.invoice-left p,
+.invoice-left small {
+  color: #94a3b8 !important;
+}
+
+.invoice-right strong {
+  color: #ff9800 !important;
+}
+
+.invoice-paid {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.12),
+      rgba(16, 185, 129, 0.18)
+    ) !important;
+
+  color: #15803d !important;
+}
+
+.invoice-unpaid {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.12),
+      rgba(255, 181, 46, 0.18)
+    ) !important;
+
+  color: #e88700 !important;
+}
+/* =====================================================
+   FIX INVOICE FULL WIDTH
+===================================================== */
+
+.owner-main {
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* =====================================================
+   INVOICE CONTAINER
+===================================================== */
+
+.invoice-container {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+
+/* =====================================================
+   INVOICE ITEM
+===================================================== */
+
+.invoice-item {
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 30px;
+
+  padding: 24px 30px;
+
+  background: #ffffff;
+
+  border-top: 1px solid #e8edf3;
+
+  min-width: 0;
+}
+
+
+/* =====================================================
+   LEFT
+===================================================== */
+
+.invoice-left {
+  min-width: 0;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+}
+
+
+/* =====================================================
+   INVOICE CONTENT
+===================================================== */
+
+.invoice-left > div:last-child {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.invoice-left h3 {
+  margin: 0;
+
+  color: #172a4d;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  line-height: 1.4;
+}
+
+
+/* =====================================================
+   CONTRACT
+===================================================== */
+
+.invoice-left p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   SMALL INFORMATION
+===================================================== */
+
+.invoice-left small {
+  display: block;
+
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+  white-space: normal;
+}
+
+
+/* =====================================================
+   RIGHT
+===================================================== */
+
+.invoice-right {
+  flex-shrink: 0;
+
+  min-width: 190px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  justify-content: center;
+
+  gap: 10px;
+}
+
+
+/* =====================================================
+   AMOUNT
+===================================================== */
+
+.invoice-right strong {
+  color: #ff9800;
+
+  font-size: 19px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   PAID
+===================================================== */
+
+.invoice-paid {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 8px 16px;
+
+  border-radius: 20px;
+
+  background: #dcfce7;
+
+  color: #16a34a;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   UNPAID
+===================================================== */
+
+.invoice-unpaid {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 8px 16px;
+
+  border-radius: 20px;
+
+  background: #fff7ed;
+
+  color: #ea580c;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   OVERDUE
+===================================================== */
+
+.invoice-overdue {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 8px 16px;
+
+  border-radius: 20px;
+
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   OVERDUE ITEM
+===================================================== */
+
+.invoice-item-overdue {
+  border-left: 4px solid #ef4444;
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+.invoice-item {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.invoice-item:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 25px
+    rgba(23, 42, 77, 0.06);
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .invoice-item {
+    align-items: flex-start;
+  }
+
+  .invoice-right {
+    min-width: 160px;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .invoice-item {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 20px;
+  }
+
+  .invoice-right {
+    width: 100%;
+
+    align-items: flex-start;
+  }
+
+}

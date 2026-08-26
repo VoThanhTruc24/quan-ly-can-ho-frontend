@@ -603,3 +603,74 @@
     grid-template-columns: 1fr;
   }
 }
+/* =====================================================
+   RENTHUB THEME - ADMIN CONTRACTS
+===================================================== */
+
+.contracts-page,
+.contract-page,
+.contracts-container {
+  background:
+    radial-gradient(
+      circle at 92% 5%,
+      rgba(255, 174, 39, 0.16),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 5% 95%,
+      rgba(74, 70, 232, 0.12),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f9fafc,
+      #f1f3f9
+    );
+}
+
+.contract-card,
+.contracts-card,
+.contract-table-container {
+  background: rgba(255, 255, 255, 0.90) !important;
+
+  border-color:
+    rgba(255, 255, 255, 0.95) !important;
+
+  box-shadow:
+    0 12px 35px rgba(23, 42, 77, 0.07) !important;
+
+  backdrop-filter: blur(12px);
+}
+
+.contract-icon {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(74, 70, 232, 0.10),
+      rgba(255, 157, 0, 0.10)
+    ) !important;
+}
+
+.contract-status {
+  background:
+    rgba(34, 197, 94, 0.12) !important;
+
+  color: #15803d !important;
+}
+
+.contract-price {
+  color: #ff9800 !important;
+}
+
+.add-contract-btn,
+.create-contract-btn {
+  background:
+    linear-gradient(
+      135deg,
+      #ff9d00,
+      #ffb52e
+    ) !important;
+
+  border: none !important;
+  color: #fff !important;
+}

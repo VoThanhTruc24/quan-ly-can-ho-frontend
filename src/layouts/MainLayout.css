@@ -61,3 +61,252 @@ body {
   }
 
 }
+/* =========================================================
+   RENTHUB - ADMIN GLOBAL BACKGROUND
+   Gradient phủ toàn bộ khu vực bên phải Sidebar
+   Không thay đổi layout hiện tại
+========================================================= */
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(255, 173, 39, 0.22),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 8% 88%,
+      rgba(74, 70, 232, 0.14),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 55% 45%,
+      rgba(255, 190, 72, 0.06),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #fffaf2 0%,
+      #f7f7fb 38%,
+      #f0f2fb 72%,
+      #eceeff 100%
+    );
+
+  background-attachment: fixed;
+}
+
+
+/* =========================================================
+   MAIN LAYOUT
+========================================================= */
+
+.app-layout {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(255, 173, 39, 0.20),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 5% 100%,
+      rgba(74, 70, 232, 0.13),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #fffaf2 0%,
+      #f6f7fb 45%,
+      #eef0fb 100%
+    );
+
+  background-attachment: fixed;
+}
+
+
+/* =========================================================
+   KHU VỰC NỘI DUNG BÊN PHẢI SIDEBAR
+========================================================= */
+
+.app-main {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 95% 5%,
+      rgba(255, 173, 39, 0.24),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 10% 92%,
+      rgba(74, 70, 232, 0.15),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 55% 45%,
+      rgba(255, 190, 72, 0.06),
+      transparent 38%
+    ),
+    linear-gradient(
+      135deg,
+      #fffaf2 0%,
+      #f7f7fb 42%,
+      #f0f2fb 75%,
+      #eceeff 100%
+    );
+
+  background-attachment: fixed;
+}
+
+
+/* =========================================================
+   PAGE CONTENT
+========================================================= */
+
+.page-content {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(255, 181, 46, 0.16),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(74, 70, 232, 0.10),
+      transparent 28%
+    );
+
+  background-attachment: fixed;
+}
+
+
+/* =========================================================
+   GIỮ CÁC TRANG ADMIN TRONG SUỐT
+   Để gradient của MainLayout nhìn xuyên suốt
+========================================================= */
+
+.dashboard-page,
+.owners-page,
+.customers-page,
+.apartments-page,
+.contracts-page,
+.customer-page,
+.apartment-page,
+.contract-page {
+  background: transparent !important;
+}
+
+
+/* =========================================================
+   TIÊU ĐỀ / TEXT ADMIN
+========================================================= */
+
+.dashboard-topbar h1,
+.owners-page h1,
+.customers-page h1,
+.apartments-page h1,
+.contracts-page h1 {
+  color: #172a4d;
+}
+
+
+/* =========================================================
+   CARD KÍNH NHẸ
+========================================================= */
+
+.dashboard-card,
+.stat-card,
+.owner-card,
+.owners-card,
+.customer-card,
+.customers-card,
+.apartment-card,
+.apartments-card,
+.contract-card,
+.contracts-card {
+  background: rgba(255, 255, 255, 0.84) !important;
+
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+
+  box-shadow:
+    0 12px 35px rgba(23, 42, 77, 0.07) !important;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+
+/* =========================================================
+   INPUT / SEARCH
+========================================================= */
+
+.dashboard-search,
+.search-box,
+.search-container,
+input,
+select,
+textarea {
+  background-color: rgba(255, 255, 255, 0.86);
+}
+
+
+/* =========================================================
+   NÚT CAM RENTHUB
+========================================================= */
+
+button.primary,
+.btn-primary,
+.add-owner-btn,
+.add-customer-btn,
+.add-apartment-btn,
+.add-contract-btn,
+.create-owner-btn,
+.create-customer-btn,
+.create-apartment-btn,
+.create-contract-btn {
+  background:
+    linear-gradient(
+      135deg,
+      #ff9700 0%,
+      #ffad1f 55%,
+      #ffbf45 100%
+    ) !important;
+
+  color: #ffffff !important;
+
+  border: none !important;
+
+  box-shadow:
+    0 9px 22px rgba(255, 157, 0, 0.22);
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+button.primary:hover,
+.btn-primary:hover,
+.add-owner-btn:hover,
+.add-customer-btn:hover,
+.add-apartment-btn:hover,
+.add-contract-btn:hover,
+.create-owner-btn:hover,
+.create-customer-btn:hover,
+.create-apartment-btn:hover,
+.create-contract-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 13px 28px rgba(255, 157, 0, 0.28);
+}

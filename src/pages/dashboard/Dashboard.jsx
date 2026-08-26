@@ -6,6 +6,7 @@ import dashboardService from "../../services/dashboardService";
 import "./Dashboard.css";
 
 function Dashboard() {
+
   const navigate = useNavigate();
 
   // ==========================================
@@ -19,11 +20,14 @@ function Dashboard() {
     revenue: 0,
   });
 
+
   // ==========================================
   // 2. DOANH THU THEO THÁNG
   // ==========================================
 
-  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
+  const [monthlyRevenue, setMonthlyRevenue] =
+    useState([]);
+
 
   // ==========================================
   // 3. LOADING
@@ -31,21 +35,65 @@ function Dashboard() {
 
   const [loading, setLoading] = useState(true);
 
+
   // ==========================================
-  // 4. LẤY DỮ LIỆU DASHBOARD
+  // 4. NĂM ĐANG CHỌN
   // ==========================================
 
-  const fetchStats = async () => {
+  const currentYear =
+    new Date().getFullYear();
+
+  const [selectedYear, setSelectedYear] =
+    useState(currentYear);
+
+
+  // ==========================================
+  // 5. DROPDOWN
+  // ==========================================
+
+  const [showYearMenu, setShowYearMenu] =
+    useState(false);
+
+
+  // ==========================================
+  // 6. DANH SÁCH NĂM
+  // ==========================================
+
+  const years = [
+    currentYear,
+    currentYear - 1,
+    currentYear - 2,
+    currentYear - 3,
+  ];
+
+
+  // ==========================================
+  // 7. LẤY DỮ LIỆU DASHBOARD
+  // ==========================================
+
+  const fetchStats = async (year) => {
+
     try {
-      const data = await dashboardService.getDashboardStats();
 
-      console.log("Dashboard API:", data);
+      setLoading(true);
+
+      const data =
+        await dashboardService
+          .getDashboardStats(year);
+
+
+      console.log(
+        "Dashboard API:",
+        data
+      );
+
 
       // ----------------------------------------
-      // Thống kê tổng quan
+      // THỐNG KÊ TỔNG QUAN
       // ----------------------------------------
 
       setStats({
+
         totalCustomers:
           data?.totalCustomers ?? 0,
 
@@ -55,15 +103,13 @@ function Dashboard() {
         totalContracts:
           data?.totalContracts ?? 0,
 
-        // QUAN TRỌNG:
-        // Backend trả totalRevenue
-        // chứ không phải revenue
         revenue:
           data?.totalRevenue ?? 0,
       });
 
+
       // ----------------------------------------
-      // Doanh thu theo tháng
+      // DOANH THU THEO THÁNG
       // ----------------------------------------
 
       setMonthlyRevenue(
@@ -71,12 +117,13 @@ function Dashboard() {
       );
 
     } catch (error) {
+
       console.error(
         "Error fetching stats:",
         error
       );
 
-      // Nếu API lỗi thì đưa dữ liệu về 0
+
       setStats({
         totalCustomers: 0,
         totalApartments: 0,
@@ -84,31 +131,41 @@ function Dashboard() {
         revenue: 0,
       });
 
+
       setMonthlyRevenue([]);
 
     } finally {
+
       setLoading(false);
     }
   };
 
+
   // ==========================================
-  // 5. GỌI API KHI MỞ DASHBOARD
+  // 8. GỌI API KHI ĐỔI NĂM
   // ==========================================
 
   useEffect(() => {
-    fetchStats();
-  }, []);
+
+    fetchStats(selectedYear);
+
+  }, [selectedYear]);
+
 
   // ==========================================
-  // 6. SEARCH
+  // 9. SEARCH
   // ==========================================
 
   const handleSearch = (e) => {
+
     if (e.key === "Enter") {
+
       const keyword =
         e.target.value.trim();
 
+
       if (keyword) {
+
         console.log(
           "Search:",
           keyword
@@ -117,20 +174,23 @@ function Dashboard() {
     }
   };
 
+
   // ==========================================
-  // 7. FORMAT TIỀN
+  // 10. FORMAT TIỀN
   // ==========================================
 
   const formatMoney = (value) => {
+
     return (
-      Number(value || 0).toLocaleString(
-        "vi-VN"
-      ) + " đ"
+      Number(value || 0)
+        .toLocaleString("vi-VN") +
+      " đ"
     );
   };
 
+
   // ==========================================
-  // 8. DANH SÁCH 12 THÁNG
+  // 11. DANH SÁCH 12 THÁNG
   // ==========================================
 
   const months = [
@@ -148,57 +208,48 @@ function Dashboard() {
     "Dec",
   ];
 
+
   // ==========================================
-  // 9. TÍNH CHIỀU CAO BIỂU ĐỒ
+  // 12. TÍNH DOANH THU 12 THÁNG
   // ==========================================
 
-  /*
-    Backend trả:
+  const revenueValues =
+    months.map(
+      (_, index) => {
 
-    [
-      {
-        month: 1,
-        revenue: 0
-      },
-      {
-        month: 8,
-        revenue: 18000000
-      }
-    ]
+        const monthData =
+          monthlyRevenue.find(
+            (item) =>
+              Number(item.month) ===
+              index + 1
+          );
 
-    Nhưng CSS cần:
-
-    height: 0% -> 100%
-
-    Vì vậy phải chuyển doanh thu
-    thành phần trăm.
-  */
-
-  const revenueValues = months.map(
-    (_, index) => {
-      const monthData =
-        monthlyRevenue.find(
-          (item) =>
-            Number(item.month) ===
-            index + 1
+        return Number(
+          monthData?.revenue || 0
         );
+      }
+    );
 
-      return Number(
-        monthData?.revenue || 0
-      );
-    }
-  );
 
-  // Doanh thu lớn nhất trong 12 tháng
-  const maxRevenue = Math.max(
-    ...revenueValues,
-    1
-  );
+  // ==========================================
+  // 13. DOANH THU LỚN NHẤT
+  // ==========================================
 
-  // Chuyển doanh thu thành %
+  const maxRevenue =
+    Math.max(
+      ...revenueValues,
+      1
+    );
+
+
+  // ==========================================
+  // 14. CHUYỂN SANG %
+  // ==========================================
+
   const chartHeights =
     revenueValues.map(
       (revenue) => {
+
         if (revenue === 0) {
           return 0;
         }
@@ -210,11 +261,25 @@ function Dashboard() {
       }
     );
 
+
   // ==========================================
-  // 10. RETURN GIAO DIỆN
+  // 15. CHỌN NĂM
+  // ==========================================
+
+  const handleSelectYear = (year) => {
+
+    setSelectedYear(year);
+
+    setShowYearMenu(false);
+  };
+
+
+  // ==========================================
+  // 16. RETURN
   // ==========================================
 
   return (
+
     <div className="dashboard-page">
 
       {/* =====================================
@@ -224,12 +289,17 @@ function Dashboard() {
       <header className="dashboard-topbar">
 
         <div>
-          <h1>Trang chủ</h1>
+
+          <h1>
+            Trang chủ
+          </h1>
 
           <p>
             Tổng quan hệ thống quản lý căn hộ
           </p>
+
         </div>
+
 
         <div className="dashboard-topbar-right">
 
@@ -237,15 +307,20 @@ function Dashboard() {
 
           <div className="dashboard-search">
 
-            <span>🔍</span>
+            <span>
+              🔍
+            </span>
 
             <input
               type="text"
               placeholder="Tìm kiếm..."
-              onKeyDown={handleSearch}
+              onKeyDown={
+                handleSearch
+              }
             />
 
           </div>
+
 
           {/* ACCOUNT */}
 
@@ -406,7 +481,7 @@ function Dashboard() {
               </strong>
 
               <span className="stat-description">
-                Tổng doanh thu
+                Tổng doanh thu {selectedYear}
               </span>
 
             </div>
@@ -443,9 +518,126 @@ function Dashboard() {
 
               </div>
 
-              <button className="card-action">
-                Năm nay ▾
-              </button>
+
+              {/* =========================
+                  YEAR DROPDOWN
+              ========================== */}
+
+              <div
+                className="year-selector"
+                style={{
+                  position:
+                    "relative",
+                }}
+              >
+
+                <button
+                  className="card-action"
+                  onClick={() =>
+                    setShowYearMenu(
+                      (prev) =>
+                        !prev
+                    )
+                  }
+                >
+                  {selectedYear} ▾
+                </button>
+
+
+                {showYearMenu && (
+
+                  <div
+                    className="year-dropdown"
+                    style={{
+                      position:
+                        "absolute",
+
+                      top:
+                        "calc(100% + 6px)",
+
+                      right: 0,
+
+                      minWidth:
+                        "120px",
+
+                      background:
+                        "#ffffff",
+
+                      border:
+                        "1px solid #edf0f5",
+
+                      borderRadius:
+                        "12px",
+
+                      boxShadow:
+                        "0 12px 30px rgba(23,42,77,0.12)",
+
+                      overflow:
+                        "hidden",
+
+                      zIndex: 1000,
+                    }}
+                  >
+
+                    {years.map(
+                      (year) => (
+
+                        <button
+                          key={year}
+                          type="button"
+                          onClick={() =>
+                            handleSelectYear(
+                              year
+                            )
+                          }
+                          style={{
+                            display:
+                              "block",
+
+                            width:
+                              "100%",
+
+                            padding:
+                              "10px 14px",
+
+                            border:
+                              "none",
+
+                            background:
+                              year ===
+                              selectedYear
+                                ? "rgba(255,157,0,0.12)"
+                                : "#ffffff",
+
+                            color:
+                              year ===
+                              selectedYear
+                                ? "#ff9800"
+                                : "#172a4d",
+
+                            textAlign:
+                              "left",
+
+                            cursor:
+                              "pointer",
+
+                            fontFamily:
+                              "inherit",
+                          }}
+                        >
+
+                          {year}
+
+                        </button>
+
+                      )
+                    )}
+
+                  </div>
+
+                )}
+
+              </div>
 
             </div>
 
@@ -461,11 +653,25 @@ function Dashboard() {
 
               <div className="chart-y">
 
-                <span>100%</span>
-                <span>75%</span>
-                <span>50%</span>
-                <span>25%</span>
-                <span>0%</span>
+                <span>
+                  100%
+                </span>
+
+                <span>
+                  75%
+                </span>
+
+                <span>
+                  50%
+                </span>
+
+                <span>
+                  25%
+                </span>
+
+                <span>
+                  0%
+                </span>
 
               </div>
 
@@ -488,19 +694,23 @@ function Dashboard() {
                 </div>
 
 
-                {/* ===========================
-                    BARS
-                ============================ */}
+                {/* BARS */}
 
                 <div className="chart-bars">
 
                   {chartHeights.map(
-                    (height, index) => {
+                    (
+                      height,
+                      index
+                    ) => {
 
                       const revenue =
-                        revenueValues[index];
+                        revenueValues[
+                          index
+                        ];
 
                       return (
+
                         <div
                           key={index}
                           className="chart-bar"
@@ -520,16 +730,13 @@ function Dashboard() {
 
                         </div>
                       );
-
                     }
                   )}
 
                 </div>
 
 
-                {/* ===========================
-                    MONTHS
-                ============================ */}
+                {/* MONTHS */}
 
                 <div className="chart-months">
 
@@ -580,8 +787,6 @@ function Dashboard() {
             <div className="overview-list">
 
 
-              {/* KHÁCH HÀNG */}
-
               <div className="overview-item">
 
                 <div className="overview-left">
@@ -602,8 +807,6 @@ function Dashboard() {
 
               </div>
 
-
-              {/* CĂN HỘ */}
 
               <div className="overview-item">
 
@@ -626,8 +829,6 @@ function Dashboard() {
               </div>
 
 
-              {/* HỢP ĐỒNG */}
-
               <div className="overview-item">
 
                 <div className="overview-left">
@@ -648,8 +849,6 @@ function Dashboard() {
 
               </div>
 
-
-              {/* DOANH THU */}
 
               <div className="overview-item">
 
@@ -711,7 +910,9 @@ function Dashboard() {
               }
             >
 
-              <span>👤</span>
+              <span>
+                👤
+              </span>
 
               <div>
 
@@ -736,7 +937,9 @@ function Dashboard() {
               }
             >
 
-              <span>🏢</span>
+              <span>
+                🏢
+              </span>
 
               <div>
 
@@ -761,7 +964,9 @@ function Dashboard() {
               }
             >
 
-              <span>📄</span>
+              <span>
+                📄
+              </span>
 
               <div>
 
@@ -776,7 +981,6 @@ function Dashboard() {
               </div>
 
             </button>
-
 
           </div>
 

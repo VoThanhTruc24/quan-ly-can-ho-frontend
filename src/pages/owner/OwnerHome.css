@@ -786,3 +786,424 @@
     display: none;
   }
 }
+/* =====================================================
+   RENTHUB THEME - OWNER
+   Giữ nguyên layout và cấu trúc cũ
+===================================================== */
+
+.owner-page {
+  background:
+    radial-gradient(
+      circle at 92% 5%,
+      rgba(255, 174, 39, 0.17),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 5% 95%,
+      rgba(74, 70, 232, 0.13),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f9fafc 0%,
+      #f3f5fa 55%,
+      #eef1fb 100%
+    );
+
+  color: #172a4d;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.owner-sidebar {
+  background: rgba(255, 255, 255, 0.90);
+  border-right-color: rgba(226, 232, 240, 0.75);
+
+  box-shadow:
+    6px 0 30px rgba(23, 42, 77, 0.035);
+
+  backdrop-filter: blur(16px);
+}
+
+.owner-logo-icon {
+  background:
+    linear-gradient(
+      135deg,
+      #ff9d00,
+      #ffb52e
+    );
+
+  box-shadow:
+    0 7px 18px rgba(255, 157, 0, 0.22);
+}
+
+.owner-logo span {
+  color: #172a4d;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.owner-menu {
+  color: #64748b;
+}
+
+.owner-menu:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.08),
+      rgba(74, 70, 232, 0.05)
+    );
+
+  color: #ff9800;
+}
+
+.owner-menu.active {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.16),
+      rgba(74, 70, 232, 0.08)
+    );
+
+  color: #f08c00;
+
+  box-shadow:
+    inset 3px 0 0 #ff9d00;
+}
+
+/* =========================
+   LOGOUT
+========================= */
+
+.owner-logout {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 241, 242, 0.95),
+      rgba(255, 230, 234, 0.82)
+    );
+
+  color: #dc2626;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.owner-header-title h1,
+.owner-header h1 {
+  color: #172a4d;
+}
+
+.owner-header-title p,
+.owner-header p {
+  color: #94a3b8;
+}
+
+.owner-avatar {
+  background:
+    linear-gradient(
+      135deg,
+      #ff9d00,
+      #4a46e8
+    );
+
+  box-shadow:
+    0 7px 18px rgba(74, 70, 232, 0.20);
+}
+
+.owner-user-info strong {
+  color: #172a4d;
+}
+
+.owner-user-info span {
+  color: #94a3b8;
+}
+
+/* =========================
+   WELCOME
+========================= */
+
+.owner-welcome {
+  background:
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(255, 190, 72, 0.30),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 10% 90%,
+      rgba(74, 70, 232, 0.20),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #ff9800 0%,
+      #f59e0b 35%,
+      #5b4bea 100%
+    );
+
+  box-shadow:
+    0 15px 35px rgba(74, 70, 232, 0.12);
+}
+
+.welcome-content p {
+  color: rgba(255, 255, 255, 0.90);
+}
+
+.welcome-building {
+  filter:
+    drop-shadow(
+      0 8px 20px
+      rgba(0, 0, 0, 0.14)
+    );
+}
+
+/* =========================
+   STATISTICS
+========================= */
+
+.owner-stat-card {
+  background: rgba(255, 255, 255, 0.88);
+
+  border-color:
+    rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 10px 30px rgba(23, 42, 77, 0.06);
+
+  backdrop-filter: blur(12px);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.owner-stat-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 16px 36px rgba(23, 42, 77, 0.10);
+}
+
+.stat-icon.apartment {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.15),
+      rgba(255, 190, 72, 0.25)
+    );
+}
+
+.stat-icon.contract {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(74, 70, 232, 0.10),
+      rgba(91, 75, 234, 0.18)
+    );
+}
+
+.stat-icon.money {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.10),
+      rgba(34, 197, 94, 0.12)
+    );
+}
+
+.stat-content span {
+  color: #64748b;
+}
+
+.stat-content strong {
+  color: #172a4d;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.owner-section-header h2 {
+  color: #172a4d;
+}
+
+.owner-section-header p {
+  color: #94a3b8;
+}
+
+.view-button {
+  color: #ff9800;
+}
+
+.view-button:hover {
+  color: #e88700;
+}
+
+/* =========================
+   APARTMENT
+========================= */
+
+.owner-apartment-card {
+  background: rgba(255, 255, 255, 0.88);
+
+  border-color:
+    rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 10px 30px rgba(23, 42, 77, 0.06);
+
+  backdrop-filter: blur(12px);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.owner-apartment-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 14px 34px rgba(23, 42, 77, 0.09);
+}
+
+.apartment-image {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.10),
+      rgba(74, 70, 232, 0.10)
+    );
+}
+
+.apartment-title-row h3 {
+  color: #172a4d;
+}
+
+.apartment-title-row p {
+  color: #94a3b8;
+}
+
+.active-badge {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.12),
+      rgba(16, 185, 129, 0.18)
+    );
+
+  color: #15803d;
+}
+
+.apartment-details {
+  border-top-color:
+    rgba(226, 232, 240, 0.85);
+}
+
+.apartment-details span {
+  color: #94a3b8;
+}
+
+.apartment-details strong {
+  color: #374151;
+}
+
+.rent-price {
+  color: #ff9800 !important;
+}
+
+/* =========================
+   CONTRACT
+========================= */
+
+.owner-contract-card {
+  background: rgba(255, 255, 255, 0.88);
+
+  border-color:
+    rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 10px 30px rgba(23, 42, 77, 0.06);
+
+  backdrop-filter: blur(12px);
+}
+
+.contract-icon {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(74, 70, 232, 0.10),
+      rgba(255, 157, 0, 0.08)
+    );
+}
+
+.contract-main h3 {
+  color: #172a4d;
+}
+
+.contract-main p {
+  color: #94a3b8;
+}
+
+.contract-details {
+  border-left-color:
+    rgba(226, 232, 240, 0.85);
+}
+
+.contract-details span {
+  color: #94a3b8;
+}
+
+/* =========================
+   INVOICE
+========================= */
+
+.owner-invoice-card {
+  background: rgba(255, 255, 255, 0.88);
+
+  border-color:
+    rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 10px 30px rgba(23, 42, 77, 0.06);
+
+  backdrop-filter: blur(12px);
+}
+
+.invoice-icon {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.10),
+      rgba(34, 197, 94, 0.13)
+    );
+}
+
+.invoice-main h3 {
+  color: #172a4d;
+}
+
+.invoice-main p {
+  color: #94a3b8;
+}
+
+.invoice-amount strong {
+  color: #ff9800;
+}
+
+.paid-badge {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.12),
+      rgba(16, 185, 129, 0.18)
+    );
+
+  color: #15803d;
+}

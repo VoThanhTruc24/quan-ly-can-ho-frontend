@@ -1,20 +1,29 @@
-﻿const API_BASE_URL =
-  "http://localhost:8080/api";
+﻿const API_BASE_URL = "http://localhost:8080/api";
+
+const getToken = () => {
+  return localStorage.getItem("token");
+};
 
 const dashboardService = {
-  // Dashboard statistics
-  getDashboardStats: async () => {
-    const token = localStorage.getItem("token");
 
-    const response = await fetch(
-      `${API_BASE_URL}/dashboard/stats`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+  // =====================================================
+  // DASHBOARD STATISTICS
+  // =====================================================
+
+  getDashboardStats: async (year) => {
+    const token = getToken();
+
+    const url = year
+      ? `${API_BASE_URL}/dashboard/stats?year=${year}`
+      : `${API_BASE_URL}/dashboard/stats`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
 
     if (!response.ok) {
       throw new Error(
@@ -25,13 +34,18 @@ const dashboardService = {
     return await response.json();
   },
 
-  // Apartments
+
+  // =====================================================
+  // APARTMENTS
+  // =====================================================
+
   getApartments: async () => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
 
     const response = await fetch(
       `${API_BASE_URL}/apartments`,
       {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -48,13 +62,18 @@ const dashboardService = {
     return await response.json();
   },
 
-  // Customers
+
+  // =====================================================
+  // CUSTOMERS
+  // =====================================================
+
   getCustomers: async () => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
 
     const response = await fetch(
       `${API_BASE_URL}/customers`,
       {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
@@ -71,15 +90,20 @@ const dashboardService = {
     return await response.json();
   },
 
-  // Search
+
+  // =====================================================
+  // SEARCH
+  // =====================================================
+
   search: async (keyword) => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
 
     const response = await fetch(
       `${API_BASE_URL}/search?q=${encodeURIComponent(
         keyword
       )}`,
       {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

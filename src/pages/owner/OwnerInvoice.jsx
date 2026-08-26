@@ -1,83 +1,153 @@
 import "./OwnerInvoice.css";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-import { getCurrentOwner } from "../../services/ownerService";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  useNavigate,
+} from "react-router-dom";
+
+import {
+  getCurrentOwner,
+  getMyInvoices,
+} from "../../services/ownerService";
+
 
 function OwnerInvoice() {
 
   const navigate = useNavigate();
 
-  // ==============================
-  // STATE
-  // ==============================
 
-  const [owner, setOwner] = useState(null);
+  // ==========================================
+  // OWNER
+  // ==========================================
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [owner, setOwner] =
+    useState(null);
 
 
-  // ==============================
-  // LOAD OWNER
-  // ==============================
+  // ==========================================
+  // INVOICES
+  // ==========================================
+
+  const [invoices, setInvoices] =
+    useState([]);
+
+
+  // ==========================================
+  // LOADING
+  // ==========================================
+
+  const [loading, setLoading] =
+    useState(true);
+
+
+  // ==========================================
+  // ERROR
+  // ==========================================
+
+  const [error, setError] =
+    useState("");
+
+
+  // ==========================================
+  // LOAD DATA
+  // ==========================================
 
   useEffect(() => {
 
-    const loadOwner = async () => {
+    const loadData = async () => {
 
       const token =
         localStorage.getItem("token");
 
+
+      // --------------------------------------
+      // KIỂM TRA LOGIN
+      // --------------------------------------
+
       if (!token) {
+
         navigate("/login");
+
         return;
       }
+
 
       try {
 
         setLoading(true);
+
         setError("");
+
+
+        // --------------------------------------
+        // LẤY OWNER
+        // --------------------------------------
 
         const ownerData =
           await getCurrentOwner();
 
+
         console.log(
-          "✅ INVOICE OWNER:",
+          "OWNER:",
           ownerData
         );
 
+
         setOwner(ownerData);
+
+
+        // --------------------------------------
+        // LẤY HÓA ĐƠN
+        // --------------------------------------
+
+        const invoiceData =
+          await getMyInvoices();
+
+
+        console.log(
+          "OWNER INVOICES:",
+          invoiceData
+        );
+
+
+        setInvoices(
+          Array.isArray(invoiceData)
+            ? invoiceData
+            : []
+        );
 
       } catch (err) {
 
         console.error(
-          "❌ INVOICE OWNER ERROR:",
+          "OWNER INVOICE ERROR:",
           err
         );
 
+
         setError(
           err.message ||
-          "Không thể tải thông tin Owner"
+          "Không thể tải dữ liệu hóa đơn"
         );
 
       } finally {
 
         setLoading(false);
-
       }
-
     };
 
 
-    loadOwner();
+    loadData();
 
   }, [navigate]);
 
 
-  // ==============================
+  // ==========================================
   // DISPLAY NAME
-  // ==============================
+  // ==========================================
 
   const displayName =
     owner?.fullName ||
@@ -87,9 +157,9 @@ function OwnerInvoice() {
     "Chủ căn hộ";
 
 
-  // ==============================
+  // ==========================================
   // LOGOUT
-  // ==============================
+  // ==========================================
 
   const handleLogout = () => {
 
@@ -99,62 +169,195 @@ function OwnerInvoice() {
     localStorage.removeItem("fullName");
 
     navigate("/login");
-
   };
 
 
-  // ==============================
-  // LOADING
-  // ==============================
+  // ==========================================
+  // FORMAT MONEY
+  // ==========================================
 
-  if (loading) {
+  const formatMoney = (amount) => {
 
     return (
-
-      <div className="owner-page">
-
-        <aside className="owner-sidebar">
-
-          <div className="owner-logo">
-
-            <div className="owner-logo-icon">
-              🏢
-            </div>
-
-            <span>
-              Quản Lý Căn Hộ
-            </span>
-
-          </div>
-
-        </aside>
-
-
-        <main className="owner-main">
-
-          <div
-            style={{
-              padding: "50px",
-              fontSize: "20px",
-            }}
-          >
-            Đang tải dữ liệu hóa đơn...
-          </div>
-
-        </main>
-
-      </div>
-
+      Number(amount || 0)
+        .toLocaleString("vi-VN")
+      + " đ"
     );
+  };
 
-  }
+
+  // ==========================================
+  // FORMAT DATE
+  // ==========================================
+
+  const formatDate = (date) => {
+
+    if (!date) {
+      return "--";
+    }
 
 
-  // ==============================
-  // ERROR
-  // ==============================
+    const parts =
+      String(date).split("-");
 
-  if (error) {
+
+    if (parts.length === 3) {
+
+      return (
+        `${parts[2]}/${parts[1]}/${parts[0]}`
+      );
+    }
+
+
+    return String(date);
+  };
+
+
+  // ==========================================
+  // NORMALIZE STATUS
+  // ==========================================
+
+  const normalizeStatus = (status) => {
+
+    return String(status || "")
+      .trim()
+      .toUpperCase();
+  };
+
+
+  // ==========================================
+  // KIỂM TRA TRẠNG THÁI
+  // ==========================================
+
+  const isPaid = (status) => {
+
+    return (
+      normalizeStatus(status) ===
+      "PAID"
+    );
+  };
+
+
+  const isUnpaid = (status) => {
+
+    return (
+      normalizeStatus(status) ===
+      "UNPAID"
+    );
+  };
+
+
+  const isOverdue = (status) => {
+
+    return (
+      normalizeStatus(status) ===
+      "OVERDUE"
+    );
+  };
+
+
+  // ==========================================
+  // PAYMENT METHOD
+  // ==========================================
+
+  const getPaymentMethodName = (
+    paymentMethod
+  ) => {
+
+    switch (
+      String(paymentMethod || "")
+        .trim()
+        .toUpperCase()
+    ) {
+
+      case "BANK_TRANSFER":
+        return "Chuyển khoản";
+
+      case "MOMO":
+        return "MoMo";
+
+      case "VNPAY":
+        return "VNPay";
+
+      case "CASH":
+        return "Tiền mặt";
+
+      default:
+        return paymentMethod || "--";
+    }
+  };
+
+
+  // ==========================================
+  // SUMMARY
+  // ==========================================
+
+  const totalInvoices =
+    invoices.length;
+
+
+  const paidInvoices =
+    invoices.filter(
+      (invoice) =>
+        isPaid(invoice.status)
+    ).length;
+
+
+  const unpaidInvoices =
+    invoices.filter(
+      (invoice) =>
+        isUnpaid(invoice.status)
+    ).length;
+
+
+  const overdueInvoices =
+    invoices.filter(
+      (invoice) =>
+        isOverdue(invoice.status)
+    ).length;
+
+
+  // ==========================================
+  // TỔNG TIỀN CÒN PHẢI THANH TOÁN
+  // ==========================================
+
+  const totalOutstanding =
+    invoices
+      .filter(
+        (invoice) =>
+          !isPaid(invoice.status)
+      )
+      .reduce(
+        (sum, invoice) =>
+          sum +
+          Number(invoice.amount || 0),
+        0
+      );
+
+
+  // ==========================================
+  // TỔNG TIỀN ĐÃ THANH TOÁN
+  // ==========================================
+
+  const totalPaidAmount =
+    invoices
+      .filter(
+        (invoice) =>
+          isPaid(invoice.status)
+      )
+      .reduce(
+        (sum, invoice) =>
+          sum +
+          Number(invoice.amount || 0),
+        0
+      );
+
+
+  // ==========================================
+  // LOADING
+  // ==========================================
+
+  if (loading) {
 
     return (
 
@@ -198,7 +401,151 @@ function OwnerInvoice() {
           <div
             style={{
               padding: "50px",
-              color: "red",
+              fontSize: "20px",
+              color: "#172a4d",
+            }}
+          >
+            Đang tải dữ liệu hóa đơn...
+          </div>
+
+        </main>
+
+      </div>
+
+    );
+  }
+
+
+  // ==========================================
+  // ERROR
+  // ==========================================
+
+  if (error) {
+
+    return (
+
+      <div className="owner-page">
+
+        <aside className="owner-sidebar">
+
+          <div className="owner-logo">
+
+            <div className="owner-logo-icon">
+              🏢
+            </div>
+
+            <span>
+              Quản Lý Căn Hộ
+            </span>
+
+          </div>
+
+
+          <nav className="owner-nav">
+
+            <button
+              className="owner-menu"
+              onClick={() =>
+                navigate("/owner")
+              }
+            >
+              <span className="menu-icon">
+                🏠
+              </span>
+
+              <span>
+                Trang chủ
+              </span>
+            </button>
+
+
+            <button
+              className="owner-menu"
+              onClick={() =>
+                navigate("/owner/apartment")
+              }
+            >
+              <span className="menu-icon">
+                🏢
+              </span>
+
+              <span>
+                Căn hộ của tôi
+              </span>
+            </button>
+
+
+            <button
+              className="owner-menu"
+              onClick={() =>
+                navigate("/owner/contract")
+              }
+            >
+              <span className="menu-icon">
+                📄
+              </span>
+
+              <span>
+                Hợp đồng
+              </span>
+            </button>
+
+
+            <button
+              className="owner-menu active"
+            >
+              <span className="menu-icon">
+                💰
+              </span>
+
+              <span>
+                Hóa đơn
+              </span>
+            </button>
+
+
+            <button
+              className="owner-menu"
+              onClick={() =>
+                navigate("/owner/profile")
+              }
+            >
+              <span className="menu-icon">
+                👤
+              </span>
+
+              <span>
+                Cá nhân
+              </span>
+            </button>
+
+          </nav>
+
+
+          <button
+            className="owner-logout"
+            onClick={handleLogout}
+          >
+
+            <span className="menu-icon">
+              🚪
+            </span>
+
+            <span>
+              Đăng xuất
+            </span>
+
+          </button>
+
+        </aside>
+
+
+        <main className="owner-main">
+
+          <div
+            style={{
+              padding: "50px",
+              color: "#dc2626",
             }}
           >
 
@@ -210,10 +557,23 @@ function OwnerInvoice() {
               {error}
             </p>
 
+
             <button
               onClick={() =>
                 window.location.reload()
               }
+              style={{
+                marginTop: "15px",
+                padding:
+                  "10px 18px",
+                border: "none",
+                borderRadius: "10px",
+                background:
+                  "#2563eb",
+                color: "#fff",
+                cursor:
+                  "pointer",
+              }}
             >
               Thử lại
             </button>
@@ -225,20 +585,21 @@ function OwnerInvoice() {
       </div>
 
     );
-
   }
 
 
-  // ==============================
+  // ==========================================
   // UI
-  // ==============================
+  // ==========================================
 
   return (
 
     <div className="owner-page">
 
 
-      {/* ================= SIDEBAR ================= */}
+      {/* ======================================
+          SIDEBAR
+      ======================================= */}
 
       <aside className="owner-sidebar">
 
@@ -377,12 +738,16 @@ function OwnerInvoice() {
       </aside>
 
 
-      {/* ================= MAIN ================= */}
+      {/* ======================================
+          MAIN
+      ======================================= */}
 
       <main className="owner-main">
 
 
-        {/* HEADER */}
+        {/* ======================================
+            HEADER
+        ======================================= */}
 
         <header className="owner-header">
 
@@ -427,10 +792,14 @@ function OwnerInvoice() {
         </header>
 
 
-        {/* ================= SUMMARY ================= */}
+        {/* ======================================
+            SUMMARY
+        ======================================= */}
 
         <section className="invoice-summary">
 
+
+          {/* TỔNG HÓA ĐƠN */}
 
           <div className="invoice-summary-card">
 
@@ -445,13 +814,15 @@ function OwnerInvoice() {
               </span>
 
               <strong>
-                0
+                {totalInvoices}
               </strong>
 
             </div>
 
           </div>
 
+
+          {/* ĐÃ THANH TOÁN */}
 
           <div className="invoice-summary-card">
 
@@ -466,13 +837,28 @@ function OwnerInvoice() {
               </span>
 
               <strong>
-                0
+                {paidInvoices}
               </strong>
+
+              <small
+                style={{
+                  color: "#64748b",
+                  fontSize: "11px",
+                  display: "block",
+                  marginTop: "4px",
+                }}
+              >
+                {formatMoney(
+                  totalPaidAmount
+                )}
+              </small>
 
             </div>
 
           </div>
 
+
+          {/* CHƯA THANH TOÁN */}
 
           <div className="invoice-summary-card">
 
@@ -487,8 +873,26 @@ function OwnerInvoice() {
               </span>
 
               <strong>
-                0
+                {
+                  unpaidInvoices +
+                  overdueInvoices
+                }
               </strong>
+
+              <small
+                style={{
+                  color: overdueInvoices > 0
+                    ? "#dc2626"
+                    : "#64748b",
+                  fontSize: "11px",
+                  display: "block",
+                  marginTop: "4px",
+                }}
+              >
+                {overdueInvoices > 0
+                  ? `${overdueInvoices} hóa đơn quá hạn`
+                  : "Không có hóa đơn quá hạn"}
+              </small>
 
             </div>
 
@@ -498,10 +902,16 @@ function OwnerInvoice() {
         </section>
 
 
-        {/* ================= INVOICE LIST ================= */}
+        {/* ======================================
+            INVOICE CONTAINER
+        ======================================= */}
 
         <section className="invoice-container">
 
+
+          {/* ====================================
+              TITLE
+          ===================================== */}
 
           <div className="invoice-title">
 
@@ -512,7 +922,23 @@ function OwnerInvoice() {
               </h2>
 
               <p>
+
                 Các khoản thanh toán của bạn
+
+                {" · "}
+
+                Còn phải thanh toán:{" "}
+
+                <strong
+                  style={{
+                    color: "#2563eb",
+                  }}
+                >
+                  {formatMoney(
+                    totalOutstanding
+                  )}
+                </strong>
+
               </p>
 
             </div>
@@ -520,52 +946,234 @@ function OwnerInvoice() {
           </div>
 
 
-          {/* ================= EMPTY ================= */}
+          {/* ====================================
+              EMPTY
+          ===================================== */}
 
-          <div className="invoice-item">
+          {invoices.length === 0 ? (
 
-            <div className="invoice-left">
+            <div className="invoice-item">
 
-              <div className="invoice-icon">
-                💰
+              <div className="invoice-left">
+
+                <div className="invoice-icon">
+                  💰
+                </div>
+
+
+                <div>
+
+                  <h3>
+                    Chưa có dữ liệu hóa đơn
+                  </h3>
+
+                  <p>
+                    Owner hiện tại chưa có hóa đơn.
+                  </p>
+
+                  <small>
+                    Khi hệ thống phát sinh hóa đơn,
+                    dữ liệu sẽ hiển thị tại đây.
+                  </small>
+
+                </div>
+
               </div>
 
 
-              <div>
+              <div className="invoice-right">
 
-                <h3>
-                  Chưa có dữ liệu hóa đơn
-                </h3>
+                <strong>
+                  0 đ
+                </strong>
 
-                <p>
-                  Hệ thống chưa cung cấp API
-                  hóa đơn cho Owner.
-                </p>
-
-                <small>
-                  Vui lòng kiểm tra lại sau khi
-                  backend triển khai chức năng hóa đơn.
-                </small>
+                <span className="invoice-unpaid">
+                  Chưa có dữ liệu
+                </span>
 
               </div>
 
             </div>
 
+          ) : (
 
-            <div className="invoice-right">
 
-              <strong>
-                --
-              </strong>
+            /* ==================================
+               INVOICE LIST
+            =================================== */
 
-              <span className="invoice-unpaid">
-                Chưa có dữ liệu
-              </span>
+            invoices.map(
+              (invoice) => (
 
-            </div>
+                <div
+                  className={`invoice-item ${
+                    isOverdue(
+                      invoice.status
+                    )
+                      ? "invoice-item-overdue"
+                      : ""
+                  }`}
+                  key={invoice.id}
+                >
 
-          </div>
 
+                  {/* =================================
+                      LEFT
+                  ================================= */}
+
+                  <div className="invoice-left">
+
+                    <div className="invoice-icon">
+                      💰
+                    </div>
+
+
+                    <div>
+
+                      <h3>
+                        Hóa đơn tháng{" "}
+                        {String(
+                          invoice.month ?? ""
+                        ).padStart(2, "0")}
+                        /
+                        {invoice.year}
+                      </h3>
+
+
+                      <p>
+                        Hợp đồng #
+                        {invoice.contractId}
+                      </p>
+
+
+                      {/* HẠN THANH TOÁN */}
+
+                      <small>
+                        Hạn thanh toán:{" "}
+                        {formatDate(
+                          invoice.dueDate
+                        )}
+                      </small>
+
+
+                      {/* NGÀY THANH TOÁN */}
+
+                      {isPaid(
+                        invoice.status
+                      ) && (
+                        <small>
+                          Đã thanh toán:{" "}
+                          {formatDate(
+                            invoice.paidDate
+                          )}
+                        </small>
+                      )}
+
+
+                      {/* PHƯƠNG THỨC */}
+
+                      {isPaid(
+                        invoice.status
+                      ) &&
+                        invoice.paymentMethod && (
+                          <small>
+                            Phương thức:{" "}
+                            {getPaymentMethodName(
+                              invoice.paymentMethod
+                            )}
+                          </small>
+                        )}
+
+
+                      {/* CẢNH BÁO QUÁ HẠN */}
+
+                      {isOverdue(
+                        invoice.status
+                      ) && (
+                        <small
+                          style={{
+                            color:
+                              "#dc2626",
+                            fontWeight:
+                              "600",
+                          }}
+                        >
+                          Khoản thanh toán
+                          đã quá hạn
+                        </small>
+                      )}
+
+                    </div>
+
+                  </div>
+
+
+                  {/* =================================
+                      RIGHT
+                  ================================= */}
+
+                  <div className="invoice-right">
+
+                    <strong>
+                      {formatMoney(
+                        invoice.amount
+                      )}
+                    </strong>
+
+
+                    {/* PAID */}
+
+                    {isPaid(
+                      invoice.status
+                    ) && (
+
+                      <span
+                        className="invoice-paid"
+                      >
+                        Đã thanh toán
+                      </span>
+
+                    )}
+
+
+                    {/* UNPAID */}
+
+                    {isUnpaid(
+                      invoice.status
+                    ) && (
+
+                      <span
+                        className="invoice-unpaid"
+                      >
+                        Chưa thanh toán
+                      </span>
+
+                    )}
+
+
+                    {/* OVERDUE */}
+
+                    {isOverdue(
+                      invoice.status
+                    ) && (
+
+                      <span
+                        className="invoice-overdue"
+                      >
+                        Quá hạn
+                      </span>
+
+                    )}
+
+                  </div>
+
+
+                </div>
+
+              )
+            )
+
+          )}
 
         </section>
 
@@ -573,8 +1181,8 @@ function OwnerInvoice() {
       </main>
 
     </div>
-
   );
 }
+
 
 export default OwnerInvoice;

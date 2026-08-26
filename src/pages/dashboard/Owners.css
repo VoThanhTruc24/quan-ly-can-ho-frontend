@@ -361,3 +361,181 @@ td {
   font-size: 13px;
   color: #8b98a8;
 }
+/* =====================================================
+   RENTHUB THEME - ADMIN OWNERS
+===================================================== */
+
+body {
+  background:
+    radial-gradient(
+      circle at 92% 5%,
+      rgba(255, 174, 39, 0.16),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 5% 95%,
+      rgba(74, 70, 232, 0.12),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f9fafc 0%,
+      #f3f5fa 55%,
+      #eef1fb 100%
+    );
+}
+
+.owners-page,
+.owners-container,
+.owner-page-container {
+  background:
+    radial-gradient(
+      circle at 92% 5%,
+      rgba(255, 174, 39, 0.14),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 5% 95%,
+      rgba(74, 70, 232, 0.10),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f9fafc,
+      #f1f3f9
+    );
+}
+
+/* CARD */
+
+.owner-card,
+.owners-card,
+.owner-table-container,
+.owner-form-card {
+  background: rgba(255, 255, 255, 0.90) !important;
+  border-color: rgba(255, 255, 255, 0.95) !important;
+
+  box-shadow:
+    0 12px 35px rgba(23, 42, 77, 0.07) !important;
+
+  backdrop-filter: blur(12px);
+}
+
+/* TITLE */
+
+.owners-page h1,
+.owner-page h1,
+.owners-title h1 {
+  color: #172a4d !important;
+}
+
+.owners-page p,
+.owner-page p {
+  color: #94a3b8;
+}
+
+/* PRIMARY BUTTON */
+
+button.primary,
+.btn-primary,
+.add-owner-btn,
+.owner-add-btn,
+button[class*="add"] {
+  background:
+    linear-gradient(
+      135deg,
+      #ff9d00,
+      #ffb52e
+    ) !important;
+
+  border: none !important;
+  color: #fff !important;
+
+  box-shadow:
+    0 8px 18px rgba(255, 157, 0, 0.20);
+
+  transition: 0.2s ease;
+}
+
+button.primary:hover,
+.btn-primary:hover,
+.add-owner-btn:hover,
+.owner-add-btn:hover,
+button[class*="add"]:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 24px rgba(255, 157, 0, 0.26);
+}
+
+/* TABLE */
+
+.owner-table,
+.owners-table,
+table {
+  background: rgba(255, 255, 255, 0.90);
+}
+
+.owner-table thead,
+.owners-table thead,
+table thead {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.08),
+      rgba(74, 70, 232, 0.06)
+    );
+}
+
+.owner-table th,
+.owners-table th,
+table th {
+  color: #172a4d;
+}
+
+.owner-table td,
+.owners-table td,
+table td {
+  border-color: #edf0f5;
+  color: #475569;
+}
+
+/* BADGE */
+
+.owner-badge,
+.role-badge {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(74, 70, 232, 0.10),
+      rgba(91, 75, 234, 0.16)
+    ) !important;
+
+  color: #4a46e8 !important;
+}
+
+/* ACTION */
+
+.assign-btn,
+.view-apartment-btn {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.12),
+      rgba(255, 181, 46, 0.20)
+    ) !important;
+
+  color: #e88700 !important;
+
+  border: 1px solid rgba(255, 157, 0, 0.10);
+}
+
+.assign-btn:hover,
+.view-apartment-btn:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.20),
+      rgba(74, 70, 232, 0.08)
+    ) !important;
+}

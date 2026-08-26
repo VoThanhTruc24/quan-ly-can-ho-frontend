@@ -589,3 +589,292 @@
     width: fit-content;
   }
 }
+/* =====================================================
+   RENTHUB THEME - ADMIN DASHBOARD
+   Giữ nguyên layout và cấu trúc cũ
+===================================================== */
+
+.dashboard-page {
+  background:
+    radial-gradient(
+      circle at 92% 5%,
+      rgba(255, 174, 39, 0.18),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 5% 95%,
+      rgba(74, 70, 232, 0.13),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #f9fafc 0%,
+      #f3f5fa 55%,
+      #eef1fb 100%
+    );
+}
+
+/* =========================
+   TOPBAR
+========================= */
+
+.dashboard-topbar h1 {
+  color: #172a4d;
+}
+
+.dashboard-topbar p {
+  color: #94a3b8;
+}
+
+.dashboard-search {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 8px 25px rgba(23, 42, 77, 0.05);
+
+  backdrop-filter: blur(12px);
+}
+
+.dashboard-account {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 8px 25px rgba(23, 42, 77, 0.05);
+
+  backdrop-filter: blur(12px);
+}
+
+.dashboard-avatar {
+  background:
+    linear-gradient(
+      135deg,
+      #ff9d00,
+      #ffbe48
+    );
+
+  color: white;
+}
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 12px 35px rgba(23, 42, 77, 0.07);
+
+  backdrop-filter: blur(12px);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 16px 38px rgba(23, 42, 77, 0.11);
+}
+
+.stat-icon {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.18),
+      rgba(255, 190, 72, 0.25)
+    );
+}
+
+.stat-label {
+  color: #64748b;
+}
+
+.stat-value {
+  color: #172a4d;
+}
+
+.stat-description {
+  color: #94a3b8;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.dashboard-card {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 12px 35px rgba(23, 42, 77, 0.07);
+
+  backdrop-filter: blur(12px);
+}
+
+.card-header h2 {
+  color: #172a4d;
+}
+
+.card-header p {
+  color: #94a3b8;
+}
+
+.card-action {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.10),
+      rgba(74, 70, 232, 0.06)
+    );
+
+  border-color: rgba(255, 157, 0, 0.12);
+}
+
+/* =========================
+   CHART
+========================= */
+
+.chart-lines span {
+  border-top-color: rgba(148, 163, 184, 0.25);
+}
+
+.chart-bar {
+  background:
+    linear-gradient(
+      180deg,
+      #ffb52e 0%,
+      #ff9814 55%,
+      #ff8a00 100%
+    );
+
+  box-shadow:
+    0 5px 14px rgba(255, 157, 0, 0.18);
+}
+
+.chart-bar:hover {
+  opacity: 0.88;
+  transform: translateY(-2px);
+}
+
+.chart-months {
+  color: #94a3b8;
+}
+
+/* =========================
+   OVERVIEW
+========================= */
+
+.overview-item {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(248, 250, 252, 0.96),
+      rgba(238, 241, 251, 0.82)
+    );
+
+  border: 1px solid rgba(226, 232, 240, 0.65);
+}
+
+.overview-left {
+  color: #64748b;
+}
+
+.overview-icon {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.15),
+      rgba(255, 190, 72, 0.22)
+    );
+}
+
+.overview-item strong {
+  color: #172a4d;
+}
+
+/* =========================
+   QUICK ACTIONS
+========================= */
+
+.section-title h2 {
+  color: #172a4d;
+}
+
+.section-title p {
+  color: #94a3b8;
+}
+
+.quick-actions button {
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+
+  box-shadow:
+    0 8px 25px rgba(23, 42, 77, 0.05);
+
+  backdrop-filter: blur(12px);
+}
+
+.quick-actions button:hover {
+  box-shadow:
+    0 14px 32px rgba(23, 42, 77, 0.10);
+}
+
+.quick-actions button > span {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 157, 0, 0.18),
+      rgba(74, 70, 232, 0.08)
+    );
+}
+
+.quick-actions strong {
+  color: #172a4d;
+}
+
+.quick-actions small {
+  color: #94a3b8;
+}
+/* =====================================================
+   FIX CARD DOANH THU BỊ TRÀN
+===================================================== */
+
+.stats-grid {
+  min-width: 0;
+}
+
+.stat-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.stat-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.stat-value {
+  min-width: 0;
+  max-width: 100%;
+  font-size: 22px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* Card doanh thu */
+.stat-card:last-child .stat-value {
+  font-size: 21px;
+  line-height: 1.15;
+}
+
+/* Không cho số tiền phá layout */
+.stat-card:last-child {
+  overflow: hidden;
+}
