@@ -1,37 +1,136 @@
-.owner-page {
-  min-height: 100vh;
-  display: flex;
-  background: #f5f7fb;
-}
+/* =====================================================
+   RETHUB - OWNER CONTRACT
+   PREMIUM / PROFESSIONAL DESIGN
+
+   LƯU Ý:
+   - Không thay đổi JSX
+   - Không thay đổi API
+   - Không thay đổi logic
+   - Chỉ thay đổi giao diện
+===================================================== */
 
 
-/* ================= SIDEBAR ================= */
+/* =====================================================
+   GLOBAL
+===================================================== */
 
-.owner-sidebar {
-  width: 280px;
-  min-height: 100vh;
-
-  background: white;
-
-  padding: 28px 20px;
-
-  display: flex;
-  flex-direction: column;
-
+* {
   box-sizing: border-box;
 }
 
 
+html {
+  scroll-behavior: smooth;
+}
+
+
+body {
+  margin: 0;
+
+  font-family:
+    Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  background: #f5f7fb;
+
+  color: #172a4d;
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
+.owner-page {
+  min-height: 100vh;
+
+  display: flex;
+
+  background:
+    radial-gradient(
+      circle at 94% 4%,
+      rgba(255, 178, 59, 0.17),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 5% 90%,
+      rgba(95, 78, 220, 0.12),
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #f8fafc 0%,
+      #f4f6fb 50%,
+      #eef1fa 100%
+    );
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.owner-sidebar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+
+  width: 280px;
+
+  padding: 28px 18px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background:
+    rgba(255, 255, 255, 0.90);
+
+  border-right:
+    1px solid
+    rgba(226, 232, 240, 0.85);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  box-shadow:
+    8px 0 32px
+    rgba(15, 39, 71, 0.045);
+
+  z-index: 100;
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
 .owner-logo {
   display: flex;
+
   align-items: center;
 
   gap: 12px;
 
-  margin-bottom: 40px;
+  padding:
+    0 10px 32px;
+
+  margin-bottom: 4px;
+
+  color: #172a4d;
 
   font-size: 20px;
-  font-weight: 700;
+
+  font-weight: 800;
+
+  letter-spacing: -0.3px;
 }
 
 
@@ -39,166 +138,321 @@
   width: 48px;
   height: 48px;
 
-  border-radius: 12px;
-
-  background: #2563eb;
+  flex-shrink: 0;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff9800 0%,
+      #ffb629 100%
+    );
+
   font-size: 25px;
+
+  box-shadow:
+    0 10px 22px
+    rgba(255, 152, 0, 0.22);
 }
 
 
+.owner-logo span {
+  color: #172a4d;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
 .owner-nav {
   display: flex;
+
   flex-direction: column;
 
-  gap: 8px;
+  gap: 6px;
 }
 
 
 .owner-menu {
+  position: relative;
+
   width: 100%;
 
-  border: none;
-  background: transparent;
-
-  padding: 16px;
-
-  border-radius: 12px;
+  min-height: 52px;
 
   display: flex;
+
   align-items: center;
 
-  gap: 14px;
+  gap: 13px;
 
-  font-size: 16px;
+  padding: 14px 15px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  background: transparent;
 
   color: #64748b;
 
-  cursor: pointer;
+  font-size: 15px;
+
+  font-weight: 500;
 
   text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.20s ease,
+    color 0.20s ease,
+    transform 0.20s ease,
+    box-shadow 0.20s ease;
 }
 
 
 .owner-menu:hover {
-  background: #f1f5f9;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 152, 0, 0.09),
+      rgba(108, 88, 220, 0.06)
+    );
+
+  color: #ef8d00;
+
+  transform:
+    translateX(2px);
 }
 
 
 .owner-menu.active {
-  background: #eaf2ff;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 166, 45, 0.15),
+      rgba(103, 82, 222, 0.08)
+    );
 
-  color: #2563eb;
+  color: #f08c00;
 
-  font-weight: 600;
+  font-weight: 700;
+
+  box-shadow:
+    inset 4px 0 0 #ff9800,
+    0 5px 14px
+    rgba(15, 39, 71, 0.035);
 }
 
 
 .menu-icon {
-  font-size: 20px;
+  width: 24px;
+
+  flex-shrink: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 19px;
 }
 
 
-/* ================= LOGOUT ================= */
+/* =====================================================
+   LOGOUT
+===================================================== */
 
 .owner-logout {
+  width: 100%;
+
+  min-height: 52px;
+
   margin-top: auto;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 14px 15px;
 
   border: none;
 
-  background: #fff1f2;
+  border-radius: 13px;
 
-  color: #ef4444;
+  background:
+    linear-gradient(
+      135deg,
+      #fff1f2,
+      #ffe8ec
+    );
 
-  padding: 16px;
+  color: #dc2626;
 
-  border-radius: 12px;
+  font-size: 15px;
 
-  display: flex;
-  align-items: center;
-
-  gap: 14px;
-
-  font-size: 16px;
+  font-weight: 600;
 
   cursor: pointer;
+
+  transition:
+    transform 0.20s ease,
+    box-shadow 0.20s ease,
+    background 0.20s ease;
 }
 
 
-/* ================= MAIN ================= */
+.owner-logout:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #ffe5e8,
+      #ffdde3
+    );
+
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 8px 20px
+    rgba(220, 38, 38, 0.10);
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
 
 .owner-main {
-  flex: 1;
+  width:
+    calc(100% - 280px);
 
-  padding: 45px 50px;
+  min-height: 100vh;
 
-  box-sizing: border-box;
+  margin-left: 280px;
+
+  padding:
+    42px 48px 65px;
+
+  max-width: 1700px;
 }
 
 
-/* ================= HEADER ================= */
+/* =====================================================
+   HEADER
+===================================================== */
 
 .owner-header {
   display: flex;
 
-  justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 40px;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 34px;
+}
+
+
+.owner-header > div:first-child {
+  min-width: 0;
 }
 
 
 .owner-header h1 {
   margin: 0;
 
-  font-size: 36px;
+  color: #172a4d;
 
-  color: #0f2747;
+  font-size: clamp(
+    32px,
+    3vw,
+    42px
+  );
+
+  font-weight: 850;
+
+  letter-spacing: -1px;
+
+  line-height: 1.1;
 }
 
 
 .owner-header p {
-  margin-top: 10px;
+  margin:
+    9px 0 0;
 
   color: #94a3b8;
 
-  font-size: 16px;
+  font-size: 15px;
+
+  font-weight: 500;
 }
 
 
+/* =====================================================
+   HEADER USER
+===================================================== */
+
 .owner-header-user {
   display: flex;
+
   align-items: center;
 
   gap: 12px;
+
+  flex-shrink: 0;
 }
 
 
 .owner-avatar {
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
 
   border-radius: 50%;
 
-  background: #2563eb;
+  background:
+    linear-gradient(
+      135deg,
+      #ff9800 0%,
+      #c87b45 43%,
+      #7350c7 100%
+    );
 
-  color: white;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: #ffffff;
 
   font-size: 20px;
-  font-weight: 600;
+
+  font-weight: 800;
+
+  box-shadow:
+    0 9px 24px
+    rgba(99, 78, 190, 0.19);
 }
 
 
 .owner-user-info {
   display: flex;
+
   flex-direction: column;
 
   gap: 4px;
@@ -206,34 +460,137 @@
 
 
 .owner-user-info strong {
-  color: #0f2747;
+  color: #172a4d;
+
+  font-size: 15px;
+
+  font-weight: 750;
 }
 
 
 .owner-user-info span {
   color: #94a3b8;
+
+  font-size: 12px;
 }
 
 
-/* ================= CONTRACT CARD ================= */
+/* =====================================================
+   CONTRACT CARD
+===================================================== */
 
 .contract-page-card {
+  position: relative;
 
-  background: white;
+  width: 100%;
 
-  border-radius: 20px;
+  padding: 29px;
 
-  padding: 35px;
+  margin-bottom: 20px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.95);
+
+  border-radius: 23px;
+
+  background:
+    rgba(255, 255, 255, 0.92);
 
   box-shadow:
-    0 5px 20px
-    rgba(0, 0, 0, 0.04);
+    0 12px 38px
+    rgba(23, 42, 77, 0.07);
+
+  backdrop-filter:
+    blur(15px);
+
+  -webkit-backdrop-filter:
+    blur(15px);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
 
 
-/* ================= CONTRACT HEADER ================= */
+/* DECORATIVE GLOW */
+
+.contract-page-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: -100px;
+
+  right: -80px;
+
+  width: 250px;
+  height: 250px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 175, 45, 0.10),
+      transparent 68%
+    );
+
+  pointer-events: none;
+}
+
+
+/* SECOND GLOW */
+
+.contract-page-card::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -120px;
+
+  left: -90px;
+
+  width: 250px;
+  height: 250px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(104, 84, 224, 0.06),
+      transparent 68%
+    );
+
+  pointer-events: none;
+}
+
+
+.contract-page-card:hover {
+  transform:
+    translateY(-3px);
+
+  border-color:
+    rgba(255, 190, 75, 0.18);
+
+  box-shadow:
+    0 18px 45px
+    rgba(23, 42, 77, 0.095);
+}
+
+
+/* =====================================================
+   CONTRACT HEADER
+===================================================== */
 
 .contract-header {
+  position: relative;
+
+  z-index: 1;
 
   display: flex;
 
@@ -241,147 +598,835 @@
 
   gap: 20px;
 
-  padding-bottom: 30px;
+  padding-bottom: 27px;
 
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom:
+    1px solid
+    rgba(226, 232, 240, 0.85);
 }
 
 
 .contract-icon-large {
-
   width: 70px;
   height: 70px;
 
-  border-radius: 16px;
-
-  background: #f1f5ff;
+  flex-shrink: 0;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
-  font-size: 35px;
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #eef4ff 0%,
+      #eef0ff 58%,
+      #f7efff 100%
+    );
+
+  font-size: 34px;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(255, 255, 255, 0.90),
+
+    0 7px 17px
+    rgba(87, 78, 183, 0.07);
+}
+
+
+.contract-header > div:not(.contract-icon-large) {
+  min-width: 0;
 }
 
 
 .contract-header h2 {
-
   margin: 0;
 
-  color: #0f2747;
+  color: #172a4d;
 
-  font-size: 24px;
+  font-size: 25px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.45px;
+
+  line-height: 1.15;
 }
 
 
 .contract-header p {
-
-  margin-top: 8px;
+  margin:
+    7px 0 0;
 
   color: #94a3b8;
+
+  font-size: 13px;
+
+  font-weight: 500;
 }
 
 
+/* =====================================================
+   STATUS BADGE
+===================================================== */
+
 .active-badge {
+  position: relative;
 
   margin-left: auto;
 
-  padding: 9px 18px;
+  flex-shrink: 0;
 
-  background: #dcfce7;
+  display: inline-flex;
 
-  color: #16a34a;
+  align-items: center;
 
-  border-radius: 20px;
+  justify-content: center;
 
-  font-size: 14px;
+  min-height: 38px;
 
-  font-weight: 600;
+  padding:
+    8px 16px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #dcfce7,
+      #d1fae5
+    );
+
+  color: #15803d;
+
+  font-size: 12px;
+
+  font-weight: 750;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(34, 197, 94, 0.08);
 }
 
 
-/* ================= INFO ================= */
+/* GREEN DOT */
+
+.active-badge::before {
+  content: "";
+
+  width: 7px;
+  height: 7px;
+
+  margin-right: 8px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(34, 197, 94, 0.10);
+}
+
+
+/* =====================================================
+   CONTRACT INFO
+===================================================== */
 
 .contract-info {
+  position: relative;
+
+  z-index: 1;
 
   display: grid;
 
   grid-template-columns:
-    repeat(4, 1fr);
+    repeat(4, minmax(0, 1fr));
 
-  gap: 25px;
+  gap: 14px;
 
-  padding: 35px 0;
+  padding:
+    28px 0;
 
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom:
+    1px solid
+    rgba(226, 232, 240, 0.85);
 }
 
+
+/* =====================================================
+   INFO ITEM
+===================================================== */
 
 .contract-info-item {
+  min-width: 0;
 
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 10px;
-}
-
-
-.contract-info-item span {
-
-  color: #94a3b8;
-
-  font-size: 14px;
-}
-
-
-.contract-info-item strong {
-
-  color: #0f2747;
-
-  font-size: 17px;
-}
-
-
-.rent-price {
-
-  color: #2563eb !important;
-}
-
-
-/* ================= FOOTER ================= */
-
-.contract-footer {
-
-  display: flex;
-
-  gap: 100px;
-
-  padding-top: 30px;
-}
-
-
-.contract-footer div {
+  padding:
+    16px 15px;
 
   display: flex;
 
   flex-direction: column;
 
   gap: 8px;
+
+  border:
+    1px solid
+    rgba(226, 232, 240, 0.66);
+
+  border-radius: 15px;
+
+  background:
+    rgba(248, 250, 252, 0.72);
+
+  transition:
+    transform 0.20s ease,
+    background 0.20s ease,
+    border-color 0.20s ease,
+    box-shadow 0.20s ease;
+}
+
+
+.contract-info-item:hover {
+  transform:
+    translateY(-2px);
+
+  background:
+    rgba(255, 255, 255, 0.92);
+
+  border-color:
+    rgba(255, 176, 49, 0.24);
+
+  box-shadow:
+    0 7px 18px
+    rgba(23, 42, 77, 0.05);
+}
+
+
+.contract-info-item span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+
+.contract-info-item strong {
+  overflow: hidden;
+
+  color: #172a4d;
+
+  font-size: 16px;
+
+  font-weight: 750;
+
+  line-height: 1.4;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   RENT PRICE
+===================================================== */
+
+.rent-price {
+  color: #2563eb !important;
+}
+
+
+/* =====================================================
+   CONTRACT FOOTER
+===================================================== */
+
+.contract-footer {
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 80px;
+
+  padding-top: 26px;
+}
+
+
+.contract-footer > div {
+  min-width: 180px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  padding:
+    12px 0;
 }
 
 
 .contract-footer span {
-
   color: #94a3b8;
 
-  font-size: 14px;
+  font-size: 11px;
+
+  font-weight: 600;
 }
 
 
 .contract-footer strong {
+  color: #172a4d;
 
-  color: #0f2747;
+  font-size: 15px;
 
-  font-size: 16px;
+  font-weight: 750;
+}
+
+
+/* =====================================================
+   EMPTY CONTRACT CARD
+===================================================== */
+
+.contract-page-card:has(.contract-header h2:first-child) {
+  min-height: 180px;
+}
+
+
+/* =====================================================
+   MAIN SCROLLBAR
+===================================================== */
+
+html {
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(148, 163, 184, 0.42)
+    transparent;
+}
+
+
+html::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+html::-webkit-scrollbar-thumb {
+  background:
+    rgba(148, 163, 184, 0.42);
+
+  border-radius: 999px;
+}
+
+
+html::-webkit-scrollbar-thumb:hover {
+  background:
+    rgba(100, 116, 139, 0.65);
+}
+
+
+/* =====================================================
+   LOADING / ERROR
+===================================================== */
+
+.owner-main > div[style] {
+  min-height: 150px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 30px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.90);
+
+  border-radius: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.80);
+
+  color: #64748b;
+
+  box-shadow:
+    0 10px 30px
+    rgba(23, 42, 77, 0.05);
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 1200px) {
+
+  .owner-main {
+    padding:
+      35px 30px 50px;
+  }
+
+
+  .contract-page-card {
+    padding: 25px;
+  }
+
+
+  .contract-info {
+    gap: 10px;
+  }
+
+
+  .contract-info-item {
+    padding:
+      14px 12px;
+  }
+
+
+  .contract-info-item strong {
+    font-size: 14px;
+  }
+
+
+  .contract-footer {
+    gap: 45px;
+  }
+
+}
+
+
+/* =====================================================
+   TABLET SMALL
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .owner-sidebar {
+    width: 88px;
+
+    padding:
+      24px 12px;
+  }
+
+
+  .owner-logo {
+    justify-content: center;
+
+    padding:
+      0 0 28px;
+  }
+
+
+  .owner-logo span {
+    display: none;
+  }
+
+
+  .owner-menu {
+    justify-content: center;
+
+    padding:
+      14px 10px;
+  }
+
+
+  .owner-menu span:not(.menu-icon),
+  .owner-logout span:not(.menu-icon) {
+    display: none;
+  }
+
+
+  .owner-logout {
+    justify-content: center;
+
+    padding:
+      14px 10px;
+  }
+
+
+  .owner-main {
+    width:
+      calc(100% - 88px);
+
+    margin-left: 88px;
+
+    padding:
+      32px 25px 45px;
+  }
+
+
+  .contract-info {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .contract-footer {
+    gap: 40px;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 760px) {
+
+  .owner-main {
+    padding:
+      25px 18px 40px;
+  }
+
+
+  .owner-header {
+    margin-bottom: 25px;
+  }
+
+
+  .owner-header h1 {
+    font-size: 31px;
+  }
+
+
+  .owner-header p {
+    font-size: 13px;
+  }
+
+
+  .owner-header-user {
+    display: none;
+  }
+
+
+  .contract-page-card {
+    padding: 20px;
+
+    border-radius: 18px;
+  }
+
+
+  .contract-header {
+    align-items: flex-start;
+
+    gap: 14px;
+
+    padding-bottom: 22px;
+  }
+
+
+  .contract-icon-large {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 14px;
+
+    font-size: 28px;
+  }
+
+
+  .contract-header h2 {
+    font-size: 21px;
+  }
+
+
+  .contract-header p {
+    font-size: 11px;
+  }
+
+
+  .active-badge {
+    position: absolute;
+
+    top: 1px;
+    right: 0;
+
+    min-height: 34px;
+
+    padding:
+      7px 11px;
+
+    font-size: 10px;
+  }
+
+
+  .contract-info {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 9px;
+
+    padding:
+      21px 0;
+  }
+
+
+  .contract-info-item {
+    padding:
+      12px;
+
+    border-radius: 12px;
+  }
+
+
+  .contract-info-item strong {
+    white-space: normal;
+
+    font-size: 13px;
+  }
+
+
+  .contract-footer {
+    gap: 25px;
+
+    padding-top: 20px;
+  }
+
+
+  .contract-footer > div {
+    min-width: 0;
+
+    flex: 1;
+  }
+
+}
+
+
+/* =====================================================
+   MOBILE SMALL
+===================================================== */
+
+@media (max-width: 520px) {
+
+  .owner-sidebar {
+    width: 68px;
+
+    padding:
+      20px 9px;
+  }
+
+
+  .owner-logo-icon {
+    width: 42px;
+    height: 42px;
+
+    font-size: 21px;
+  }
+
+
+  .owner-main {
+    width:
+      calc(100% - 68px);
+
+    margin-left: 68px;
+
+    padding:
+      20px 13px 35px;
+  }
+
+
+  .owner-header h1 {
+    font-size: 27px;
+  }
+
+
+  .owner-header p {
+    max-width: 240px;
+
+    line-height: 1.45;
+  }
+
+
+  .contract-page-card {
+    margin-bottom: 14px;
+
+    padding: 17px;
+
+    border-radius: 17px;
+  }
+
+
+  .contract-header {
+    display: grid;
+
+    grid-template-columns:
+      50px 1fr;
+
+    gap: 12px;
+  }
+
+
+  .contract-icon-large {
+    width: 50px;
+    height: 50px;
+
+    font-size: 24px;
+  }
+
+
+  .contract-header h2 {
+    max-width: 190px;
+
+    font-size: 18px;
+
+    line-height: 1.25;
+  }
+
+
+  .contract-header p {
+    margin-top: 5px;
+
+    font-size: 10px;
+  }
+
+
+  .active-badge {
+    position: static;
+
+    grid-column:
+      1 / -1;
+
+    justify-self: flex-start;
+
+    margin-left: 0;
+
+    margin-top: 3px;
+  }
+
+
+  .contract-info {
+    grid-template-columns: 1fr;
+
+    gap: 8px;
+  }
+
+
+  .contract-info-item {
+    padding:
+      11px 12px;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+  }
+
+
+  .contract-info-item span {
+    flex-shrink: 0;
+
+    margin: 0;
+  }
+
+
+  .contract-info-item strong {
+    text-align: right;
+
+    white-space: normal;
+
+    font-size: 13px;
+  }
+
+
+  .contract-footer {
+    flex-direction: column;
+
+    gap: 7px;
+
+    padding-top: 17px;
+  }
+
+
+  .contract-footer > div {
+    width: 100%;
+
+    min-width: 0;
+
+    padding:
+      9px 11px;
+
+    border-radius: 11px;
+
+    background:
+      #f8fafc;
+
+    border:
+      1px solid
+      #edf1f6;
+  }
+
+
+  .contract-footer span {
+    font-size: 10px;
+  }
+
+
+  .contract-footer strong {
+    font-size: 13px;
+  }
+
+}
+
+
+/* =====================================================
+   ACCESSIBILITY
+===================================================== */
+
+button:focus-visible {
+  outline:
+    3px solid
+    rgba(37, 99, 235, 0.20);
+
+  outline-offset:
+    2px;
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
+
+    transition-duration:
+      0.01ms !important;
+  }
+
 }

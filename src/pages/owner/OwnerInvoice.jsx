@@ -63,10 +63,14 @@ function OwnerInvoice() {
 
   // =====================================================
   // PAYMENT METHOD
+  //
+  // null = chưa chọn
+  // VNPAY = thanh toán được
+  // MOMO / BANK_TRANSFER / CASH = chưa hỗ trợ
   // =====================================================
 
   const [paymentMethod, setPaymentMethod] =
-    useState("VNPAY");
+    useState(null);
 
 
   const [paying, setPaying] =
@@ -86,7 +90,7 @@ function OwnerInvoice() {
   // =====================================================
 
   const [bankCode, setBankCode] =
-    useState("NCB");
+    useState(null);
 
 
   const [cardNumber, setCardNumber] =
@@ -106,11 +110,12 @@ function OwnerInvoice() {
 
 
   // =====================================================
-  // DANH SÁCH NGÂN HÀNG
-  // Logo lấy từ website tương ứng
+  // BANK OPTIONS
+  // Logo lấy từ link bên ngoài
   // =====================================================
 
   const bankOptions = [
+
     {
       value: "NCB",
       label: "NCB",
@@ -130,7 +135,8 @@ function OwnerInvoice() {
     {
       value: "BIDV",
       label: "BIDV",
-      description: "Ngân hàng Đầu tư và Phát triển Việt Nam",
+      description:
+        "Ngân hàng Đầu tư và Phát triển Việt Nam",
       logo:
         "https://www.google.com/s2/favicons?domain=bidv.com.vn&sz=128",
     },
@@ -138,7 +144,8 @@ function OwnerInvoice() {
     {
       value: "VIETINBANK",
       label: "VietinBank",
-      description: "Ngân hàng Công thương Việt Nam",
+      description:
+        "Ngân hàng Công thương Việt Nam",
       logo:
         "https://www.google.com/s2/favicons?domain=vietinbank.vn&sz=128",
     },
@@ -150,6 +157,7 @@ function OwnerInvoice() {
       logo:
         "https://www.google.com/s2/favicons?domain=acb.com.vn&sz=128",
     },
+
   ];
 
 
@@ -178,7 +186,9 @@ function OwnerInvoice() {
       setError("");
 
 
+      // -------------------------------------------------
       // OWNER
+      // -------------------------------------------------
 
       const ownerData =
         await getCurrentOwner();
@@ -187,7 +197,9 @@ function OwnerInvoice() {
       setOwner(ownerData);
 
 
+      // -------------------------------------------------
       // INVOICE
+      // -------------------------------------------------
 
       const invoiceData =
         await getMyInvoices();
@@ -300,10 +312,12 @@ function OwnerInvoice() {
 
 
   // =====================================================
-  // STATUS
+  // NORMALIZE STATUS
   // =====================================================
 
-  const normalizeStatus = (status) => {
+  const normalizeStatus = (
+    status
+  ) => {
 
     return String(status || "")
       .trim()
@@ -311,7 +325,13 @@ function OwnerInvoice() {
   };
 
 
-  const isPaid = (status) => {
+  // =====================================================
+  // PAID
+  // =====================================================
+
+  const isPaid = (
+    status
+  ) => {
 
     return (
       normalizeStatus(status) ===
@@ -320,7 +340,13 @@ function OwnerInvoice() {
   };
 
 
-  const isOverdue = (status) => {
+  // =====================================================
+  // OVERDUE
+  // =====================================================
+
+  const isOverdue = (
+    status
+  ) => {
 
     return (
       normalizeStatus(status) ===
@@ -329,7 +355,13 @@ function OwnerInvoice() {
   };
 
 
-  const isUnpaid = (status) => {
+  // =====================================================
+  // UNPAID
+  // =====================================================
+
+  const isUnpaid = (
+    status
+  ) => {
 
     return (
       normalizeStatus(status) ===
@@ -371,14 +403,16 @@ function OwnerInvoice() {
 
 
   // =====================================================
-  // RESET FORM
+  // RESET PAYMENT FORM
   // =====================================================
 
   const resetPaymentForm = () => {
 
-    setPaymentMethod("VNPAY");
+    // Không chọn phương thức sẵn
+    setPaymentMethod(null);
 
-    setBankCode("NCB");
+    // Không chọn ngân hàng sẵn
+    setBankCode(null);
 
     setCardNumber("");
 
@@ -391,11 +425,13 @@ function OwnerInvoice() {
     setPaymentError("");
 
     setPaymentSuccess(false);
+
+    setPaying(false);
   };
 
 
   // =====================================================
-  // OPEN MODAL
+  // OPEN PAYMENT
   // =====================================================
 
   const handleOpenPayment = (
@@ -415,7 +451,7 @@ function OwnerInvoice() {
 
 
   // =====================================================
-  // CLOSE MODAL
+  // CLOSE PAYMENT
   // =====================================================
 
   const handleClosePayment = () => {
@@ -442,15 +478,46 @@ function OwnerInvoice() {
 
     setPaymentMethod(method);
 
+    // Khi đổi phương thức
+    // phải bỏ ngân hàng đã chọn
+
+    setBankCode(null);
+
+    // Xóa form cũ
+
+    setCardNumber("");
+
+    setCardHolder("");
+
+    setIssueDate("");
+
+    setOtp("");
+
     setPaymentError("");
 
-    // Các phương thức khác chưa được xử lý
+
+    // 3 phương thức chưa hỗ trợ
+
     if (method !== "VNPAY") {
 
       setPaymentError(
         "Phương thức thanh toán này hiện chưa được hỗ trợ."
       );
     }
+  };
+
+
+  // =====================================================
+  // SELECT BANK
+  // =====================================================
+
+  const handleSelectBank = (
+    value
+  ) => {
+
+    setBankCode(value);
+
+    setPaymentError("");
   };
 
 
@@ -491,30 +558,13 @@ function OwnerInvoice() {
   ) => {
 
     const value =
-      event.target.value
-        .replace(
-          /[^a-zA-ZÀ-ỹà-ỹ\s]/g,
-          ""
-        );
+      event.target.value.replace(
+        /[^a-zA-ZÀ-ỹà-ỹ\s]/g,
+        ""
+      );
 
 
     setCardHolder(value);
-  };
-
-
-  // =====================================================
-  // OTP
-  // =====================================================
-
-  const handleOtpChange = (
-    event
-  ) => {
-
-    setOtp(
-      event.target.value
-        .replace(/\D/g, "")
-        .slice(0, 6)
-    );
   };
 
 
@@ -546,14 +596,42 @@ function OwnerInvoice() {
 
 
   // =====================================================
-  // VNPAY VALIDATION
+  // OTP
+  // =====================================================
+
+  const handleOtpChange = (
+    event
+  ) => {
+
+    setOtp(
+      event.target.value
+        .replace(/\D/g, "")
+        .slice(0, 6)
+    );
+  };
+
+
+  // =====================================================
+  // VALIDATE VNPAY
   // =====================================================
 
   const validateVNPayForm = () => {
 
-    // ------------------------------------------
-    // CARD
-    // ------------------------------------------
+    // -------------------------------------------------
+    // BANK
+    // -------------------------------------------------
+
+    if (!bankCode) {
+
+      return (
+        "Vui lòng chọn ngân hàng."
+      );
+    }
+
+
+    // -------------------------------------------------
+    // CARD NUMBER
+    // -------------------------------------------------
 
     const cleanCardNumber =
       cardNumber.replace(/\s/g, "");
@@ -571,9 +649,9 @@ function OwnerInvoice() {
     }
 
 
-    // ------------------------------------------
+    // -------------------------------------------------
     // CARD HOLDER
-    // ------------------------------------------
+    // -------------------------------------------------
 
     if (
       !cardHolder.trim()
@@ -595,9 +673,9 @@ function OwnerInvoice() {
     }
 
 
-    // ------------------------------------------
+    // -------------------------------------------------
     // ISSUE DATE
-    // ------------------------------------------
+    // -------------------------------------------------
 
     if (
       !/^\d{2}\/\d{2}$/.test(
@@ -611,12 +689,14 @@ function OwnerInvoice() {
     }
 
 
-    // ------------------------------------------
+    // -------------------------------------------------
     // OTP
-    // ------------------------------------------
+    // -------------------------------------------------
 
     if (
-      !/^\d{6}$/.test(otp)
+      !/^\d{6}$/.test(
+        otp
+      )
     ) {
 
       return (
@@ -625,9 +705,9 @@ function OwnerInvoice() {
     }
 
 
-    // ------------------------------------------
+    // -------------------------------------------------
     // DEMO OTP
-    // ------------------------------------------
+    // -------------------------------------------------
 
     if (
       otp !== "123456"
@@ -647,102 +727,109 @@ function OwnerInvoice() {
   // CONFIRM PAYMENT
   // =====================================================
 
-  const handleConfirmPayment = async () => {
+  const handleConfirmPayment =
+    async () => {
 
-    if (!selectedInvoice) {
+      if (!selectedInvoice) {
 
-      return;
-    }
-
-
-    // Chỉ VNPay được xử lý
-
-    if (
-      paymentMethod !== "VNPAY"
-    ) {
-
-      setPaymentError(
-        "Phương thức thanh toán này hiện chưa được hỗ trợ."
-      );
-
-      return;
-    }
+        return;
+      }
 
 
-    // Validate
+      // -------------------------------------------------
+      // CHỈ VNPAY
+      // -------------------------------------------------
 
-    const validationError =
-      validateVNPayForm();
+      if (
+        paymentMethod !== "VNPAY"
+      ) {
 
+        setPaymentError(
+          "Phương thức thanh toán này hiện chưa được hỗ trợ."
+        );
 
-    if (validationError) {
-
-      setPaymentError(
-        validationError
-      );
-
-      return;
-    }
-
-
-    try {
-
-      setPaying(true);
-
-      setPaymentError("");
+        return;
+      }
 
 
-      // ==========================================
-      // GỌI BACKEND
-      // ==========================================
+      // -------------------------------------------------
+      // VALIDATE
+      // -------------------------------------------------
 
-      await payInvoice(
-        selectedInvoice.id,
-        "VNPAY"
-      );
+      const validationError =
+        validateVNPayForm();
 
 
-      // ==========================================
-      // THÀNH CÔNG
-      // ==========================================
+      if (validationError) {
 
-      setPaymentSuccess(true);
+        setPaymentError(
+          validationError
+        );
 
-
-      // Đợi để hiển thị màn hình thành công
-
-      setTimeout(
-        async () => {
-
-          setSelectedInvoice(null);
-
-          resetPaymentForm();
-
-          await loadData();
-
-        },
-        1000
-      );
+        return;
+      }
 
 
-    } catch (err) {
+      try {
 
-      console.error(
-        "PAYMENT ERROR:",
-        err
-      );
+        setPaying(true);
+
+        setPaymentError("");
 
 
-      setPaymentError(
-        err.message ||
-        "Thanh toán thất bại."
-      );
+        // -------------------------------------------------
+        // GỌI BACKEND
+        // -------------------------------------------------
 
-    } finally {
+        await payInvoice(
+          selectedInvoice.id,
+          "VNPAY"
+        );
 
-      setPaying(false);
-    }
-  };
+
+        // -------------------------------------------------
+        // SUCCESS
+        // -------------------------------------------------
+
+        setPaymentSuccess(true);
+
+
+        // -------------------------------------------------
+        // LOAD DATA
+        // -------------------------------------------------
+
+        setTimeout(
+          async () => {
+
+            setSelectedInvoice(null);
+
+            resetPaymentForm();
+
+            await loadData();
+
+          },
+          1000
+        );
+
+
+      } catch (err) {
+
+        console.error(
+          "PAYMENT ERROR:",
+          err
+        );
+
+
+        setPaymentError(
+          err.message ||
+          "Thanh toán thất bại."
+        );
+
+      } finally {
+
+        setPaying(false);
+      }
+    };
 
 
   // =====================================================
@@ -851,6 +938,7 @@ function OwnerInvoice() {
         </main>
 
       </div>
+
     );
   }
 
@@ -922,6 +1010,7 @@ function OwnerInvoice() {
         </main>
 
       </div>
+
     );
   }
 
@@ -956,6 +1045,9 @@ function OwnerInvoice() {
 
         <nav className="owner-nav">
 
+
+          {/* TRANG CHỦ */}
+
           <button
             className="owner-menu"
             onClick={() =>
@@ -973,6 +1065,8 @@ function OwnerInvoice() {
 
           </button>
 
+
+          {/* CĂN HỘ */}
 
           <button
             className="owner-menu"
@@ -992,6 +1086,8 @@ function OwnerInvoice() {
           </button>
 
 
+          {/* HỢP ĐỒNG */}
+
           <button
             className="owner-menu"
             onClick={() =>
@@ -1010,6 +1106,8 @@ function OwnerInvoice() {
           </button>
 
 
+          {/* HÓA ĐƠN */}
+
           <button
             className="owner-menu active"
           >
@@ -1024,6 +1122,8 @@ function OwnerInvoice() {
 
           </button>
 
+
+          {/* CÁ NHÂN */}
 
           <button
             className="owner-menu"
@@ -1044,6 +1144,8 @@ function OwnerInvoice() {
 
         </nav>
 
+
+        {/* LOGOUT */}
 
         <button
           className="owner-logout"
@@ -1121,11 +1223,15 @@ function OwnerInvoice() {
 
         <section className="invoice-summary">
 
+
+          {/* TOTAL */}
+
           <div className="invoice-summary-card">
 
             <div className="invoice-summary-icon blue">
               📄
             </div>
+
 
             <div>
 
@@ -1142,11 +1248,14 @@ function OwnerInvoice() {
           </div>
 
 
+          {/* PAID */}
+
           <div className="invoice-summary-card">
 
             <div className="invoice-summary-icon green">
               ✓
             </div>
+
 
             <div>
 
@@ -1159,9 +1268,11 @@ function OwnerInvoice() {
               </strong>
 
               <small className="summary-money">
+
                 {formatMoney(
                   totalPaidAmount
                 )}
+
               </small>
 
             </div>
@@ -1169,11 +1280,14 @@ function OwnerInvoice() {
           </div>
 
 
+          {/* UNPAID */}
+
           <div className="invoice-summary-card">
 
             <div className="invoice-summary-icon orange">
               ⏳
             </div>
+
 
             <div>
 
@@ -1186,10 +1300,13 @@ function OwnerInvoice() {
               </strong>
 
               <small className="summary-money">
+
                 Còn lại:{" "}
+
                 {formatMoney(
                   totalOutstanding
                 )}
+
               </small>
 
             </div>
@@ -1204,6 +1321,7 @@ function OwnerInvoice() {
         ================================================= */}
 
         <section className="invoice-container">
+
 
           <div className="invoice-title">
 
@@ -1222,6 +1340,8 @@ function OwnerInvoice() {
           </div>
 
 
+          {/* EMPTY */}
+
           {invoices.length === 0 ? (
 
             <div className="invoice-item">
@@ -1231,6 +1351,7 @@ function OwnerInvoice() {
                 <div className="invoice-icon">
                   💰
                 </div>
+
 
                 <div>
 
@@ -1272,25 +1393,34 @@ function OwnerInvoice() {
               (invoice) => {
 
                 const paid =
-                  isPaid(invoice.status);
+                  isPaid(
+                    invoice.status
+                  );
+
 
                 const overdue =
-                  isOverdue(invoice.status);
+                  isOverdue(
+                    invoice.status
+                  );
+
 
                 const unpaid =
-                  isUnpaid(invoice.status);
+                  isUnpaid(
+                    invoice.status
+                  );
 
 
                 return (
 
                   <div
+                    key={invoice.id}
                     className={
                       overdue
                         ? "invoice-item invoice-item-overdue"
                         : "invoice-item"
                     }
-                    key={invoice.id}
                   >
+
 
                     {/* LEFT */}
 
@@ -1304,59 +1434,87 @@ function OwnerInvoice() {
                       <div className="invoice-content">
 
                         <h3>
+
                           Hóa đơn tháng{" "}
+
                           {String(
                             invoice.month ?? ""
-                          ).padStart(2, "0")}
+                          ).padStart(
+                            2,
+                            "0"
+                          )}
+
                           /
+
                           {invoice.year}
+
                         </h3>
 
 
                         <p>
+
                           Hợp đồng #
+
                           {invoice.contractId}
+
                         </p>
 
 
                         <small>
+
                           Hạn thanh toán:{" "}
+
                           {formatDate(
                             invoice.dueDate
                           )}
+
                         </small>
 
+
+                        {/* PAID DATE */}
 
                         {paid &&
                           invoice.paidDate && (
 
                             <small className="paid-info">
+
                               Đã thanh toán:{" "}
+
                               {formatDate(
                                 invoice.paidDate
                               )}
+
                             </small>
 
                           )}
 
+
+                        {/* PAYMENT METHOD */}
 
                         {paid &&
                           invoice.paymentMethod && (
 
                             <small className="paid-info">
+
                               Phương thức:{" "}
+
                               {getPaymentMethodName(
                                 invoice.paymentMethod
                               )}
+
                             </small>
 
                           )}
 
 
+                        {/* OVERDUE */}
+
                         {overdue && (
 
                           <small className="overdue-info">
+
                             Hóa đơn đã quá hạn thanh toán
+
                           </small>
 
                         )}
@@ -1371,11 +1529,15 @@ function OwnerInvoice() {
                     <div className="invoice-right">
 
                       <strong>
+
                         {formatMoney(
                           invoice.amount
                         )}
+
                       </strong>
 
+
+                      {/* PAID */}
 
                       {paid && (
 
@@ -1385,6 +1547,8 @@ function OwnerInvoice() {
 
                       )}
 
+
+                      {/* UNPAID */}
 
                       {unpaid && (
 
@@ -1410,6 +1574,8 @@ function OwnerInvoice() {
 
                       )}
 
+
+                      {/* OVERDUE */}
 
                       {overdue && (
 
@@ -1438,7 +1604,9 @@ function OwnerInvoice() {
                     </div>
 
                   </div>
+
                 );
+
               }
             )
 
@@ -1487,10 +1655,13 @@ function OwnerInvoice() {
 
 
                 <p>
+
                   Hóa đơn đã được cập nhật thành
+
                   <strong>
                     {" "}Đã thanh toán
-                  </strong>.
+                  </strong>
+
                 </p>
 
 
@@ -1533,12 +1704,20 @@ function OwnerInvoice() {
 
 
                     <p>
+
                       Hóa đơn tháng{" "}
+
                       {String(
                         selectedInvoice.month ?? ""
-                      ).padStart(2, "0")}
+                      ).padStart(
+                        2,
+                        "0"
+                      )}
+
                       /
+
                       {selectedInvoice.year}
+
                     </p>
 
                   </div>
@@ -1569,43 +1748,49 @@ function OwnerInvoice() {
                       Số tiền thanh toán
                     </span>
 
+
                     <strong>
+
                       {formatMoney(
                         selectedInvoice.amount
                       )}
+
                     </strong>
 
                   </div>
 
 
                   <span className="payment-order-code">
-                    INV-{selectedInvoice.id}
+
+                    INV-
+                    {selectedInvoice.id}
+
                   </span>
 
                 </div>
 
 
                 {/* =================================================
-                    METHOD TITLE
+                    PAYMENT METHOD
                 ================================================= */}
 
                 <div className="payment-method-title">
 
-                  <span>
-                    Phương thức thanh toán
-                  </span>
+                  Phương thức thanh toán
 
                 </div>
 
 
                 {/* =================================================
-                    PAYMENT METHODS
+                    4 METHODS
                 ================================================= */}
 
                 <div className="payment-method-tabs">
 
 
-                  {/* VNPay */}
+                  {/* =================================================
+                      VNPAY
+                  ================================================= */}
 
                   <button
                     type="button"
@@ -1641,7 +1826,9 @@ function OwnerInvoice() {
                   </button>
 
 
-                  {/* MoMo */}
+                  {/* =================================================
+                      MOMO
+                  ================================================= */}
 
                   <button
                     type="button"
@@ -1677,7 +1864,9 @@ function OwnerInvoice() {
                   </button>
 
 
-                  {/* Ngân hàng */}
+                  {/* =================================================
+                      BANK
+                  ================================================= */}
 
                   <button
                     type="button"
@@ -1713,7 +1902,9 @@ function OwnerInvoice() {
                   </button>
 
 
-                  {/* Tiền mặt */}
+                  {/* =================================================
+                      CASH
+                  ================================================= */}
 
                   <button
                     type="button"
@@ -1748,8 +1939,35 @@ function OwnerInvoice() {
 
                   </button>
 
-
                 </div>
+
+
+                {/* =================================================
+                    CHƯA CHỌN PHƯƠNG THỨC
+                ================================================= */}
+
+                {paymentMethod === null && (
+
+                  <div className="payment-method-empty">
+
+                    <div className="payment-method-empty-icon">
+                      💳
+                    </div>
+
+
+                    <h3>
+                      Chọn phương thức thanh toán
+                    </h3>
+
+
+                    <p>
+                      Vui lòng chọn một phương thức
+                      để tiếp tục.
+                    </p>
+
+                  </div>
+
+                )}
 
 
                 {/* =================================================
@@ -1761,6 +1979,8 @@ function OwnerInvoice() {
                   <div className="vnpay-payment-box">
 
 
+                    {/* HEADER */}
+
                     <div className="vnpay-payment-header">
 
                       <div>
@@ -1768,6 +1988,7 @@ function OwnerInvoice() {
                         <div className="vnpay-small-brand">
                           PAYMENT GATEWAY
                         </div>
+
 
                         <h3>
                           Thanh toán qua VNPay
@@ -1783,9 +2004,28 @@ function OwnerInvoice() {
                     </div>
 
 
-                    {/* ==========================================
+                    {/* NOTE */}
+
+                    <div className="vnpay-demo-note">
+
+                      <span>
+                        ℹ️
+                      </span>
+
+
+                      <p>
+
+                        Chọn ngân hàng để tiếp tục
+                        thanh toán.
+
+                      </p>
+
+                    </div>
+
+
+                    {/* =================================================
                         BANK LIST
-                    =========================================== */}
+                    ================================================= */}
 
                     <div className="payment-field">
 
@@ -1800,22 +2040,18 @@ function OwnerInvoice() {
                           (bank) => (
 
                             <button
-                              type="button"
                               key={bank.value}
+                              type="button"
                               className={
                                 bankCode === bank.value
                                   ? "bank-select-item selected"
                                   : "bank-select-item"
                               }
-                              onClick={() => {
-
-                                setBankCode(
+                              onClick={() =>
+                                handleSelectBank(
                                   bank.value
-                                );
-
-                                setPaymentError("");
-
-                              }}
+                                )
+                              }
                             >
 
                               <div className="bank-logo-box">
@@ -1825,6 +2061,9 @@ function OwnerInvoice() {
                                   alt={bank.label}
                                   className="bank-logo"
                                   onError={(event) => {
+
+                                    event.currentTarget.onerror =
+                                      null;
 
                                     event.currentTarget.src =
                                       "https://www.google.com/s2/favicons?domain=google.com&sz=128";
@@ -1850,7 +2089,8 @@ function OwnerInvoice() {
 
                               <span className="bank-check">
 
-                                {bankCode === bank.value
+                                {bankCode ===
+                                bank.value
                                   ? "✓"
                                   : ""}
 
@@ -1866,172 +2106,232 @@ function OwnerInvoice() {
                     </div>
 
 
-                    {/* ==========================================
-                        CARD NUMBER
-                    =========================================== */}
+                    {/* =================================================
+                        CHƯA CHỌN BANK
+                    ================================================= */}
 
-                    <div className="payment-field">
+                    {!bankCode && (
 
-                      <label>
-                        Số thẻ
-                      </label>
+                      <div className="bank-required-message">
 
-                      <input
-                        type="text"
-                        inputMode="numeric"
-                        value={cardNumber}
-                        onChange={
-                          handleCardNumberChange
-                        }
-                        placeholder="Nhập số thẻ"
-                        maxLength={23}
-                      />
-
-                    </div>
+                        <div className="bank-required-icon">
+                          🏦
+                        </div>
 
 
-                    {/* ==========================================
-                        CARD HOLDER
-                    =========================================== */}
+                        <div>
 
-                    <div className="payment-field">
-
-                      <label>
-                        Tên chủ thẻ
-                      </label>
-
-                      <input
-                        type="text"
-                        value={cardHolder}
-                        onChange={
-                          handleCardHolderChange
-                        }
-                        placeholder="NGUYEN VAN A"
-                      />
-
-                    </div>
+                          <h4>
+                            Chọn ngân hàng để tiếp tục
+                          </h4>
 
 
-                    {/* ==========================================
-                        ISSUE DATE
-                    =========================================== */}
+                          <p>
+                            Vui lòng chọn một ngân hàng
+                            ở trên trước khi nhập thông tin.
+                          </p>
 
-                    <div className="payment-field">
-
-                      <label>
-                        Ngày phát hành
-                      </label>
-
-                      <input
-                        type="text"
-                        value={issueDate}
-                        onChange={
-                          handleIssueDateChange
-                        }
-                        placeholder="MM/YY"
-                        maxLength={5}
-                      />
-
-                    </div>
-
-
-                    {/* ==========================================
-                        OTP
-                    =========================================== */}
-
-                    <div className="payment-field">
-
-                      <label>
-                        Mã OTP
-                      </label>
-
-                      <input
-                        type="password"
-                        inputMode="numeric"
-                        value={otp}
-                        onChange={
-                          handleOtpChange
-                        }
-                        placeholder="Nhập mã OTP"
-                        maxLength={6}
-                      />
-
-                    </div>
-
-
-                    {/* ==========================================
-                        OTP NOTE
-                    =========================================== */}
-
-                    <div className="otp-demo-note">
-
-                      <span>
-                        🔑
-                      </span>
-
-                      <p>
-                        Mã OTP dùng cho bài demo:
-                        <strong>
-                          {" "}123456
-                        </strong>
-                      </p>
-
-                    </div>
-
-
-                    {/* ==========================================
-                        ERROR
-                    =========================================== */}
-
-                    {paymentError && (
-
-                      <div className="payment-modal-error">
-
-                        <span>
-                          ⚠
-                        </span>
-
-                        <p>
-                          {paymentError}
-                        </p>
+                        </div>
 
                       </div>
 
                     )}
 
 
-                    {/* ==========================================
-                        FOOTER
-                    =========================================== */}
+                    {/* =================================================
+                        FORM
+                        CHỈ HIỆN KHI ĐÃ CHỌN BANK
+                    ================================================= */}
 
-                    <div className="payment-modal-footer">
+                    {bankCode && (
 
-                      <button
-                        className="payment-cancel-button"
-                        onClick={
-                          handleClosePayment
-                        }
-                        disabled={paying}
-                      >
-                        Hủy
-                      </button>
+                      <>
+
+                        {/* SỐ THẺ */}
+
+                        <div className="payment-field">
+
+                          <label>
+                            Số thẻ
+                          </label>
 
 
-                      <button
-                        className="payment-confirm-button"
-                        onClick={
-                          handleConfirmPayment
-                        }
-                        disabled={paying}
-                      >
+                          <input
+                            type="text"
+                            inputMode="numeric"
+                            value={cardNumber}
+                            onChange={
+                              handleCardNumberChange
+                            }
+                            placeholder="Nhập số thẻ"
+                            maxLength={23}
+                          />
 
-                        {paying
-                          ? "Đang xử lý..."
-                          : "Thanh toán"}
+                        </div>
 
-                      </button>
 
-                    </div>
+                        {/* TÊN CHỦ THẺ */}
+
+                        <div className="payment-field">
+
+                          <label>
+                            Tên chủ thẻ
+                          </label>
+
+
+                          <input
+                            type="text"
+                            value={cardHolder}
+                            onChange={
+                              handleCardHolderChange
+                            }
+                            placeholder="NGUYEN VAN A"
+                          />
+
+                        </div>
+
+
+                        {/* NGÀY PHÁT HÀNH */}
+
+                        <div className="payment-field">
+
+                          <label>
+                            Ngày phát hành
+                          </label>
+
+
+                          <input
+                            type="text"
+                            value={issueDate}
+                            onChange={
+                              handleIssueDateChange
+                            }
+                            placeholder="MM/YY"
+                            maxLength={5}
+                          />
+
+                        </div>
+
+
+                        {/* OTP */}
+
+                        <div className="payment-field">
+
+                          <label>
+                            Mã OTP
+                          </label>
+
+
+                          <input
+                            type="password"
+                            inputMode="numeric"
+                            value={otp}
+                            onChange={
+                              handleOtpChange
+                            }
+                            placeholder="Nhập mã OTP"
+                            maxLength={6}
+                          />
+
+                        </div>
+
+
+                        {/* OTP NOTE */}
+
+                        <div className="otp-demo-note">
+
+                          <span>
+                            🔑
+                          </span>
+
+
+                          <p>
+                            Mã OTP kiểm thử:
+                            <strong>
+                              {" "}123456
+                            </strong>
+                          </p>
+
+                        </div>
+
+
+                        {/* ERROR */}
+
+                        {paymentError && (
+
+                          <div className="payment-modal-error">
+
+                            <span>
+                              ⚠
+                            </span>
+
+
+                            <p>
+                              {paymentError}
+                            </p>
+
+                          </div>
+
+                        )}
+
+
+                        {/* FOOTER */}
+
+                        <div className="payment-modal-footer">
+
+                          <button
+                            className="payment-cancel-button"
+                            onClick={
+                              handleClosePayment
+                            }
+                            disabled={paying}
+                          >
+                            Hủy
+                          </button>
+
+
+                          <button
+                            className="payment-confirm-button"
+                            onClick={
+                              handleConfirmPayment
+                            }
+                            disabled={paying}
+                          >
+
+                            {paying
+                              ? "Đang xử lý..."
+                              : "Thanh toán"}
+
+                          </button>
+
+                        </div>
+
+                      </>
+
+                    )}
+
+
+                    {/* =================================================
+                        ERROR KHI CHƯA CHỌN BANK
+                    ================================================= */}
+
+                    {!bankCode &&
+                      paymentError && (
+
+                        <div className="payment-modal-error">
+
+                          <span>
+                            ⚠
+                          </span>
+
+
+                          <p>
+                            {paymentError}
+                          </p>
+
+                        </div>
+
+                      )}
 
                   </div>
 
@@ -2056,6 +2356,7 @@ function OwnerInvoice() {
                       <h3>
                         Thanh toán MoMo
                       </h3>
+
 
                       <p>
                         Phương thức thanh toán này
@@ -2088,6 +2389,7 @@ function OwnerInvoice() {
                         Chuyển khoản ngân hàng
                       </h3>
 
+
                       <p>
                         Phương thức thanh toán này
                         hiện chưa được hỗ trợ.
@@ -2119,6 +2421,7 @@ function OwnerInvoice() {
                         Thanh toán tiền mặt
                       </h3>
 
+
                       <p>
                         Phương thức thanh toán này
                         hiện chưa được hỗ trợ.
@@ -2141,6 +2444,7 @@ function OwnerInvoice() {
       )}
 
     </div>
+
   );
 }
 

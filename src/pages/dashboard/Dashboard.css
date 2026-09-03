@@ -1,142 +1,283 @@
+/* =====================================================
+   RENTHUB - ADMIN DASHBOARD
+   PREMIUM CLEAN DESIGN
+   Chỉ thay đổi giao diện - không thay đổi JSX / logic
+===================================================== */
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
 .dashboard-page {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+
+  padding:
+    0 4px 30px;
+
+  color: #172a4d;
+
+  background:
+    radial-gradient(
+      circle at 92% 4%,
+      rgba(255, 173, 38, 0.14),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 4% 90%,
+      rgba(89, 76, 205, 0.09),
+      transparent 28%
+    );
 }
 
-/* =========================
+
+/* =====================================================
    TOPBAR
-========================= */
+===================================================== */
 
 .dashboard-topbar {
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
 
-  gap: 25px;
+  gap: 24px;
 
-  margin-bottom: 30px;
+  margin-bottom: 28px;
 }
+
+
+/* =====================================================
+   TITLE
+===================================================== */
 
 .dashboard-topbar h1 {
   margin: 0;
 
-  color: #102a43;
+  color: #172a4d;
 
-  font-size: 32px;
-  font-weight: 800;
+  font-size: 36px;
+
+  font-weight: 850;
+
+  line-height: 1.1;
+
+  letter-spacing: -0.8px;
 }
 
+
 .dashboard-topbar p {
-  margin: 7px 0 0;
+  margin:
+    8px 0 0;
 
   color: #94a3b8;
 
   font-size: 14px;
+
+  font-weight: 500;
 }
+
+
+/* =====================================================
+   TOPBAR RIGHT
+===================================================== */
 
 .dashboard-topbar-right {
   display: flex;
+
   align-items: center;
-  gap: 18px;
+
+  gap: 14px;
 }
 
-/* SEARCH */
+
+/* =====================================================
+   SEARCH
+===================================================== */
 
 .dashboard-search {
-  width: 250px;
-  height: 48px;
+  width: 270px;
+
+  height: 50px;
 
   display: flex;
+
   align-items: center;
 
   gap: 10px;
 
-  padding: 0 16px;
+  padding:
+    0 16px;
 
-  background: #ffffff;
+  background:
+    rgba(255, 255, 255, 0.94);
 
-  border: 1px solid #edf0f5;
+  border:
+    1px solid #eef1f6;
 
-  border-radius: 14px;
+  border-radius: 15px;
+
+  box-shadow:
+    0 7px 22px
+    rgba(23, 42, 77, 0.055);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
+
+
+.dashboard-search:focus-within {
+  border-color:
+    rgba(255, 152, 0, 0.32);
+
+  box-shadow:
+    0 8px 24px
+    rgba(255, 152, 0, 0.08);
+}
+
 
 .dashboard-search span {
-  font-size: 17px;
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 18px;
 }
+
 
 .dashboard-search input {
   width: 100%;
 
+  min-width: 0;
+
   border: none;
+
   outline: none;
 
+  background: transparent;
+
+  color: #172a4d;
+
   font-family: inherit;
+
   font-size: 13px;
 }
 
-/* ACCOUNT */
+
+.dashboard-search input::placeholder {
+  color: #a5afbd;
+}
+
+
+/* =====================================================
+   ACCOUNT
+===================================================== */
 
 .dashboard-account {
+  min-height: 50px;
+
   display: flex;
+
   align-items: center;
 
-  gap: 12px;
+  gap: 11px;
 
-  padding: 8px 16px 8px 10px;
+  padding:
+    6px 15px 6px 8px;
 
-  background: #ffffff;
+  background:
+    rgba(255, 255, 255, 0.94);
 
-  border: 1px solid #edf0f5;
+  border:
+    1px solid #eef1f6;
 
   border-radius: 15px;
+
+  box-shadow:
+    0 7px 22px
+    rgba(23, 42, 77, 0.055);
 }
+
 
 .dashboard-avatar {
   width: 40px;
   height: 40px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-shrink: 0;
 
-  background: #fff1d6;
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
 
   border-radius: 50%;
 
-  font-size: 18px;
+  background:
+    linear-gradient(
+      135deg,
+      #f59e0b 0%,
+      #c97a43 42%,
+      #7b56c6 100%
+    );
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  font-weight: 700;
 }
+
 
 .dashboard-account-info {
   display: flex;
+
   flex-direction: column;
+
   gap: 2px;
 }
 
+
 .dashboard-account-info strong {
-  color: #102a43;
+  color: #172a4d;
+
   font-size: 13px;
+
+  font-weight: 750;
 }
+
 
 .dashboard-account-info span {
   color: #94a3b8;
+
   font-size: 11px;
 }
 
-/* =========================
+
+/* =====================================================
    CONTENT
-========================= */
+===================================================== */
 
 .dashboard-content {
   display: flex;
+
   flex-direction: column;
 
-  gap: 25px;
+  gap: 24px;
 }
 
-/* =========================
-   STATS
-========================= */
+
+/* =====================================================
+   STATISTICS
+===================================================== */
 
 .stats-grid {
   display: grid;
@@ -147,167 +288,417 @@
   gap: 18px;
 }
 
+
 .stat-card {
+  position: relative;
+
+  min-width: 0;
+
+  min-height: 142px;
+
   display: flex;
+
   align-items: center;
 
-  gap: 15px;
+  gap: 16px;
 
-  padding: 22px;
+  padding: 20px;
 
-  background: #ffffff;
+  overflow: hidden;
 
-  border: 1px solid #edf0f5;
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #fbfcfe 100%
+    );
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.96);
 
   border-radius: 20px;
 
   box-shadow:
-    0 8px 25px rgba(15, 23, 42, 0.04);
+    0 10px 28px
+    rgba(23, 42, 77, 0.055);
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
 }
 
+
+.stat-card::after {
+  content: "";
+
+  position: absolute;
+
+  right: -45px;
+
+  bottom: -55px;
+
+  width: 120px;
+
+  height: 120px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 174, 38, 0.08),
+      transparent 70%
+    );
+
+  pointer-events: none;
+}
+
+
+.stat-card:hover {
+  transform:
+    translateY(-3px);
+
+  border-color:
+    rgba(255, 178, 53, 0.18);
+
+  box-shadow:
+    0 15px 34px
+    rgba(23, 42, 77, 0.085);
+}
+
+
+/* =====================================================
+   STAT ICON
+===================================================== */
+
 .stat-icon {
-  width: 50px;
-  height: 50px;
+  width: 54px;
+  height: 54px;
 
   flex-shrink: 0;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
-  background: #fff1d6;
+  border-radius: 16px;
 
-  border-radius: 15px;
-
-  font-size: 22px;
-}
-
-.stat-info {
-  min-width: 0;
-
-  display: flex;
-  flex-direction: column;
-
-  gap: 3px;
-}
-
-.stat-label {
-  color: #64748b;
-
-  font-size: 12px;
-}
-
-.stat-value {
-  color: #102a43;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 171, 39, 0.14),
+      rgba(255, 201, 98, 0.22)
+    );
 
   font-size: 23px;
-  font-weight: 800;
 }
+
+
+/* =====================================================
+   STAT INFO
+===================================================== */
+
+.stat-info {
+  position: relative;
+
+  z-index: 1;
+
+  min-width: 0;
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+
+.stat-label {
+  color: #71809a;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+
+.stat-value {
+  min-width: 0;
+
+  color: #172a4d;
+
+  font-size: 27px;
+
+  font-weight: 850;
+
+  line-height: 1.05;
+
+  letter-spacing: -0.35px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
 
 .stat-description {
-  color: #a0aec0;
+  color: #9aa7b8;
 
   font-size: 10px;
+
+  line-height: 1.35;
 }
 
-/* =========================
-   GRID
-========================= */
+
+/* =====================================================
+   REVENUE STAT
+   Không cho số tiền bị quá nhỏ hoặc quá bóp
+===================================================== */
+
+.stat-card:last-child .stat-value {
+  color: #ef8c00;
+
+  font-size: 21px;
+
+  font-weight: 850;
+
+  line-height: 1.18;
+
+  white-space: normal;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =====================================================
+   LOWER GRID
+===================================================== */
 
 .dashboard-grid {
   display: grid;
 
   grid-template-columns:
-    minmax(0, 2fr)
-    minmax(300px, 1fr);
+    minmax(0, 1.85fr)
+    minmax(310px, 0.95fr);
 
   gap: 22px;
+
+  align-items: stretch;
 }
 
+
+/* =====================================================
+   COMMON CARD
+===================================================== */
+
 .dashboard-card {
-  background: #ffffff;
-
-  border: 1px solid #edf0f5;
-
-  border-radius: 22px;
+  min-width: 0;
 
   padding: 25px;
 
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.96);
+
+  border-radius: 22px;
+
   box-shadow:
-    0 8px 25px rgba(15, 23, 42, 0.04);
+    0 11px 30px
+    rgba(23, 42, 77, 0.06);
 }
 
-/* =========================
+
+/* =====================================================
    CARD HEADER
-========================= */
+===================================================== */
 
 .card-header {
   display: flex;
-  justify-content: space-between;
+
   align-items: flex-start;
+
+  justify-content: space-between;
 
   gap: 15px;
 
-  margin-bottom: 25px;
+  margin-bottom: 23px;
 }
+
 
 .card-header h2 {
   margin: 0;
 
-  color: #102a43;
+  color: #172a4d;
 
-  font-size: 18px;
+  font-size: 20px;
+
+  font-weight: 800;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.25px;
 }
 
+
 .card-header p {
-  margin: 5px 0 0;
+  margin:
+    6px 0 0;
 
   color: #94a3b8;
 
   font-size: 12px;
 }
 
-.card-action {
-  padding: 8px 12px;
 
-  border: 1px solid #edf0f5;
+/* =====================================================
+   YEAR
+===================================================== */
 
-  background: #f8fafc;
-
-  border-radius: 9px;
-
-  color: #64748b;
-
-  cursor: pointer;
+.year-selector {
+  flex-shrink: 0;
 }
 
-/* =========================
+
+.card-action {
+  min-width: 88px;
+
+  padding:
+    10px 14px;
+
+  border:
+    1px solid
+    rgba(255, 177, 43, 0.20);
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 174, 37, 0.10),
+      rgba(111, 88, 215, 0.06)
+    );
+
+  color: #34445e;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+.card-action:hover {
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 6px 16px
+    rgba(255, 174, 37, 0.10);
+}
+
+
+/* =====================================================
+   YEAR DROPDOWN
+===================================================== */
+
+.year-dropdown {
+  min-width: 120px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    #edf0f5 !important;
+
+  border-radius: 12px !important;
+
+  box-shadow:
+    0 14px 32px
+    rgba(23, 42, 77, 0.12) !important;
+}
+
+
+.year-dropdown button {
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+
+.year-dropdown button:hover {
+  background:
+    rgba(255, 157, 0, 0.08) !important;
+
+  color: #f08c00 !important;
+}
+
+
+/* =====================================================
    CHART
-========================= */
+===================================================== */
 
 .chart {
-  height: 270px;
+  height: 310px;
 
   display: flex;
 
-  gap: 12px;
+  gap: 13px;
 }
+
+
+/* =====================================================
+   CHART Y AXIS
+===================================================== */
 
 .chart-y {
   width: 40px;
 
+  flex-shrink: 0;
+
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
 
   padding-bottom: 30px;
 
-  color: #a0aec0;
+  color: #a3adbb;
 
   font-size: 10px;
 
   text-align: right;
 }
+
+
+/* =====================================================
+   CHART AREA
+===================================================== */
 
 .chart-area {
   position: relative;
@@ -317,8 +708,14 @@
   min-width: 0;
 
   display: flex;
+
   flex-direction: column;
 }
+
+
+/* =====================================================
+   CHART LINES
+===================================================== */
 
 .chart-lines {
   position: absolute;
@@ -329,87 +726,205 @@
   bottom: 30px;
 
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
+
+  pointer-events: none;
 }
+
 
 .chart-lines span {
   width: 100%;
 
-  border-top: 1px dashed #e8edf3;
+  border-top:
+    1px dashed
+    rgba(148, 163, 184, 0.25);
 }
+
+
+/* =====================================================
+   CHART BARS
+===================================================== */
 
 .chart-bars {
   position: relative;
 
   flex: 1;
 
+  min-height: 0;
+
   display: flex;
+
   align-items: flex-end;
 
   justify-content: space-between;
 
   gap: 8px;
 
-  padding: 0 4px;
+  padding:
+    0 5px;
 }
+
 
 .chart-bar {
   position: relative;
 
   flex: 1;
 
-  max-width: 35px;
+  max-width: 38px;
 
-  background: #ffae27;
+  min-height: 0;
 
-  border-radius: 7px 7px 2px 2px;
+  border-radius:
+    9px
+    9px
+    3px
+    3px;
 
-  transition: 0.2s;
+  background:
+    linear-gradient(
+      180deg,
+      #ffb83d 0%,
+      #ff9817 55%,
+      #f28a00 100%
+    );
+
+  box-shadow:
+    0 5px 14px
+    rgba(255, 153, 17, 0.16);
+
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
 }
+
 
 .chart-bar:hover {
-  opacity: 0.8;
+  transform:
+    translateY(-3px);
+
+  filter:
+    brightness(1.03);
 }
+
+
+.chart-bar span {
+  position: absolute;
+
+  top: 3px;
+
+  left: 5px;
+  right: 5px;
+
+  height: 3px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.35);
+}
+
+
+/* =====================================================
+   MONTH LABELS
+===================================================== */
 
 .chart-months {
   height: 30px;
 
   display: flex;
-  justify-content: space-between;
 
   align-items: flex-end;
+
+  justify-content: space-between;
 
   color: #94a3b8;
 
   font-size: 10px;
+
+  font-weight: 500;
 }
 
-/* =========================
+
+.chart-months span {
+  flex: 1;
+
+  text-align: center;
+}
+
+
+/* =====================================================
    OVERVIEW
-========================= */
+===================================================== */
+
+.overview-card {
+  min-height: 100%;
+}
+
 
 .overview-list {
   display: flex;
+
   flex-direction: column;
 
-  gap: 12px;
+  gap: 11px;
 }
+
 
 .overview-item {
+  min-height: 59px;
+
   display: flex;
-  justify-content: space-between;
+
   align-items: center;
 
-  padding: 13px 14px;
+  justify-content: space-between;
 
-  background: #f8fafc;
+  gap: 15px;
 
-  border-radius: 12px;
+  padding:
+    11px 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fafbfe,
+      #f3f5fb
+    );
+
+  border:
+    1px solid
+    rgba(226, 232, 240, 0.75);
+
+  border-radius: 14px;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
 }
 
+
+.overview-item:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(255, 178, 53, 0.14);
+
+  box-shadow:
+    0 7px 18px
+    rgba(23, 42, 77, 0.05);
+}
+
+
 .overview-left {
+  min-width: 0;
+
   display: flex;
+
   align-items: center;
 
   gap: 10px;
@@ -417,54 +932,89 @@
   color: #64748b;
 
   font-size: 13px;
+
+  font-weight: 550;
 }
+
 
 .overview-icon {
-  width: 32px;
-  height: 32px;
+  width: 35px;
+  height: 35px;
+
+  flex-shrink: 0;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
-  background: #fff1d6;
+  border-radius: 10px;
 
-  border-radius: 9px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 171, 39, 0.15),
+      rgba(116, 89, 215, 0.08)
+    );
+
+  font-size: 17px;
 }
+
 
 .overview-item strong {
-  color: #102a43;
+  max-width: 55%;
+
+  color: #172a4d;
 
   font-size: 14px;
+
+  font-weight: 800;
+
+  text-align: right;
+
+  overflow-wrap: anywhere;
 }
 
-/* =========================
-   QUICK ACTIONS
-========================= */
+
+/* =====================================================
+   QUICK SECTION
+===================================================== */
 
 .quick-section {
-  margin-top: 3px;
+  margin-top: 1px;
 }
 
+
 .section-title {
-  margin-bottom: 15px;
+  margin-bottom: 14px;
 }
+
 
 .section-title h2 {
   margin: 0;
 
-  color: #102a43;
+  color: #172a4d;
 
-  font-size: 18px;
+  font-size: 20px;
+
+  font-weight: 800;
 }
 
+
 .section-title p {
-  margin: 5px 0 0;
+  margin:
+    5px 0 0;
 
   color: #94a3b8;
 
   font-size: 12px;
 }
+
+
+/* =====================================================
+   QUICK ACTIONS
+===================================================== */
 
 .quick-actions {
   display: grid;
@@ -472,64 +1022,102 @@
   grid-template-columns:
     repeat(3, minmax(0, 1fr));
 
-  gap: 16px;
+  gap: 15px;
 }
 
+
 .quick-actions button {
+  min-width: 0;
+
   display: flex;
+
   align-items: center;
 
-  gap: 14px;
+  gap: 13px;
 
-  padding: 18px;
+  padding: 17px;
 
-  background: #ffffff;
+  background:
+    rgba(255, 255, 255, 0.96);
 
-  border: 1px solid #edf0f5;
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.96);
 
   border-radius: 16px;
+
+  box-shadow:
+    0 8px 24px
+    rgba(23, 42, 77, 0.05);
 
   cursor: pointer;
 
   text-align: left;
 
-  transition: 0.2s;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
+
 
 .quick-actions button:hover {
-  transform: translateY(-2px);
+  transform:
+    translateY(-3px);
+
+  border-color:
+    rgba(255, 171, 39, 0.16);
 
   box-shadow:
-    0 8px 25px rgba(15, 23, 42, 0.08);
+    0 14px 30px
+    rgba(23, 42, 77, 0.085);
 }
 
+
 .quick-actions button > span {
-  width: 42px;
-  height: 42px;
+  width: 43px;
+  height: 43px;
+
+  flex-shrink: 0;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
-  background: #fff1d6;
-
   border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 173, 39, 0.16),
+      rgba(107, 87, 214, 0.08)
+    );
 
   font-size: 18px;
 }
 
+
 .quick-actions button div {
+  min-width: 0;
+
   display: flex;
+
   flex-direction: column;
 
   gap: 4px;
 }
 
+
 .quick-actions strong {
-  color: #102a43;
+  color: #172a4d;
 
   font-size: 13px;
+
+  font-weight: 750;
 }
+
 
 .quick-actions small {
   color: #94a3b8;
@@ -537,344 +1125,462 @@
   font-size: 10px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
 
-@media (max-width: 1100px) {
+/* =====================================================
+   FOCUS
+===================================================== */
+
+button:focus-visible,
+input:focus-visible {
+  outline:
+    3px solid
+    rgba(255, 152, 0, 0.18);
+
+  outline-offset: 2px;
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+html {
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(148, 163, 184, 0.42)
+    transparent;
+}
+
+
+html::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+html::-webkit-scrollbar-thumb {
+  background:
+    rgba(148, 163, 184, 0.42);
+
+  border-radius: 999px;
+}
+
+
+html::-webkit-scrollbar-thumb:hover {
+  background:
+    rgba(100, 116, 139, 0.60);
+}
+
+
+/* =====================================================
+   RESPONSIVE - 1200
+===================================================== */
+
+@media (max-width: 1200px) {
+
+  .dashboard-page {
+    max-width: 100%;
+  }
+
+
+  .stats-grid {
+    gap: 14px;
+  }
+
+
+  .stat-card {
+    padding: 18px;
+  }
+
+
+  .stat-value {
+    font-size: 23px;
+  }
+
+
+  .stat-card:last-child .stat-value {
+    font-size: 19px;
+  }
+
+
+  .dashboard-grid {
+    grid-template-columns:
+      minmax(0, 1.7fr)
+      minmax(290px, 1fr);
+  }
+
+}
+
+
+/* =====================================================
+   RESPONSIVE - 1000
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .dashboard-topbar {
+    align-items: flex-start;
+  }
+
+
+  .dashboard-search {
+    width: 230px;
+  }
+
+
   .stats-grid {
     grid-template-columns:
       repeat(2, minmax(0, 1fr));
   }
 
+
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
+
+
+  .overview-card {
+    min-height: auto;
+  }
+
 }
 
-@media (max-width: 750px) {
+
+/* =====================================================
+   RESPONSIVE - 760
+===================================================== */
+
+@media (max-width: 760px) {
+
   .dashboard-topbar {
     flex-direction: column;
-    align-items: flex-start;
+
+    align-items: stretch;
+
+    gap: 18px;
   }
+
+
+  .dashboard-topbar h1 {
+    font-size: 31px;
+  }
+
 
   .dashboard-topbar-right {
     width: 100%;
   }
 
+
   .dashboard-search {
     flex: 1;
+
+    width: auto;
   }
+
+
+  .dashboard-account {
+    flex-shrink: 0;
+  }
+
 
   .quick-actions {
     grid-template-columns: 1fr;
   }
+
 }
 
-@media (max-width: 550px) {
+
+/* =====================================================
+   RESPONSIVE - 560
+===================================================== */
+
+@media (max-width: 560px) {
+
+  .dashboard-page {
+    padding:
+      0 0 24px;
+  }
+
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
 
+
+  .stat-card {
+    min-height: 118px;
+  }
+
+
   .dashboard-topbar-right {
     flex-direction: column;
+
     align-items: stretch;
   }
+
 
   .dashboard-search {
     width: 100%;
   }
 
+
   .dashboard-account {
     width: fit-content;
   }
+
+
+  .dashboard-card {
+    padding: 20px;
+  }
+
+
+  .card-header {
+    align-items: flex-start;
+  }
+
+
+  .chart {
+    height: 270px;
+  }
+
+
+  .chart-y {
+    width: 34px;
+  }
+
 }
 /* =====================================================
-   RENTHUB THEME - ADMIN DASHBOARD
-   Giữ nguyên layout và cấu trúc cũ
-===================================================== */
-
-.dashboard-page {
-  background:
-    radial-gradient(
-      circle at 92% 5%,
-      rgba(255, 174, 39, 0.18),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 5% 95%,
-      rgba(74, 70, 232, 0.13),
-      transparent 30%
-    ),
-    linear-gradient(
-      135deg,
-      #f9fafc 0%,
-      #f3f5fa 55%,
-      #eef1fb 100%
-    );
-}
-
-/* =========================
-   TOPBAR
-========================= */
-
-.dashboard-topbar h1 {
-  color: #172a4d;
-}
-
-.dashboard-topbar p {
-  color: #94a3b8;
-}
-
-.dashboard-search {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-
-  box-shadow:
-    0 8px 25px rgba(23, 42, 77, 0.05);
-
-  backdrop-filter: blur(12px);
-}
-
-.dashboard-account {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-
-  box-shadow:
-    0 8px 25px rgba(23, 42, 77, 0.05);
-
-  backdrop-filter: blur(12px);
-}
-
-.dashboard-avatar {
-  background:
-    linear-gradient(
-      135deg,
-      #ff9d00,
-      #ffbe48
-    );
-
-  color: white;
-}
-
-/* =========================
-   STAT CARDS
-========================= */
-
-.stat-card {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-
-  box-shadow:
-    0 12px 35px rgba(23, 42, 77, 0.07);
-
-  backdrop-filter: blur(12px);
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.stat-card:hover {
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 16px 38px rgba(23, 42, 77, 0.11);
-}
-
-.stat-icon {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 157, 0, 0.18),
-      rgba(255, 190, 72, 0.25)
-    );
-}
-
-.stat-label {
-  color: #64748b;
-}
-
-.stat-value {
-  color: #172a4d;
-}
-
-.stat-description {
-  color: #94a3b8;
-}
-
-/* =========================
-   CARDS
-========================= */
-
-.dashboard-card {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-
-  box-shadow:
-    0 12px 35px rgba(23, 42, 77, 0.07);
-
-  backdrop-filter: blur(12px);
-}
-
-.card-header h2 {
-  color: #172a4d;
-}
-
-.card-header p {
-  color: #94a3b8;
-}
-
-.card-action {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 157, 0, 0.10),
-      rgba(74, 70, 232, 0.06)
-    );
-
-  border-color: rgba(255, 157, 0, 0.12);
-}
-
-/* =========================
-   CHART
-========================= */
-
-.chart-lines span {
-  border-top-color: rgba(148, 163, 184, 0.25);
-}
-
-.chart-bar {
-  background:
-    linear-gradient(
-      180deg,
-      #ffb52e 0%,
-      #ff9814 55%,
-      #ff8a00 100%
-    );
-
-  box-shadow:
-    0 5px 14px rgba(255, 157, 0, 0.18);
-}
-
-.chart-bar:hover {
-  opacity: 0.88;
-  transform: translateY(-2px);
-}
-
-.chart-months {
-  color: #94a3b8;
-}
-
-/* =========================
-   OVERVIEW
-========================= */
-
-.overview-item {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(248, 250, 252, 0.96),
-      rgba(238, 241, 251, 0.82)
-    );
-
-  border: 1px solid rgba(226, 232, 240, 0.65);
-}
-
-.overview-left {
-  color: #64748b;
-}
-
-.overview-icon {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 157, 0, 0.15),
-      rgba(255, 190, 72, 0.22)
-    );
-}
-
-.overview-item strong {
-  color: #172a4d;
-}
-
-/* =========================
-   QUICK ACTIONS
-========================= */
-
-.section-title h2 {
-  color: #172a4d;
-}
-
-.section-title p {
-  color: #94a3b8;
-}
-
-.quick-actions button {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.95);
-
-  box-shadow:
-    0 8px 25px rgba(23, 42, 77, 0.05);
-
-  backdrop-filter: blur(12px);
-}
-
-.quick-actions button:hover {
-  box-shadow:
-    0 14px 32px rgba(23, 42, 77, 0.10);
-}
-
-.quick-actions button > span {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 157, 0, 0.18),
-      rgba(74, 70, 232, 0.08)
-    );
-}
-
-.quick-actions strong {
-  color: #172a4d;
-}
-
-.quick-actions small {
-  color: #94a3b8;
-}
-/* =====================================================
-   FIX CARD DOANH THU BỊ TRÀN
+   FIX 4 STAT CARDS - CÂN ĐỀU + DOANH THU KHÔNG BỊ CẮT
 ===================================================== */
 
 .stats-grid {
-  min-width: 0;
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr)) !important;
+
+  gap: 18px !important;
+
+  width: 100% !important;
 }
 
-.stat-card {
-  min-width: 0;
+
+.stats-grid .stat-card {
+  width: 100% !important;
+
+  min-width: 0 !important;
+
+  min-height: 142px;
+
+  display: flex !important;
+
+  align-items: center !important;
+
+  gap: 15px !important;
+
+  padding: 20px !important;
+
+  overflow: hidden !important;
+
+  border-radius: 20px;
+}
+
+
+/* =====================================================
+   ICON
+===================================================== */
+
+.stats-grid .stat-card .stat-icon {
+  width: 52px !important;
+
+  height: 52px !important;
+
+  min-width: 52px !important;
+
+  flex: 0 0 52px !important;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 15px;
+}
+
+
+/* =====================================================
+   TEXT AREA
+===================================================== */
+
+.stats-grid .stat-card .stat-info {
+  flex: 1 1 auto !important;
+
+  min-width: 0 !important;
+
+  max-width: 100% !important;
+
+  overflow: hidden !important;
+}
+
+
+/* =====================================================
+   LABEL
+===================================================== */
+
+.stats-grid .stat-card .stat-label {
+  display: block;
+
+  margin-bottom: 4px;
+
+  white-space: nowrap;
+
   overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
-.stat-info {
-  min-width: 0;
-  flex: 1;
-}
 
-.stat-value {
-  min-width: 0;
-  max-width: 100%;
-  font-size: 22px;
-  line-height: 1.15;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
+/* =====================================================
+   NUMBER - 3 Ô THƯỜNG
+===================================================== */
 
-/* Card doanh thu */
-.stat-card:last-child .stat-value {
-  font-size: 21px;
-  line-height: 1.15;
-}
+.stats-grid .stat-card:not(:last-child) .stat-value {
+  display: block;
 
-/* Không cho số tiền phá layout */
-.stat-card:last-child {
+  width: 100%;
+
+  color: #172a4d;
+
+  font-size: 27px;
+
+  font-weight: 850;
+
+  line-height: 1.1;
+
+  white-space: nowrap;
+
   overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =====================================================
+   DOANH THU
+===================================================== */
+
+.stats-grid .stat-card:last-child .stat-info {
+  overflow: visible !important;
+}
+
+
+.stats-grid .stat-card:last-child .stat-value {
+  display: block !important;
+
+  width: 100% !important;
+
+  color: #ef8c00 !important;
+
+  font-size: 18px !important;
+
+  font-weight: 850 !important;
+
+  line-height: 1.25 !important;
+
+  letter-spacing: -0.35px !important;
+
+  white-space: nowrap !important;
+
+  overflow: visible !important;
+
+  text-overflow: clip !important;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.stats-grid .stat-card .stat-description {
+  display: block;
+
+  margin-top: 4px;
+
+  line-height: 1.35;
+
+  white-space: normal;
+}
+
+
+/* =====================================================
+   MÀN HÌNH NHỎ
+===================================================== */
+
+@media (max-width: 1200px) {
+
+  .stats-grid {
+    gap: 14px !important;
+  }
+
+  .stats-grid .stat-card {
+    padding: 17px !important;
+
+    gap: 12px !important;
+  }
+
+  .stats-grid .stat-card .stat-icon {
+    width: 48px !important;
+
+    height: 48px !important;
+
+    min-width: 48px !important;
+
+    flex-basis: 48px !important;
+  }
+
+  .stats-grid .stat-card:not(:last-child) .stat-value {
+    font-size: 23px;
+  }
+
+  .stats-grid .stat-card:last-child .stat-value {
+    font-size: 16px !important;
+  }
+
+}
+
+
+@media (max-width: 1000px) {
+
+  .stats-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .stats-grid .stat-card:last-child .stat-value {
+    font-size: 19px !important;
+  }
+
+}
+
+
+@media (max-width: 560px) {
+
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .stats-grid .stat-card {
+    min-height: 118px;
+  }
+
+  .stats-grid .stat-card:last-child .stat-value {
+    font-size: 21px !important;
+  }
+
 }

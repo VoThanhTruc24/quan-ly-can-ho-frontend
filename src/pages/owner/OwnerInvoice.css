@@ -3641,3 +3641,2198 @@
   }
 
 }
+/* =====================================================
+   CHƯA CHỌN PHƯƠNG THỨC
+===================================================== */
+
+.payment-method-empty {
+  min-height: 170px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #f8fbff,
+      #ffffff
+    );
+
+  text-align: center;
+}
+
+.payment-method-empty-icon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 10px;
+
+  border-radius: 14px;
+
+  background: #eff6ff;
+
+  font-size: 24px;
+}
+
+.payment-method-empty h3 {
+  margin: 0;
+
+  color: #172a4d;
+
+  font-size: 15px;
+}
+
+.payment-method-empty p {
+  max-width: 350px;
+
+  margin: 6px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   4 PHƯƠNG THỨC
+===================================================== */
+
+.payment-method-tabs {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+.payment-tab {
+  width: 100%;
+
+  min-height: 72px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 10px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid #e2e8f0;
+
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  transition:
+    0.2s ease;
+}
+
+.payment-tab:hover {
+  border-color: #93c5fd;
+
+  background: #f8fbff;
+
+  transform: translateY(-1px);
+}
+
+.payment-tab.active {
+  border-color: #005baa;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #ffffff
+    );
+
+  box-shadow:
+    0 5px 14px
+    rgba(0, 91, 170, 0.09);
+}
+
+.payment-tab-icon {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #f1f5f9;
+
+  font-size: 18px;
+}
+
+.payment-tab.active .payment-tab-icon {
+  background: #dbeafe;
+}
+
+.payment-tab > span:last-child {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.payment-tab strong {
+  color: #172a4d;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.payment-tab small {
+  color: #94a3b8;
+
+  font-size: 9px;
+}
+
+
+/* =====================================================
+   BANK LIST
+===================================================== */
+
+.bank-select-list {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 8px;
+
+  max-height: 210px;
+
+  overflow-y: auto;
+
+  scrollbar-width: none;
+}
+
+.bank-select-list::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.bank-select-item {
+  width: 100%;
+
+  min-height: 56px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 8px 10px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  transition: 0.2s ease;
+}
+
+.bank-select-item:hover {
+  border-color: #93c5fd;
+
+  background: #f8fbff;
+}
+
+.bank-select-item.selected {
+  border-color: #1976d2;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #ffffff
+    );
+
+  box-shadow:
+    0 3px 9px
+    rgba(37, 99, 235, 0.08);
+}
+
+.bank-logo-box {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  padding: 4px;
+
+  background: #ffffff;
+
+  border:
+    1px solid #edf0f5;
+
+  border-radius: 8px;
+
+  overflow: hidden;
+}
+
+.bank-logo {
+  width: 29px;
+  height: 29px;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+.bank-select-content {
+  flex: 1;
+
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.bank-select-content strong {
+  overflow: hidden;
+
+  color: #172a4d;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.bank-select-content small {
+  overflow: hidden;
+
+  color: #94a3b8;
+
+  font-size: 8px;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.bank-check {
+  width: 20px;
+  height: 20px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #005baa;
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   VNPAY BOX
+===================================================== */
+
+.vnpay-payment-box {
+  padding: 19px;
+
+  border-radius: 17px;
+
+  border:
+    1px solid #e2e8f0;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fbfdff,
+      #f7faff
+    );
+}
+
+.vnpay-payment-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 14px;
+}
+
+.vnpay-payment-header h3 {
+  margin: 0;
+
+  color: #172a4d;
+
+  font-size: 16px;
+}
+
+.vnpay-secure {
+  padding: 7px 10px;
+
+  border-radius: 8px;
+
+  background: #ecfdf5;
+
+  color: #15803d;
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+.vnpay-demo-note {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+  padding: 10px 12px;
+
+  margin-bottom: 16px;
+
+  border-radius: 9px;
+
+  background: #f8fafc;
+
+  border:
+    1px solid #e2e8f0;
+}
+
+.vnpay-demo-note span {
+  font-size: 14px;
+}
+
+.vnpay-demo-note p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   PAYMENT FIELD
+===================================================== */
+
+.payment-field {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+
+  margin-bottom: 13px;
+}
+
+.payment-field label {
+  color: #475569;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.payment-field input {
+  width: 100%;
+
+  height: 43px;
+
+  box-sizing: border-box;
+
+  padding: 0 12px;
+
+  border:
+    1px solid #dbe3ec;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #172a4d;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  outline: none;
+
+  transition: 0.2s ease;
+}
+
+.payment-field input::placeholder {
+  color: #b3becb;
+}
+
+.payment-field input:focus {
+  border-color: #1976d2;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(25, 118, 210, 0.07);
+}
+
+
+/* =====================================================
+   OTP
+===================================================== */
+
+.otp-demo-note {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 9px 11px;
+
+  border-radius: 9px;
+
+  background: #f8fafc;
+
+  border:
+    1px solid #edf0f5;
+}
+
+.otp-demo-note p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 10px;
+}
+
+.otp-demo-note strong {
+  color: #005baa;
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.payment-modal-error {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 8px;
+
+  margin-top: 13px;
+
+  padding: 10px 12px;
+
+  border-radius: 9px;
+
+  background: #fef2f2;
+
+  border:
+    1px solid #fecaca;
+}
+
+.payment-modal-error span {
+  color: #dc2626;
+
+  font-size: 14px;
+}
+
+.payment-modal-error p {
+  margin: 0;
+
+  color: #b91c1c;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   UNSUPPORTED METHOD
+===================================================== */
+
+.unsupported-payment-card {
+  min-height: 145px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  border:
+    1px solid #e2e8f0;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8fafc,
+      #ffffff
+    );
+}
+
+.unsupported-payment-icon {
+  width: 54px;
+  height: 54px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff4df,
+      #eef4ff
+    );
+
+  font-size: 25px;
+}
+
+.unsupported-payment-card h3 {
+  margin: 0;
+
+  color: #172a4d;
+
+  font-size: 15px;
+}
+
+.unsupported-payment-card p {
+  margin: 6px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+}
+
+
+/* =====================================================
+   PAYMENT FOOTER
+===================================================== */
+
+.payment-modal-footer {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 16px;
+
+  padding-top: 15px;
+
+  border-top:
+    1px solid #edf0f5;
+}
+
+.payment-cancel-button,
+.payment-confirm-button {
+  min-width: 110px;
+
+  height: 41px;
+
+  padding: 0 17px;
+
+  border-radius: 9px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.payment-cancel-button {
+  border:
+    1px solid #e2e8f0;
+
+  background: #f8fafc;
+
+  color: #64748b;
+}
+
+.payment-confirm-button {
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0878c9,
+      #005baa
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 13px
+    rgba(0, 91, 170, 0.16);
+}
+
+.payment-confirm-button:hover {
+  transform: translateY(-1px);
+}
+
+.payment-confirm-button:disabled,
+.payment-cancel-button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =====================================================
+   SUCCESS
+===================================================== */
+
+.payment-success {
+  min-height: 360px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 25px;
+
+  text-align: center;
+}
+
+.payment-success-icon {
+  width: 72px;
+  height: 72px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 50%;
+
+  background: #dcfce7;
+
+  color: #16a34a;
+
+  font-size: 40px;
+
+  font-weight: 800;
+}
+
+.payment-success h2 {
+  margin: 0;
+
+  color: #172a4d;
+
+  font-size: 23px;
+}
+
+.payment-success p {
+  margin: 9px 0 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+.payment-success p strong {
+  color: #16a34a;
+}
+
+.payment-success-amount {
+  margin-top: 18px;
+
+  color: #005baa;
+
+  font-size: 27px;
+
+  font-weight: 800;
+}
+
+.payment-success small {
+  margin-top: 12px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+
+  .payment-method-tabs {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .bank-select-list {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .payment-modal-overlay {
+    padding: 12px;
+  }
+
+  .payment-modal {
+    width: 100%;
+
+    max-height:
+      calc(100vh - 24px);
+
+    padding: 18px;
+
+    border-radius: 20px;
+
+    scrollbar-width: none;
+  }
+
+  .payment-modal::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  .payment-method-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-modal-amount {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .payment-modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .payment-cancel-button,
+  .payment-confirm-button {
+    width: 100%;
+  }
+
+}
+/* =====================================================
+   BỎ Ô TRÒN XANH Ở NGÂN HÀNG
+===================================================== */
+
+.bank-check {
+  display: none !important;
+}
+
+/* =====================================================
+   FINAL OVERRIDE - XÓA Ô TRÒN XANH Ở NGÂN HÀNG
+===================================================== */
+.bank-check {
+  display: none !important;
+}
+
+.bank-select-item {
+  justify-content: flex-start;
+}
+
+.bank-select-content {
+  flex: 1;
+}
+/* =========================================================
+   RENTHUB - OWNER INVOICE
+   PREMIUM REDESIGN
+   ---------------------------------------------------------
+   Chỉ override giao diện.
+   Không thay đổi JSX / API / payment logic.
+========================================================= */
+
+/* =========================================================
+   1. PAGE
+========================================================= */
+
+.owner-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(
+      circle at 92% 4%,
+      rgba(255, 174, 39, 0.16),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 6% 88%,
+      rgba(88, 75, 214, 0.10),
+      transparent 27%
+    ),
+    linear-gradient(
+      135deg,
+      #f8fafc 0%,
+      #f3f6fb 52%,
+      #eef1fb 100%
+    ) !important;
+}
+
+/* =========================================================
+   2. SIDEBAR - PREMIUM
+========================================================= */
+
+.owner-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 280px;
+  padding: 28px 18px;
+  background: rgba(255, 255, 255, 0.90) !important;
+  border-right: 1px solid rgba(226, 232, 240, 0.82);
+  box-shadow:
+    10px 0 34px rgba(15, 39, 71, 0.045);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 100;
+}
+
+.owner-logo {
+  padding: 0 10px 28px !important;
+  margin-bottom: 8px !important;
+  color: #172a4d !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.25px;
+}
+
+.owner-logo-icon {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 15px !important;
+  background:
+    linear-gradient(
+      135deg,
+      #ff9800,
+      #ffb72e
+    ) !important;
+  box-shadow:
+    0 10px 22px rgba(255, 152, 0, 0.20);
+}
+
+.owner-menu {
+  min-height: 52px;
+  padding: 14px 15px !important;
+  border-radius: 14px !important;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.owner-menu:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 152, 0, 0.08),
+      rgba(91, 75, 234, 0.05)
+    ) !important;
+  color: #ef8b00 !important;
+  transform: translateX(2px);
+}
+
+.owner-menu.active {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 167, 52, 0.15),
+      rgba(92, 78, 220, 0.07)
+    ) !important;
+  color: #ef8b00 !important;
+  font-weight: 700 !important;
+  box-shadow:
+    inset 4px 0 0 #ff9800,
+    0 5px 15px rgba(15, 39, 71, 0.035);
+}
+
+.owner-logout {
+  min-height: 52px;
+  padding: 14px 15px !important;
+  border-radius: 14px !important;
+  background:
+    linear-gradient(
+      135deg,
+      #fff1f2,
+      #ffe9ed
+    ) !important;
+  color: #dc2626 !important;
+  font-weight: 600;
+}
+
+.owner-logout:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 8px 20px rgba(220, 38, 38, 0.10);
+}
+
+/* =========================================================
+   3. MAIN AREA
+========================================================= */
+
+.owner-main {
+  width: calc(100% - 280px) !important;
+  min-width: 0;
+  margin-left: 280px !important;
+  padding: 42px 46px 62px !important;
+  max-width: 1700px;
+}
+
+/* =========================================================
+   4. HEADER
+========================================================= */
+
+.owner-header {
+  margin-bottom: 30px !important;
+  gap: 30px;
+}
+
+.owner-header h1 {
+  font-size: clamp(34px, 3vw, 43px) !important;
+  font-weight: 850 !important;
+  letter-spacing: -1px;
+  color: #172a4d !important;
+}
+
+.owner-header p {
+  margin-top: 8px !important;
+  font-size: 15px !important;
+  color: #94a3b8 !important;
+}
+
+.owner-avatar {
+  width: 56px !important;
+  height: 56px !important;
+  background:
+    linear-gradient(
+      135deg,
+      #ff9800 0%,
+      #c97b45 44%,
+      #7350c7 100%
+    ) !important;
+  box-shadow:
+    0 10px 24px rgba(92, 75, 184, 0.18);
+}
+
+/* =========================================================
+   5. SUMMARY CARDS
+========================================================= */
+
+.invoice-summary {
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  margin-bottom: 22px !important;
+}
+
+.invoice-summary-card {
+  position: relative;
+  min-height: 136px;
+  padding: 24px 22px !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255, 255, 255, 0.95) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  box-shadow:
+    0 12px 32px rgba(23, 42, 77, 0.065) !important;
+  overflow: hidden;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.invoice-summary-card::after {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  top: -92px;
+  right: -65px;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 176, 50, 0.11),
+      transparent 68%
+    );
+  pointer-events: none;
+}
+
+.invoice-summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 17px 38px rgba(23, 42, 77, 0.09) !important;
+}
+
+.invoice-summary-icon {
+  width: 58px !important;
+  height: 58px !important;
+  border-radius: 16px !important;
+  flex-shrink: 0;
+}
+
+.invoice-summary-icon.blue {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(91, 75, 234, 0.12),
+      rgba(91, 75, 234, 0.20)
+    ) !important;
+}
+
+.invoice-summary-icon.green {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(34, 197, 94, 0.12),
+      rgba(16, 185, 129, 0.19)
+    ) !important;
+}
+
+.invoice-summary-icon.orange {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 152, 0, 0.12),
+      rgba(255, 183, 46, 0.20)
+    ) !important;
+}
+
+.invoice-summary-card span {
+  color: #8fa0b8 !important;
+  font-size: 12px !important;
+  font-weight: 600;
+}
+
+.invoice-summary-card strong {
+  color: #172a4d !important;
+  font-size: 27px !important;
+  line-height: 1.05;
+  letter-spacing: -0.4px;
+}
+
+.invoice-summary-card small,
+.summary-money {
+  color: #7f90a8 !important;
+  font-size: 11px !important;
+}
+
+/* =========================================================
+   6. INVOICE CONTAINER
+========================================================= */
+
+.invoice-container {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(255, 255, 255, 0.96) !important;
+  background: rgba(255, 255, 255, 0.93) !important;
+  box-shadow:
+    0 14px 38px rgba(23, 42, 77, 0.065) !important;
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* =========================================================
+   7. LIST HEADER
+========================================================= */
+
+.invoice-title {
+  padding:
+    28px 32px 22px !important;
+  border-bottom:
+    1px solid rgba(226, 232, 240, 0.86) !important;
+}
+
+.invoice-title h2 {
+  margin: 0 !important;
+  color: #172a4d !important;
+  font-size: 24px !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.45px;
+}
+
+.invoice-title p {
+  margin: 7px 0 0 !important;
+  color: #94a3b8 !important;
+  font-size: 13px !important;
+}
+
+/* =========================================================
+   8. INVOICE ITEM - PREMIUM ROW
+========================================================= */
+
+.invoice-item {
+  position: relative;
+  width: 100% !important;
+  min-width: 0;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 28px !important;
+  padding:
+    23px 32px !important;
+  border: 0 !important;
+  border-bottom:
+    1px solid rgba(231, 236, 243, 0.82) !important;
+  background: rgba(255, 255, 255, 0.70) !important;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.invoice-item:last-child {
+  border-bottom: 0 !important;
+}
+
+.invoice-item:hover {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(248, 250, 252, 0.94),
+      rgba(255, 255, 255, 0.96)
+    ) !important;
+  transform: none !important;
+  box-shadow:
+    inset 4px 0 0 rgba(255, 152, 0, 0.55);
+}
+
+/* =========================================================
+   9. LEFT CONTENT
+========================================================= */
+
+.invoice-left {
+  min-width: 0;
+  flex: 1;
+  gap: 17px !important;
+}
+
+.invoice-icon {
+  width: 58px !important;
+  height: 58px !important;
+  flex-shrink: 0;
+  border-radius: 16px !important;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 157, 0, 0.10),
+      rgba(34, 197, 94, 0.12)
+    ) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.80);
+  font-size: 25px !important;
+}
+
+.invoice-left h3 {
+  margin: 0 !important;
+  color: #172a4d !important;
+  font-size: 17px !important;
+  font-weight: 780 !important;
+  line-height: 1.35 !important;
+}
+
+.invoice-left p {
+  margin: 4px 0 !important;
+  color: #91a1b8 !important;
+  font-size: 13px !important;
+}
+
+.invoice-left small {
+  color: #99a8ba !important;
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+}
+
+/* Payment metadata */
+.paid-info {
+  color: #7b8da5 !important;
+}
+
+/* =========================================================
+   10. RIGHT CONTENT
+========================================================= */
+
+.invoice-right {
+  min-width: 205px !important;
+  align-items: flex-end !important;
+  gap: 9px !important;
+}
+
+.invoice-right strong {
+  color: #f28c00 !important;
+  font-size: 20px !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.35px;
+}
+
+/* =========================================================
+   11. STATUS BADGES
+========================================================= */
+
+.invoice-paid,
+.invoice-unpaid,
+.invoice-overdue {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 7px 13px !important;
+  border-radius: 999px !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+  white-space: nowrap;
+}
+
+.invoice-paid {
+  background:
+    linear-gradient(
+      135deg,
+      #dcfce7,
+      #d1fae5
+    ) !important;
+  color: #15803d !important;
+}
+
+.invoice-unpaid {
+  background:
+    linear-gradient(
+      135deg,
+      #fff7e8,
+      #fff1d4
+    ) !important;
+  color: #d97706 !important;
+}
+
+.invoice-overdue {
+  background:
+    linear-gradient(
+      135deg,
+      #fef2f2,
+      #fee2e2
+    ) !important;
+  color: #dc2626 !important;
+}
+
+.invoice-paid::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.invoice-unpaid::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #f59e0b;
+}
+
+.invoice-overdue::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #ef4444;
+}
+
+/* =========================================================
+   12. ACTION AREA
+========================================================= */
+
+.invoice-action-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.invoice-pay-button {
+  min-height: 38px;
+  padding: 9px 16px !important;
+  border: 0 !important;
+  border-radius: 11px !important;
+  background:
+    linear-gradient(
+      135deg,
+      #0c74c6,
+      #005baa
+    ) !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+  box-shadow:
+    0 7px 16px rgba(0, 91, 170, 0.16);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.invoice-pay-button:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 19px rgba(0, 91, 170, 0.22);
+}
+
+.invoice-pay-button:active {
+  transform: translateY(0);
+}
+
+.invoice-pay-overdue {
+  background:
+    linear-gradient(
+      135deg,
+      #ef4444,
+      #dc2626
+    ) !important;
+  box-shadow:
+    0 7px 16px rgba(220, 38, 38, 0.16);
+}
+
+/* =========================================================
+   13. OVERDUE ROW
+========================================================= */
+
+.invoice-item-overdue {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(254, 242, 242, 0.48),
+      rgba(255, 255, 255, 0.70)
+    ) !important;
+}
+
+.overdue-info {
+  color: #dc2626 !important;
+  font-weight: 600;
+}
+
+/* =========================================================
+   14. LOADING
+========================================================= */
+
+.invoice-loading {
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* =========================================================
+   15. EMPTY STATE
+========================================================= */
+
+.invoice-container .invoice-item:has(.invoice-left h3:first-child) {
+  min-height: 150px;
+}
+
+/* =========================================================
+   16. PAYMENT MODAL
+========================================================= */
+
+.payment-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  padding: 28px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    rgba(15, 23, 42, 0.54) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+
+.payment-modal {
+  width: min(720px, 94vw) !important;
+  max-height: 90vh !important;
+  padding: 28px !important;
+  border: 1px solid rgba(255,255,255,0.88) !important;
+  border-radius: 24px !important;
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #f9fbff 100%
+    ) !important;
+  box-shadow:
+    0 28px 85px rgba(15, 23, 42, 0.24) !important;
+  overflow-y: auto;
+}
+
+/* bỏ thanh cuộn mặc định của modal */
+.payment-modal {
+  scrollbar-width: none;
+}
+
+.payment-modal::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* =========================================================
+   17. MODAL HEADER
+========================================================= */
+
+.vnpay-brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 6px 12px !important;
+  border-radius: 9px !important;
+  background:
+    linear-gradient(
+      135deg,
+      #0878c9,
+      #005baa
+    ) !important;
+  color: white !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+}
+
+.payment-modal-header h2 {
+  margin:
+    15px 0 0 !important;
+  color: #172a4d !important;
+  font-size: 27px !important;
+  font-weight: 820 !important;
+  letter-spacing: -0.5px;
+}
+
+.payment-modal-header p {
+  margin:
+    6px 0 0 !important;
+  color: #95a3b7 !important;
+  font-size: 13px !important;
+}
+
+.payment-modal-close {
+  width: 40px !important;
+  height: 40px !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  background: #f1f5f9 !important;
+  color: #64748b !important;
+  font-size: 23px !important;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.payment-modal-close:hover {
+  background: #e2e8f0 !important;
+  transform: rotate(6deg);
+}
+
+/* =========================================================
+   18. MODAL AMOUNT
+========================================================= */
+
+.payment-modal-amount {
+  margin-top: 22px !important;
+  padding:
+    18px 20px !important;
+  border: 1px solid #e6edf5 !important;
+  border-radius: 16px !important;
+  background:
+    linear-gradient(
+      135deg,
+      #f8fbff,
+      #f7faff
+    ) !important;
+}
+
+.payment-modal-amount span:first-child {
+  color: #64748b !important;
+  font-size: 12px !important;
+}
+
+.payment-modal-amount strong {
+  margin-left: 4px !important;
+  color: #1768d3 !important;
+  font-size: 22px !important;
+  font-weight: 850 !important;
+}
+
+.payment-order-code {
+  color: #7890aa !important;
+  font-size: 11px !important;
+  font-weight: 650;
+}
+
+/* =========================================================
+   19. PAYMENT METHOD TABS
+========================================================= */
+
+.payment-method-title {
+  margin:
+    24px 0 10px !important;
+  color: #172a4d !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+}
+
+.payment-method-tabs {
+  gap: 10px !important;
+}
+
+.payment-tab {
+  min-height: 83px !important;
+  padding: 13px !important;
+  border:
+    1px solid #e5ebf3 !important;
+  border-radius: 14px !important;
+  background: #fff !important;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.payment-tab:hover {
+  transform: translateY(-2px);
+  border-color: #cbd8e8 !important;
+  box-shadow:
+    0 8px 18px rgba(23, 42, 77, 0.06);
+}
+
+.payment-tab.active {
+  border-color: #2581cf !important;
+  background:
+    linear-gradient(
+      135deg,
+      #f3f9ff,
+      #eef6ff
+    ) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(37, 129, 207, 0.12),
+    0 8px 18px rgba(37, 129, 207, 0.08);
+}
+
+.payment-tab strong {
+  color: #172a4d !important;
+  font-size: 12px !important;
+}
+
+.payment-tab small {
+  color: #96a5b8 !important;
+  font-size: 9px !important;
+}
+
+/* =========================================================
+   20. VNPAY BOX
+========================================================= */
+
+.vnpay-payment-box {
+  margin-top: 16px !important;
+  padding: 19px !important;
+  border:
+    1px solid #e4ebf4 !important;
+  border-radius: 18px !important;
+  background:
+    linear-gradient(
+      180deg,
+      #fbfdff,
+      #f7faff
+    ) !important;
+}
+
+/* =========================================================
+   21. BANK LIST
+========================================================= */
+
+.bank-select-list {
+  gap: 10px !important;
+}
+
+.bank-select-item {
+  min-height: 66px !important;
+  padding: 10px 12px !important;
+  border:
+    1px solid #e4eaf2 !important;
+  border-radius: 13px !important;
+  background: #fff !important;
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.bank-select-item:hover {
+  transform: translateY(-1px);
+  border-color: #cbd8e7 !important;
+  box-shadow:
+    0 7px 16px rgba(23, 42, 77, 0.06);
+}
+
+/* Không có ô tròn xanh */
+.bank-check {
+  display: none !important;
+}
+
+.bank-select-item.selected {
+  border-color: #2681d0 !important;
+  background:
+    linear-gradient(
+      135deg,
+      #f6fbff,
+      #eff7ff
+    ) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(38, 129, 208, 0.08),
+    0 8px 16px rgba(38, 129, 208, 0.07);
+}
+
+.bank-logo-box {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 11px !important;
+  background: #fff !important;
+  border: 1px solid #edf1f5 !important;
+  box-shadow:
+    0 3px 8px rgba(15, 23, 42, 0.05);
+}
+
+.bank-logo {
+  width: 29px !important;
+  height: 29px !important;
+  object-fit: contain;
+}
+
+.bank-select-content strong {
+  color: #172a4d !important;
+  font-size: 12px !important;
+  font-weight: 750 !important;
+}
+
+.bank-select-content small {
+  color: #94a3b8 !important;
+  font-size: 9px !important;
+}
+
+/* =========================================================
+   22. REQUIRED BANK MESSAGE
+========================================================= */
+
+.bank-required-message {
+  margin-top: 12px !important;
+  padding: 15px 16px !important;
+  border:
+    1px dashed #d9e2ee !important;
+  border-radius: 13px !important;
+  background:
+    #f8fbff !important;
+}
+
+.bank-required-icon {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 11px !important;
+  background: #eef5ff !important;
+}
+
+.bank-required-message h4 {
+  margin: 0 !important;
+  color: #304765 !important;
+  font-size: 12px !important;
+}
+
+.bank-required-message p {
+  margin:
+    4px 0 0 !important;
+  color: #94a3b8 !important;
+  font-size: 9px !important;
+}
+
+/* =========================================================
+   23. FORM FIELDS
+========================================================= */
+
+.payment-field {
+  margin-top: 14px !important;
+}
+
+.payment-field label {
+  display: block;
+  margin-bottom: 7px !important;
+  color: #425675 !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+}
+
+.payment-field input {
+  width: 100% !important;
+  min-height: 47px !important;
+  padding: 0 14px !important;
+  border:
+    1px solid #dde6f0 !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  color: #172a4d !important;
+  font-family: inherit;
+  font-size: 12px !important;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.payment-field input:focus {
+  border-color: #2681d0 !important;
+  box-shadow:
+    0 0 0 4px rgba(38, 129, 208, 0.09);
+}
+
+.payment-field input::placeholder {
+  color: #b1bdcb !important;
+}
+
+/* =========================================================
+   24. OTP NOTE
+========================================================= */
+
+.otp-demo-note {
+  margin-top: 10px !important;
+  padding: 10px 12px !important;
+  border:
+    1px solid #e6edf5 !important;
+  border-radius: 11px !important;
+  background: #f8fbff !important;
+}
+
+.otp-demo-note p {
+  color: #8193aa !important;
+  font-size: 10px !important;
+}
+
+.otp-demo-note strong {
+  color: #1467bc !important;
+}
+
+/* =========================================================
+   25. PAYMENT ERROR
+========================================================= */
+
+.payment-modal-error {
+  margin-top: 12px !important;
+  padding: 11px 13px !important;
+  border-radius: 11px !important;
+  background: #fef2f2 !important;
+  color: #dc2626 !important;
+}
+
+.payment-modal-error p {
+  color: #dc2626 !important;
+  font-size: 10px !important;
+}
+
+/* =========================================================
+   26. MODAL FOOTER
+========================================================= */
+
+.payment-modal-footer {
+  margin-top: 18px !important;
+  padding-top: 14px !important;
+  border-top:
+    1px solid #e8edf4 !important;
+  gap: 10px !important;
+}
+
+.payment-cancel-button,
+.payment-confirm-button {
+  min-height: 43px !important;
+  padding:
+    0 17px !important;
+  border-radius: 11px !important;
+  font-size: 11px !important;
+  font-weight: 750 !important;
+}
+
+.payment-cancel-button {
+  border:
+    1px solid #dde5ee !important;
+  background: #fff !important;
+  color: #64748b !important;
+}
+
+.payment-confirm-button {
+  background:
+    linear-gradient(
+      135deg,
+      #0d7acb,
+      #005baa
+    ) !important;
+  box-shadow:
+    0 8px 17px rgba(0, 91, 170, 0.16);
+}
+
+.payment-confirm-button:hover {
+  transform: translateY(-2px) !important;
+}
+
+/* =========================================================
+   27. SUCCESS
+========================================================= */
+
+.payment-success {
+  min-height: 450px !important;
+  padding: 30px !important;
+}
+
+.payment-success-icon {
+  width: 82px !important;
+  height: 82px !important;
+  margin-bottom: 20px !important;
+  background:
+    linear-gradient(
+      135deg,
+      #dcfce7,
+      #d1fae5
+    ) !important;
+  color: #16a34a !important;
+  box-shadow:
+    0 12px 25px rgba(34, 197, 94, 0.12);
+}
+
+.payment-success h2 {
+  color: #172a4d !important;
+  font-size: 25px !important;
+  font-weight: 820 !important;
+}
+
+.payment-success p {
+  color: #7f90a8 !important;
+  font-size: 12px !important;
+}
+
+.payment-success-amount {
+  color: #1268c6 !important;
+  font-size: 29px !important;
+  font-weight: 850 !important;
+}
+
+/* =========================================================
+   28. RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+  .owner-main {
+    padding:
+      35px 30px 50px !important;
+  }
+
+  .invoice-summary {
+    gap: 14px !important;
+  }
+
+  .invoice-summary-card {
+    padding:
+      21px 18px !important;
+  }
+
+  .invoice-item {
+    padding:
+      21px 24px !important;
+  }
+}
+
+@media (max-width: 1000px) {
+  .owner-sidebar {
+    width: 88px !important;
+    padding:
+      24px 12px !important;
+  }
+
+  .owner-main {
+    width:
+      calc(100% - 88px) !important;
+    margin-left: 88px !important;
+    padding:
+      30px 24px 45px !important;
+  }
+
+  .owner-logo {
+    justify-content: center;
+    padding:
+      0 0 28px !important;
+  }
+
+  .owner-logo span {
+    display: none;
+  }
+
+  .owner-menu {
+    justify-content: center;
+    padding:
+      14px 10px !important;
+  }
+
+  .owner-menu span:not(.menu-icon),
+  .owner-logout span:not(.menu-icon) {
+    display: none;
+  }
+
+  .owner-logout {
+    justify-content: center;
+  }
+
+  .invoice-summary {
+    grid-template-columns:
+      1fr !important;
+  }
+
+  .invoice-summary-card {
+    min-height: 112px;
+  }
+
+  .invoice-right {
+    min-width: 170px !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .owner-main {
+    padding:
+      24px 18px 40px !important;
+  }
+
+  .owner-header-user {
+    display: none;
+  }
+
+  .owner-header h1 {
+    font-size: 31px !important;
+  }
+
+  .invoice-container {
+    border-radius: 18px !important;
+  }
+
+  .invoice-title {
+    padding:
+      23px 20px 18px !important;
+  }
+
+  .invoice-title h2 {
+    font-size: 21px !important;
+  }
+
+  .invoice-item {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+    padding:
+      20px !important;
+  }
+
+  .invoice-left {
+    width: 100%;
+  }
+
+  .invoice-right {
+    min-width: 0 !important;
+    width: 100%;
+    align-items: flex-start !important;
+  }
+
+  .invoice-action-group {
+    align-items: flex-start;
+  }
+
+  .invoice-pay-button {
+    width: auto;
+  }
+
+  .invoice-summary-card {
+    min-height: 108px;
+  }
+
+  .payment-modal-overlay {
+    padding: 12px !important;
+  }
+
+  .payment-modal {
+    width: 100% !important;
+    max-height: 94vh !important;
+    padding: 20px !important;
+    border-radius: 20px !important;
+  }
+
+  .payment-method-tabs {
+    grid-template-columns:
+      1fr 1fr !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .owner-sidebar {
+    width: 68px !important;
+    padding:
+      20px 9px !important;
+  }
+
+  .owner-main {
+    width:
+      calc(100% - 68px) !important;
+    margin-left: 68px !important;
+    padding:
+      20px 13px 35px !important;
+  }
+
+  .owner-logo-icon {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .owner-header h1 {
+    font-size: 27px !important;
+  }
+
+  .payment-method-tabs {
+    grid-template-columns:
+      1fr !important;
+  }
+
+  .payment-modal-amount {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 7px;
+  }
+
+  .payment-modal-footer {
+    flex-direction: column-reverse !important;
+  }
+
+  .payment-cancel-button,
+  .payment-confirm-button {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   29. REDUCE MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition:
+      none !important;
+    animation:
+      none !important;
+  }
+}

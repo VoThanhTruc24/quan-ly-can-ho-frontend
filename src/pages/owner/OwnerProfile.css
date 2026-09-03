@@ -1,57 +1,140 @@
+/* =====================================================
+   RETHUB - OWNER PROFILE
+   PREMIUM / PROFESSIONAL DESIGN
+
+   CHỈ DESIGN CSS
+   KHÔNG THAY ĐỔI JSX / API / LOGIC
+===================================================== */
+
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+
+  font-family:
+    Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  background: #f5f7fb;
+
+  color: #172a4d;
+}
+
+
+/* =====================================================
+   PAGE
+===================================================== */
+
 .owner-page {
   min-height: 100vh;
 
   display: flex;
 
-  background: #f5f7fb;
+  background:
+    radial-gradient(
+      circle at 94% 4%,
+      rgba(255, 177, 47, 0.17),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 5% 92%,
+      rgba(102, 82, 224, 0.12),
+      transparent 29%
+    ),
+    linear-gradient(
+      135deg,
+      #f8fafc 0%,
+      #f4f6fb 50%,
+      #eef1fa 100%
+    );
 }
 
 
-/* ================= SIDEBAR ================= */
+/* =====================================================
+   SIDEBAR
+===================================================== */
 
 .owner-sidebar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+  bottom: 0;
 
   width: 280px;
 
   min-height: 100vh;
 
-  background: white;
-
-  padding: 28px 20px;
+  padding: 28px 18px;
 
   display: flex;
 
   flex-direction: column;
 
-  box-sizing: border-box;
+  background:
+    rgba(255, 255, 255, 0.90);
+
+  border-right:
+    1px solid
+    rgba(226, 232, 240, 0.85);
+
+  backdrop-filter:
+    blur(18px);
+
+  -webkit-backdrop-filter:
+    blur(18px);
+
+  box-shadow:
+    8px 0 35px
+    rgba(23, 42, 77, 0.045);
+
+  z-index: 100;
 }
 
 
-.owner-logo {
+/* =====================================================
+   LOGO
+===================================================== */
 
+.owner-logo {
   display: flex;
 
   align-items: center;
 
   gap: 12px;
 
-  margin-bottom: 40px;
+  padding:
+    0 10px 31px;
+
+  margin-bottom: 4px;
+
+  color: #172a4d;
 
   font-size: 20px;
 
-  font-weight: 700;
+  font-weight: 800;
+
+  letter-spacing: -0.3px;
 }
 
-
 .owner-logo-icon {
-
   width: 48px;
-
   height: 48px;
 
-  border-radius: 12px;
-
-  background: #2563eb;
+  flex-shrink: 0;
 
   display: flex;
 
@@ -59,11 +142,576 @@
 
   justify-content: center;
 
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff9800 0%,
+      #ffb72f 100%
+    );
+
+  color: #ffffff;
+
   font-size: 25px;
+
+  box-shadow:
+    0 10px 22px
+    rgba(255, 152, 0, 0.22);
+}
+
+.owner-logo span {
+  color: #172a4d;
 }
 
 
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
 .owner-nav {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.owner-menu {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 52px;
+
+  padding:
+    14px 15px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  background: transparent;
+
+  color: #64748b;
+
+  font-size: 15px;
+
+  font-weight: 500;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.owner-menu:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 152, 0, 0.09),
+      rgba(103, 82, 223, 0.06)
+    );
+
+  color: #ef8d00;
+
+  transform:
+    translateX(2px);
+}
+
+.owner-menu.active {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 168, 41, 0.16),
+      rgba(104, 83, 224, 0.08)
+    );
+
+  color: #f08c00;
+
+  font-weight: 700;
+
+  box-shadow:
+    inset 4px 0 0 #ff9800,
+    0 5px 14px
+    rgba(23, 42, 77, 0.035);
+}
+
+.menu-icon {
+  width: 24px;
+
+  flex-shrink: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 19px;
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.owner-logout {
+  width: 100%;
+
+  min-height: 52px;
+
+  margin-top: auto;
+
+  padding:
+    14px 15px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff1f2,
+      #ffe8ec
+    );
+
+  color: #dc2626;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.owner-logout:hover {
+  background:
+    linear-gradient(
+      135deg,
+      #ffe4e7,
+      #ffdde3
+    );
+
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 8px 20px
+    rgba(220, 38, 38, 0.10);
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.owner-main {
+  width:
+    calc(100% - 280px);
+
+  min-height: 100vh;
+
+  margin-left: 280px;
+
+  padding:
+    42px 48px 60px;
+
+  max-width: 1700px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.owner-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 34px;
+}
+
+.owner-header h1 {
+  margin: 0;
+
+  color: #172a4d;
+
+  font-size:
+    clamp(32px, 3vw, 42px);
+
+  font-weight: 850;
+
+  line-height: 1.1;
+
+  letter-spacing: -1px;
+}
+
+.owner-header p {
+  margin:
+    10px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 15px;
+
+  font-weight: 500;
+}
+
+
+/* =====================================================
+   HEADER USER
+===================================================== */
+
+.owner-header-user {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+.owner-avatar {
+  width: 54px;
+  height: 54px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f59e0b 0%,
+      #d17b43 40%,
+      #8158c8 100%
+    );
+
+  color: #ffffff;
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+  box-shadow:
+    0 9px 24px
+    rgba(111, 82, 190, 0.19);
+}
+
+.owner-user-info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.owner-user-info strong {
+  color: #172a4d;
+
+  font-size: 15px;
+
+  font-weight: 750;
+}
+
+.owner-user-info span {
+  color: #94a3b8;
+
+  font-size: 12px;
+}
+
+
+/* =====================================================
+   PROFILE CARD
+===================================================== */
+
+.profile-card {
+  position: relative;
+
+  width: 100%;
+
+  padding: 31px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.95);
+
+  border-radius: 24px;
+
+  background:
+    rgba(255, 255, 255, 0.90);
+
+  box-shadow:
+    0 14px 40px
+    rgba(23, 42, 77, 0.075);
+
+  backdrop-filter:
+    blur(16px);
+
+  -webkit-backdrop-filter:
+    blur(16px);
+}
+
+
+/* =====================================================
+   DECORATIVE GLOW
+===================================================== */
+
+.profile-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: -120px;
+
+  right: -100px;
+
+  width: 300px;
+  height: 300px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 174, 43, 0.12),
+      transparent 68%
+    );
+
+  pointer-events: none;
+}
+
+.profile-card::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -130px;
+
+  left: -100px;
+
+  width: 280px;
+  height: 280px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(103, 82, 223, 0.07),
+      transparent 68%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   PROFILE TOP
+===================================================== */
+
+.profile-top {
+  position: relative;
+
+  z-index: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding:
+    2px 0 30px;
+
+  border-bottom:
+    1px solid
+    rgba(226, 232, 240, 0.88);
+}
+
+
+/* =====================================================
+   BIG AVATAR
+===================================================== */
+
+.profile-avatar {
+  width: 94px;
+  height: 94px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f59e0b 0%,
+      #d47d43 43%,
+      #8158c8 100%
+    );
+
+  color: #ffffff;
+
+  font-size: 37px;
+
+  font-weight: 800;
+
+  box-shadow:
+    0 14px 30px
+    rgba(105, 79, 190, 0.20);
+
+  position: relative;
+}
+
+
+/* INNER BORDER */
+
+.profile-avatar::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 4px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.28);
+
+  pointer-events: none;
+}
+
+
+/* =====================================================
+   PROFILE TOP TEXT
+===================================================== */
+
+.profile-top h2 {
+  margin: 0;
+
+  color: #172a4d;
+
+  font-size: 29px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
+}
+
+.profile-top p {
+  margin:
+    8px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 14px;
+
+  font-weight: 500;
+}
+
+
+/* =====================================================
+   PROFILE SECTION
+===================================================== */
+
+.profile-section {
+  position: relative;
+
+  z-index: 1;
+
+  padding:
+    29px 0;
+
+  border-bottom:
+    1px solid
+    rgba(226, 232, 240, 0.88);
+}
+
+.profile-section:last-child {
+  border-bottom: none;
+
+  padding-bottom: 0;
+}
+
+.profile-section h3 {
+  margin:
+    0 0 23px;
+
+  color: #172a4d;
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.25px;
+}
+
+
+/* =====================================================
+   PROFILE GRID
+===================================================== */
+
+.profile-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+
+/* =====================================================
+   PROFILE FIELD
+===================================================== */
+
+.profile-field {
+  min-width: 0;
 
   display: flex;
 
@@ -72,373 +720,293 @@
   gap: 8px;
 }
 
-
-.owner-menu {
-
-  width: 100%;
-
-  border: none;
-
-  background: transparent;
-
-  padding: 16px;
-
-  border-radius: 12px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 14px;
-
-  font-size: 16px;
-
-  color: #64748b;
-
-  cursor: pointer;
-
-  text-align: left;
-}
-
-
-.owner-menu:hover {
-
-  background: #f1f5f9;
-}
-
-
-.owner-menu.active {
-
-  background: #eaf2ff;
-
-  color: #2563eb;
-
-  font-weight: 600;
-}
-
-
-.menu-icon {
-
-  font-size: 20px;
-}
-
-
-/* ================= LOGOUT ================= */
-
-.owner-logout {
-
-  margin-top: auto;
-
-  border: none;
-
-  background: #fff1f2;
-
-  color: #ef4444;
-
-  padding: 16px;
-
-  border-radius: 12px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 14px;
-
-  font-size: 16px;
-
-  cursor: pointer;
-}
-
-
-/* ================= MAIN ================= */
-
-.owner-main {
-
-  flex: 1;
-
-  padding: 45px 50px;
-
-  box-sizing: border-box;
-}
-
-
-/* ================= HEADER ================= */
-
-.owner-header {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  margin-bottom: 35px;
-}
-
-
-.owner-header h1 {
-
-  margin: 0;
-
-  font-size: 36px;
-
-  color: #0f2747;
-}
-
-
-.owner-header p {
-
-  margin-top: 10px;
-
-  color: #94a3b8;
-
-  font-size: 16px;
-}
-
-
-.owner-header-user {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 12px;
-}
-
-
-.owner-avatar {
-
-  width: 52px;
-
-  height: 52px;
-
-  border-radius: 50%;
-
-  background: #2563eb;
-
-  color: white;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 20px;
-
-  font-weight: 600;
-}
-
-
-.owner-user-info {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 4px;
-}
-
-
-.owner-user-info strong {
-
-  color: #0f2747;
-}
-
-
-.owner-user-info span {
-
-  color: #94a3b8;
-}
-
-
-/* ================= PROFILE ================= */
-
-.profile-card {
-
-  background: white;
-
-  border-radius: 20px;
-
-  padding: 35px;
-
-  box-shadow:
-    0 5px 20px
-    rgba(0, 0, 0, 0.04);
-}
-
-
-/* ================= PROFILE TOP ================= */
-
-.profile-top {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 20px;
-
-  padding-bottom: 30px;
-
-  border-bottom: 1px solid #e2e8f0;
-}
-
-
-.profile-avatar {
-
-  width: 85px;
-
-  height: 85px;
-
-  border-radius: 50%;
-
-  background: #2563eb;
-
-  color: white;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 34px;
-
-  font-weight: 600;
-}
-
-
-.profile-top h2 {
-
-  margin: 0;
-
-  color: #0f2747;
-
-  font-size: 25px;
-}
-
-
-.profile-top p {
-
-  margin-top: 8px;
-
-  color: #94a3b8;
-}
-
-
-/* ================= SECTION ================= */
-
-.profile-section {
-
-  padding: 30px 0;
-
-  border-bottom: 1px solid #e2e8f0;
-}
-
-
-.profile-section:last-child {
-
-  border-bottom: none;
-
-  padding-bottom: 0;
-}
-
-
-.profile-section h3 {
-
-  margin: 0 0 25px;
-
-  color: #0f2747;
-
-  font-size: 20px;
-}
-
-
-/* ================= GRID ================= */
-
-.profile-grid {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(2, 1fr);
-
-  gap: 22px;
-}
-
-
-.profile-field {
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 9px;
-}
-
-
 .profile-field label {
-
   color: #64748b;
+
+  font-size: 11px;
+
+  font-weight: 650;
+
+  letter-spacing: 0.1px;
+}
+
+
+/* =====================================================
+   PROFILE INPUT
+===================================================== */
+
+.profile-input {
+  min-height: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding:
+    14px 16px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(226, 232, 240, 0.90);
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(248, 250, 252, 0.96),
+      rgba(239, 242, 250, 0.80)
+    );
+
+  color: #172a4d;
 
   font-size: 14px;
+
+  font-weight: 550;
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.75);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.profile-input:hover {
+  border-color:
+    rgba(255, 174, 44, 0.28);
+
+  background:
+    rgba(255, 255, 255, 0.92);
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.profile-input.status {
+  color: #15803d;
+
+  font-weight: 750;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(220, 252, 231, 0.82),
+      rgba(236, 253, 245, 0.92)
+    );
+
+  border-color:
+    rgba(34, 197, 94, 0.12);
+}
+
+
+/* Green dot before status */
+
+.profile-input.status::before {
+  content: "";
+
+  width: 8px;
+  height: 8px;
+
+  flex-shrink: 0;
+
+  margin-right: 9px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(34, 197, 94, 0.10);
+}
+
+
+/* =====================================================
+   APARTMENT SECTION
+===================================================== */
+
+.apartment-profile-box {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 17px;
+
+  min-height: 92px;
+
+  margin-bottom: 10px;
+
+  padding:
+    16px 18px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(226, 232, 240, 0.72);
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 176, 45, 0.09),
+      rgba(106, 85, 223, 0.07)
+    );
+
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
+}
+
+.apartment-profile-box:last-child {
+  margin-bottom: 0;
+}
+
+.apartment-profile-box:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(255, 177, 48, 0.24);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 177, 48, 0.12),
+      rgba(105, 84, 224, 0.08)
+    );
+
+  box-shadow:
+    0 9px 23px
+    rgba(23, 42, 77, 0.06);
+}
+
+
+/* =====================================================
+   APARTMENT ICON
+===================================================== */
+
+.apartment-profile-icon {
+  width: 60px;
+  height: 60px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 173, 42, 0.18),
+      rgba(111, 87, 220, 0.12)
+    );
+
+  font-size: 29px;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(255, 255, 255, 0.75);
+}
+
+
+/* =====================================================
+   APARTMENT TEXT
+===================================================== */
+
+.apartment-profile-box > div:last-child {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.apartment-profile-box strong {
+  color: #172a4d;
+
+  font-size: 17px;
+
+  font-weight: 800;
+}
+
+.apartment-profile-box p {
+  margin: 0;
+
+  color: #94a3b8;
+
+  font-size: 13px;
 
   font-weight: 500;
 }
 
 
-.profile-input {
+/* =====================================================
+   APARTMENT COUNT STYLE
+===================================================== */
 
-  padding: 14px 16px;
+.profile-section:last-child .apartment-profile-box::after {
+  content: "";
 
-  border: 1px solid #e2e8f0;
+  position: absolute;
 
-  border-radius: 10px;
+  right: 18px;
 
-  background: #f8fafc;
+  top: 50%;
 
-  color: #0f2747;
+  width: 6px;
+  height: 6px;
 
-  font-size: 15px;
+  border-radius: 50%;
+
+  background: #ff9f16;
+
+  transform:
+    translateY(-50%);
+
+  opacity: 0.75;
 }
 
 
-.profile-input.status {
+/* =====================================================
+   EMPTY APARTMENT
+===================================================== */
 
-  color: #16a34a;
-
-  font-weight: 600;
+.apartment-profile-box:has(strong:first-child) {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(248, 250, 252, 0.90),
+      rgba(241, 244, 250, 0.85)
+    );
 }
 
 
-/* ================= APARTMENT ================= */
+/* =====================================================
+   LOADING / ERROR
+===================================================== */
 
-.apartment-profile-box {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 18px;
-
-  padding: 20px;
-
-  background: #f8fafc;
-
-  border-radius: 14px;
-}
-
-
-.apartment-profile-icon {
-
-  width: 60px;
-
-  height: 60px;
-
-  border-radius: 14px;
-
-  background: #eff6ff;
+.owner-main > div[style] {
+  min-height: 150px;
 
   display: flex;
 
@@ -446,135 +1014,357 @@
 
   justify-content: center;
 
-  font-size: 28px;
+  padding: 30px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.90);
+
+  border-radius: 20px;
+
+  background:
+    rgba(255, 255, 255, 0.82);
+
+  color: #64748b;
+
+  box-shadow:
+    0 10px 30px
+    rgba(23, 42, 77, 0.055);
 }
 
 
-.apartment-profile-box strong {
-
-  color: #0f2747;
-
-  font-size: 18px;
-}
-
-
-.apartment-profile-box p {
-
-  margin-top: 6px;
-
-  color: #94a3b8;
-}
 /* =====================================================
-   RENTHUB THEME - OWNER PROFILE
+   BUTTON FOCUS
 ===================================================== */
 
-.owner-page {
+button:focus-visible {
+  outline:
+    3px solid
+    rgba(37, 99, 235, 0.18);
+
+  outline-offset: 2px;
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+html {
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(148, 163, 184, 0.42)
+    transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 8px;
+}
+
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
   background:
-    radial-gradient(
-      circle at 92% 5%,
-      rgba(255, 174, 39, 0.17),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 5% 95%,
-      rgba(74, 70, 232, 0.13),
-      transparent 30%
-    ),
-    linear-gradient(
-      135deg,
-      #f9fafc,
-      #f3f5fa 55%,
-      #eef1fb
-    );
+    rgba(148, 163, 184, 0.42);
+
+  border-radius: 999px;
 }
 
-.profile-card {
-  background: rgba(255, 255, 255, 0.90) !important;
-
-  border: 1px solid rgba(255, 255, 255, 0.95);
-
-  box-shadow:
-    0 12px 35px rgba(23, 42, 77, 0.07);
-
-  backdrop-filter: blur(12px);
-}
-
-.profile-avatar {
+html::-webkit-scrollbar-thumb:hover {
   background:
-    linear-gradient(
-      135deg,
-      #ff9d00,
-      #4a46e8
-    ) !important;
-
-  box-shadow:
-    0 8px 20px rgba(74, 70, 232, 0.18);
+    rgba(100, 116, 139, 0.62);
 }
 
-.profile-top h2 {
-  color: #172a4d !important;
+
+/* =====================================================
+   RESPONSIVE - 1200
+===================================================== */
+
+@media (max-width: 1200px) {
+
+  .owner-main {
+    padding:
+      35px 30px 50px;
+  }
+
+  .profile-card {
+    padding: 27px;
+  }
+
+  .profile-top h2 {
+    font-size: 26px;
+  }
+
 }
 
-.profile-top p {
-  color: #94a3b8 !important;
+
+/* =====================================================
+   RESPONSIVE - 1000
+===================================================== */
+
+@media (max-width: 1000px) {
+
+  .owner-sidebar {
+    width: 88px;
+
+    padding:
+      24px 12px;
+  }
+
+  .owner-logo {
+    justify-content: center;
+
+    padding:
+      0 0 28px;
+  }
+
+  .owner-logo span {
+    display: none;
+  }
+
+  .owner-menu {
+    justify-content: center;
+
+    padding:
+      14px 10px;
+  }
+
+  .owner-menu span:not(.menu-icon),
+  .owner-logout span:not(.menu-icon) {
+    display: none;
+  }
+
+  .owner-logout {
+    justify-content: center;
+
+    padding:
+      14px 10px;
+  }
+
+  .owner-main {
+    width:
+      calc(100% - 88px);
+
+    margin-left: 88px;
+
+    padding:
+      32px 25px 45px;
+  }
+
+  .profile-grid {
+    gap: 13px;
+  }
+
 }
 
-.profile-section {
-  border-top-color: #e7ebf2 !important;
+
+/* =====================================================
+   RESPONSIVE - 760
+===================================================== */
+
+@media (max-width: 760px) {
+
+  .owner-main {
+    padding:
+      25px 18px 40px;
+  }
+
+  .owner-header {
+    margin-bottom: 25px;
+  }
+
+  .owner-header-user {
+    display: none;
+  }
+
+  .owner-header h1 {
+    font-size: 31px;
+  }
+
+  .owner-header p {
+    font-size: 13px;
+  }
+
+  .profile-card {
+    padding:
+      21px;
+
+    border-radius: 19px;
+  }
+
+  .profile-top {
+    align-items: flex-start;
+
+    gap: 16px;
+
+    padding-bottom: 23px;
+  }
+
+  .profile-avatar {
+    width: 76px;
+    height: 76px;
+
+    font-size: 30px;
+  }
+
+  .profile-top h2 {
+    font-size: 23px;
+  }
+
+  .profile-top p {
+    font-size: 12px;
+  }
+
+  .profile-section {
+    padding:
+      24px 0;
+  }
+
+  .profile-section h3 {
+    font-size: 18px;
+
+    margin-bottom: 18px;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .apartment-profile-box {
+    min-height: 82px;
+
+    padding:
+      13px 14px;
+  }
+
+  .apartment-profile-icon {
+    width: 54px;
+    height: 54px;
+
+    font-size: 27px;
+  }
+
 }
 
-.profile-section h3 {
-  color: #172a4d !important;
+
+/* =====================================================
+   RESPONSIVE - 520
+===================================================== */
+
+@media (max-width: 520px) {
+
+  .owner-sidebar {
+    width: 68px;
+
+    padding:
+      20px 9px;
+  }
+
+  .owner-logo-icon {
+    width: 42px;
+    height: 42px;
+
+    font-size: 21px;
+  }
+
+  .owner-main {
+    width:
+      calc(100% - 68px);
+
+    margin-left: 68px;
+
+    padding:
+      20px 13px 35px;
+  }
+
+  .owner-header h1 {
+    font-size: 27px;
+  }
+
+  .owner-header p {
+    max-width: 240px;
+
+    line-height: 1.45;
+  }
+
+  .profile-card {
+    padding:
+      16px;
+
+    border-radius: 17px;
+  }
+
+  .profile-top {
+    align-items: center;
+  }
+
+  .profile-avatar {
+    width: 64px;
+    height: 64px;
+
+    font-size: 26px;
+  }
+
+  .profile-top h2 {
+    font-size: 20px;
+  }
+
+  .profile-top p {
+    font-size: 11px;
+  }
+
+  .profile-input {
+    min-height: 48px;
+
+    padding:
+      12px 13px;
+
+    font-size: 13px;
+  }
+
+  .apartment-profile-box {
+    gap: 12px;
+  }
+
+  .apartment-profile-icon {
+    width: 50px;
+    height: 50px;
+
+    border-radius: 13px;
+  }
+
+  .apartment-profile-box strong {
+    font-size: 15px;
+  }
+
+  .apartment-profile-box p {
+    font-size: 11px;
+  }
+
 }
 
-.profile-field label {
-  color: #64748b !important;
-}
 
-.profile-input {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(248, 250, 252, 0.95),
-      rgba(238, 241, 251, 0.75)
-    ) !important;
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
 
-  border-color: #e7ebf2 !important;
+@media (prefers-reduced-motion: reduce) {
 
-  color: #172a4d !important;
-}
+  html {
+    scroll-behavior: auto;
+  }
 
-.profile-input.status {
-  color: #15803d !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      0.01ms !important;
 
-  background:
-    rgba(34, 197, 94, 0.08) !important;
-}
+    transition-duration:
+      0.01ms !important;
+  }
 
-.apartment-profile-box {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 157, 0, 0.08),
-      rgba(74, 70, 232, 0.07)
-    ) !important;
-
-  border-color: rgba(255, 157, 0, 0.10) !important;
-}
-
-.apartment-profile-icon {
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 157, 0, 0.15),
-      rgba(74, 70, 232, 0.10)
-    ) !important;
-}
-
-.apartment-profile-box strong {
-  color: #172a4d !important;
-}
-
-.apartment-profile-box p {
-  color: #94a3b8 !important;
 }

@@ -1,30 +1,49 @@
 import "./OwnerContract.css";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  useNavigate,
+} from "react-router-dom";
 
 import {
   getCurrentOwner,
   getMyContracts,
+  getMyInvoices,
 } from "../../services/ownerService";
+
 
 function OwnerContract() {
 
   const navigate = useNavigate();
 
-  // ==============================
+
+  // =====================================================
   // STATE
-  // ==============================
+  // =====================================================
 
-  const [owner, setOwner] = useState(null);
-  const [contracts, setContracts] = useState([]);
+  const [owner, setOwner] =
+    useState(null);
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [contracts, setContracts] =
+    useState([]);
+
+  const [invoices, setInvoices] =
+    useState([]);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const [error, setError] =
+    useState("");
 
 
-  // ==============================
+  // =====================================================
   // LOAD DATA
-  // ==============================
+  // =====================================================
 
   useEffect(() => {
 
@@ -33,43 +52,58 @@ function OwnerContract() {
       const token =
         localStorage.getItem("token");
 
+
+      // -------------------------------------------------
+      // CHECK LOGIN
+      // -------------------------------------------------
+
       if (!token) {
+
         navigate("/login");
+
         return;
       }
+
 
       try {
 
         setLoading(true);
+
         setError("");
 
 
-        // ==============================
-        // LẤY OWNER
-        // ==============================
+        // =================================================
+        // OWNER
+        // =================================================
 
         const ownerData =
           await getCurrentOwner();
 
+
         console.log(
-          "✅ OWNER CONTRACT:",
+          "✅ OWNER:",
           ownerData
         );
 
-        setOwner(ownerData);
+
+        setOwner(
+          ownerData
+        );
 
 
-        // ==============================
-        // LẤY CONTRACT
-        // ==============================
+        // =================================================
+        // CONTRACTS
+        // =================================================
 
         const contractData =
           await getMyContracts();
 
+
         console.log(
-          "✅ OWNER CONTRACTS:",
+          "✅ CONTRACTS:",
           contractData
         );
+
 
         setContracts(
           Array.isArray(contractData)
@@ -78,12 +112,53 @@ function OwnerContract() {
         );
 
 
+        // =================================================
+        // INVOICES
+        //
+        // Dùng để lấy tiền thuê nếu Contract
+        // không trả rentPrice.
+        // =================================================
+
+        try {
+
+          const invoiceData =
+            await getMyInvoices();
+
+
+          console.log(
+            "✅ INVOICES:",
+            invoiceData
+          );
+
+
+          setInvoices(
+            Array.isArray(invoiceData)
+              ? invoiceData
+              : []
+          );
+
+        } catch (invoiceError) {
+
+          console.warn(
+            "⚠️ Không lấy được invoice:",
+            invoiceError
+          );
+
+
+          // Invoice lỗi không làm hỏng
+          // trang hợp đồng.
+
+          setInvoices([]);
+
+        }
+
       } catch (err) {
 
         console.error(
           "❌ OWNER CONTRACT ERROR:",
           err
         );
+
 
         setError(
           err.message ||
@@ -104,9 +179,9 @@ function OwnerContract() {
   }, [navigate]);
 
 
-  // ==============================
-  // DISPLAY NAME
-  // ==============================
+  // =====================================================
+  // OWNER NAME
+  // =====================================================
 
   const displayName =
     owner?.fullName ||
@@ -116,85 +191,168 @@ function OwnerContract() {
     "Chủ căn hộ";
 
 
-  // ==============================
+  // =====================================================
   // LOGOUT
-  // ==============================
+  // =====================================================
 
   const handleLogout = () => {
 
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("username");
-    localStorage.removeItem("fullName");
+    localStorage.removeItem(
+      "token"
+    );
+
+    localStorage.removeItem(
+      "role"
+    );
+
+    localStorage.removeItem(
+      "username"
+    );
+
+    localStorage.removeItem(
+      "fullName"
+    );
+
 
     navigate("/login");
 
   };
 
 
-  // ==============================
+  // =====================================================
   // FORMAT MONEY
-  // ==============================
+  // =====================================================
 
-  const formatMoney = (value) => {
+  const formatMoney = (
+    value
+  ) => {
 
     if (
       value === null ||
       value === undefined ||
       value === ""
     ) {
+
       return "Chưa có dữ liệu";
     }
 
-    const number = Number(value);
 
-    if (Number.isNaN(number)) {
-      return value;
+    const number =
+      Number(value);
+
+
+    if (
+      Number.isNaN(number)
+    ) {
+
+      return String(value);
     }
 
+
     return (
-      number.toLocaleString("vi-VN") +
-      " đ/tháng"
+      number.toLocaleString(
+        "vi-VN"
+      ) + " đ/tháng"
     );
 
   };
 
 
-  // ==============================
+  // =====================================================
   // FORMAT DATE
-  // ==============================
+  // =====================================================
 
-  const formatDate = (value) => {
+  const formatDate = (
+    value
+  ) => {
 
     if (!value) {
+
       return "Chưa có dữ liệu";
     }
 
+
+    const text =
+      String(value);
+
+
+    // -------------------------------------------------
+    // YYYY-MM-DD
+    // -------------------------------------------------
+
+    if (
+      /^\d{4}-\d{2}-\d{2}$/.test(
+        text
+      )
+    ) {
+
+      const [
+        year,
+        month,
+        day,
+      ] =
+        text.split("-");
+
+
+      return (
+        `${day}/${month}/${year}`
+      );
+
+    }
+
+
+    // -------------------------------------------------
+    // FALLBACK
+    // -------------------------------------------------
+
     try {
 
-      return new Date(value)
-        .toLocaleDateString("vi-VN");
+      const date =
+        new Date(value);
+
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+
+        return text;
+      }
+
+
+      return date.toLocaleDateString(
+        "vi-VN"
+      );
 
     } catch {
 
-      return value;
+      return text;
 
     }
 
   };
 
 
-  // ==============================
+  // =====================================================
   // FORMAT STATUS
-  // ==============================
+  // =====================================================
 
-  const formatStatus = (status) => {
+  const formatStatus = (
+    status
+  ) => {
 
     if (!status) {
+
       return "Chưa có trạng thái";
     }
 
-    switch (status.toUpperCase()) {
+
+    switch (
+      String(status)
+        .trim()
+        .toUpperCase()
+    ) {
 
       case "ACTIVE":
         return "Đang hiệu lực";
@@ -208,6 +366,9 @@ function OwnerContract() {
       case "TERMINATED":
         return "Đã chấm dứt";
 
+      case "RENTING":
+        return "Đang thuê";
+
       default:
         return status;
 
@@ -216,15 +377,644 @@ function OwnerContract() {
   };
 
 
-  // ==============================
+  // =====================================================
+  // NUMBER
+  // =====================================================
+
+  const getNumberValue = (
+    value
+  ) => {
+
+    if (
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+
+      return null;
+    }
+
+
+    const number =
+      Number(value);
+
+
+    if (
+      Number.isNaN(number)
+    ) {
+
+      return null;
+    }
+
+
+    return number;
+
+  };
+
+
+  // =====================================================
+  // GET RENT FROM INVOICE
+  // =====================================================
+
+  const getInvoiceRentPrice = (
+    contractId
+  ) => {
+
+    if (
+      contractId === null ||
+      contractId === undefined
+    ) {
+
+      return null;
+    }
+
+
+    const matchedInvoices =
+      invoices
+        .filter(
+          (invoice) =>
+
+            Number(
+              invoice.contractId
+            ) ===
+
+            Number(
+              contractId
+            )
+        )
+        .sort(
+          (a, b) => {
+
+            const yearA =
+              Number(
+                a.year || 0
+              );
+
+            const yearB =
+              Number(
+                b.year || 0
+              );
+
+
+            if (
+              yearA !== yearB
+            ) {
+
+              return (
+                yearB -
+                yearA
+              );
+
+            }
+
+
+            const monthA =
+              Number(
+                a.month || 0
+              );
+
+            const monthB =
+              Number(
+                b.month || 0
+              );
+
+
+            if (
+              monthA !== monthB
+            ) {
+
+              return (
+                monthB -
+                monthA
+              );
+
+            }
+
+
+            return (
+              Number(
+                b.id || 0
+              ) -
+              Number(
+                a.id || 0
+              )
+            );
+
+          }
+        );
+
+
+    if (
+      matchedInvoices.length === 0
+    ) {
+
+      return null;
+    }
+
+
+    for (
+      const invoice
+      of matchedInvoices
+    ) {
+
+      const amount =
+        getNumberValue(
+          invoice.amount
+        );
+
+
+      if (
+        amount !== null
+      ) {
+
+        return amount;
+      }
+
+    }
+
+
+    return null;
+
+  };
+
+
+  // =====================================================
+  // GET RENT PRICE
+  //
+  // Ưu tiên:
+  // contract.rentPrice
+  // contract.rent
+  // contract.rentalPrice
+  // contract.monthlyRent
+  // contract.monthlyPrice
+  // contract.price
+  //
+  // Nếu không có -> invoice.amount
+  // =====================================================
+
+  const getRentPrice = (
+    contract
+  ) => {
+
+    if (!contract) {
+
+      return null;
+    }
+
+
+    const values = [
+
+      contract.rentPrice,
+
+      contract.rent,
+
+      contract.rentalPrice,
+
+      contract.monthlyRent,
+
+      contract.monthlyPrice,
+
+      contract.price,
+
+    ];
+
+
+    // -------------------------------------------------
+    // TỪ CONTRACT
+    // -------------------------------------------------
+
+    for (
+      const value
+      of values
+    ) {
+
+      const number =
+        getNumberValue(
+          value
+        );
+
+
+      if (
+        number !== null
+      ) {
+
+        return number;
+      }
+
+    }
+
+
+    // -------------------------------------------------
+    // TỪ INVOICE
+    // -------------------------------------------------
+
+    return getInvoiceRentPrice(
+      contract.id
+    );
+
+  };
+
+
+  // =====================================================
+  // ADD MONTHS
+  //
+  // Hàm này dùng để tính:
+  //
+  // 15/01 + 11 tháng = 15/12
+  //
+  // Không dùng trực tiếp new Date(year, month + n, day)
+  // vì những ngày như 31/01 + 1 tháng có thể bị
+  // JavaScript nhảy sang tháng tiếp theo.
+  // =====================================================
+
+  const addMonthsClamped = (
+    date,
+    months
+  ) => {
+
+    const year =
+      date.getFullYear();
+
+    const month =
+      date.getMonth();
+
+    const day =
+      date.getDate();
+
+
+    // Ngày cuối của tháng đích
+
+    const lastDay =
+      new Date(
+        year,
+        month + months + 1,
+        0
+      ).getDate();
+
+
+    const safeDay =
+      Math.min(
+        day,
+        lastDay
+      );
+
+
+    return new Date(
+      year,
+      month + months,
+      safeDay
+    );
+
+  };
+
+
+  // =====================================================
+  // GET CONTRACT DURATION
+  //
+  // TÍNH CHÍNH XÁC:
+  //
+  // 15/01/2026 -> 31/12/2026
+  // = 11 tháng 16 ngày
+  //
+  // 01/03/2026 -> 28/02/2027
+  // = 12 tháng
+  //
+  // 01/05/2026 -> 30/04/2027
+  // = 12 tháng
+  // =====================================================
+
+  const getContractDuration = (
+    contract
+  ) => {
+
+    if (!contract) {
+
+      return "Chưa có dữ liệu";
+    }
+
+
+    if (
+      !contract.startDate ||
+      !contract.endDate
+    ) {
+
+      return "Chưa có dữ liệu";
+    }
+
+
+    // =================================================
+    // PARSE START DATE
+    // =================================================
+
+    const startParts =
+      String(
+        contract.startDate
+      ).split("-");
+
+
+    // =================================================
+    // PARSE END DATE
+    // =================================================
+
+    const endParts =
+      String(
+        contract.endDate
+      ).split("-");
+
+
+    if (
+      startParts.length !== 3 ||
+      endParts.length !== 3
+    ) {
+
+      return "Chưa có dữ liệu";
+    }
+
+
+    const startYear =
+      Number(
+        startParts[0]
+      );
+
+    const startMonth =
+      Number(
+        startParts[1]
+      );
+
+    const startDay =
+      Number(
+        startParts[2]
+      );
+
+
+    const endYear =
+      Number(
+        endParts[0]
+      );
+
+    const endMonth =
+      Number(
+        endParts[1]
+      );
+
+    const endDay =
+      Number(
+        endParts[2]
+      );
+
+
+    if (
+      !startYear ||
+      !startMonth ||
+      !startDay ||
+      !endYear ||
+      !endMonth ||
+      !endDay
+    ) {
+
+      return "Chưa có dữ liệu";
+    }
+
+
+    // =================================================
+    // CREATE DATE OBJECTS
+    // =================================================
+
+    const startDate =
+      new Date(
+        startYear,
+        startMonth - 1,
+        startDay
+      );
+
+
+    const endDate =
+      new Date(
+        endYear,
+        endMonth - 1,
+        endDay
+      );
+
+
+    // =================================================
+    // INVALID
+    // =================================================
+
+    if (
+      endDate < startDate
+    ) {
+
+      return "Không hợp lệ";
+    }
+
+
+    // =================================================
+    // SPECIAL CASE:
+    // START = NGÀY 1
+    // END = NGÀY CUỐI THÁNG
+    //
+    // Ví dụ:
+    //
+    // 01/03/2026 -> 28/02/2027
+    // = 12 tháng
+    //
+    // 01/05/2026 -> 30/04/2027
+    // = 12 tháng
+    // =================================================
+
+    const lastDayOfEndMonth =
+      new Date(
+        endYear,
+        endMonth,
+        0
+      ).getDate();
+
+
+    const isFirstDay =
+      startDay === 1;
+
+
+    const isLastDay =
+      endDay ===
+      lastDayOfEndMonth;
+
+
+    if (
+      isFirstDay &&
+      isLastDay
+    ) {
+
+      const fullMonths =
+        (
+          endYear -
+          startYear
+        ) *
+          12
+          +
+        (
+          endMonth -
+          startMonth
+        )
+        +
+        1;
+
+
+      return `${fullMonths} tháng`;
+
+    }
+
+
+    // =================================================
+    // SỐ THÁNG BAN ĐẦU
+    // =================================================
+
+    let months =
+      (
+        endYear -
+        startYear
+      ) *
+        12
+        +
+      (
+        endMonth -
+        startMonth
+      );
+
+
+    if (
+      months < 0
+    ) {
+
+      return "Không hợp lệ";
+    }
+
+
+    // =================================================
+    // NGÀY SAU KHI CỘNG months THÁNG
+    // =================================================
+
+    let calculatedDate =
+      addMonthsClamped(
+        startDate,
+        months
+      );
+
+
+    // =================================================
+    // NẾU NGÀY TÍNH ĐƯỢC VƯỢT NGÀY KẾT THÚC
+    // THÌ CHƯA ĐỦ THÁNG ĐÓ
+    // =================================================
+
+    if (
+      calculatedDate >
+      endDate
+    ) {
+
+      months--;
+
+      if (
+        months < 0
+      ) {
+
+        months = 0;
+      }
+
+
+      calculatedDate =
+        addMonthsClamped(
+          startDate,
+          months
+        );
+
+    }
+
+
+    // =================================================
+    // TÍNH SỐ NGÀY CÒN LẠI
+    // =================================================
+
+    const millisecondsPerDay =
+      24 *
+      60 *
+      60 *
+      1000;
+
+
+    const remainingDays =
+      Math.floor(
+        (
+          endDate.getTime() -
+          calculatedDate.getTime()
+        ) /
+        millisecondsPerDay
+      );
+
+
+    // =================================================
+    // HIỂN THỊ
+    // =================================================
+
+    if (
+      months === 0 &&
+      remainingDays === 0
+    ) {
+
+      return "Dưới 1 tháng";
+    }
+
+
+    if (
+      months === 0
+    ) {
+
+      return `${remainingDays} ngày`;
+    }
+
+
+    if (
+      remainingDays === 0
+    ) {
+
+      return `${months} tháng`;
+    }
+
+
+    return (
+      `${months} tháng ${remainingDays} ngày`
+    );
+
+  };
+
+
+  // =====================================================
+  // APARTMENT NAME
+  // =====================================================
+
+  const getApartmentName = (
+    contract
+  ) => {
+
+    return (
+      contract?.apartment?.name ||
+      contract?.apartmentName ||
+      contract?.apartment?.code ||
+      contract?.apartment?.number ||
+      "Chưa có dữ liệu"
+    );
+
+  };
+
+
+  // =====================================================
   // LOADING
-  // ==============================
+  // =====================================================
 
   if (loading) {
 
     return (
 
       <div className="owner-page">
+
 
         <aside className="owner-sidebar">
 
@@ -233,6 +1023,7 @@ function OwnerContract() {
             <div className="owner-logo-icon">
               🏢
             </div>
+
 
             <span>
               Quản Lý Căn Hộ
@@ -251,10 +1042,13 @@ function OwnerContract() {
               fontSize: "20px",
             }}
           >
+
             Đang tải dữ liệu hợp đồng...
+
           </div>
 
         </main>
+
 
       </div>
 
@@ -263,15 +1057,16 @@ function OwnerContract() {
   }
 
 
-  // ==============================
+  // =====================================================
   // ERROR
-  // ==============================
+  // =====================================================
 
   if (error) {
 
     return (
 
       <div className="owner-page">
+
 
         <aside className="owner-sidebar">
 
@@ -280,6 +1075,7 @@ function OwnerContract() {
             <div className="owner-logo-icon">
               🏢
             </div>
+
 
             <span>
               Quản Lý Căn Hộ
@@ -296,6 +1092,7 @@ function OwnerContract() {
             <span className="menu-icon">
               🚪
             </span>
+
 
             <span>
               Đăng xuất
@@ -319,9 +1116,11 @@ function OwnerContract() {
               Không thể tải dữ liệu
             </h2>
 
+
             <p>
               {error}
             </p>
+
 
             <button
               onClick={() =>
@@ -335,6 +1134,7 @@ function OwnerContract() {
 
         </main>
 
+
       </div>
 
     );
@@ -342,18 +1142,23 @@ function OwnerContract() {
   }
 
 
-  // ==============================
-  // UI
-  // ==============================
+  // =====================================================
+  // MAIN UI
+  // =====================================================
 
   return (
 
     <div className="owner-page">
 
 
-      {/* ================= SIDEBAR ================= */}
+      {/* =================================================
+          SIDEBAR
+      ================================================= */}
 
       <aside className="owner-sidebar">
+
+
+        {/* LOGO */}
 
         <div className="owner-logo">
 
@@ -361,12 +1166,15 @@ function OwnerContract() {
             🏢
           </div>
 
+
           <span>
             Quản Lý Căn Hộ
           </span>
 
         </div>
 
+
+        {/* NAV */}
 
         <nav className="owner-nav">
 
@@ -384,6 +1192,7 @@ function OwnerContract() {
               🏠
             </span>
 
+
             <span>
               Trang chủ
             </span>
@@ -396,13 +1205,16 @@ function OwnerContract() {
           <button
             className="owner-menu"
             onClick={() =>
-              navigate("/owner/apartment")
+              navigate(
+                "/owner/apartment"
+              )
             }
           >
 
             <span className="menu-icon">
               🏢
             </span>
+
 
             <span>
               Căn hộ của tôi
@@ -421,6 +1233,7 @@ function OwnerContract() {
               📄
             </span>
 
+
             <span>
               Hợp đồng
             </span>
@@ -433,13 +1246,16 @@ function OwnerContract() {
           <button
             className="owner-menu"
             onClick={() =>
-              navigate("/owner/invoice")
+              navigate(
+                "/owner/invoice"
+              )
             }
           >
 
             <span className="menu-icon">
               💰
             </span>
+
 
             <span>
               Hóa đơn
@@ -453,7 +1269,9 @@ function OwnerContract() {
           <button
             className="owner-menu"
             onClick={() =>
-              navigate("/owner/profile")
+              navigate(
+                "/owner/profile"
+              )
             }
           >
 
@@ -461,11 +1279,13 @@ function OwnerContract() {
               👤
             </span>
 
+
             <span>
               Cá nhân
             </span>
 
           </button>
+
 
         </nav>
 
@@ -481,29 +1301,37 @@ function OwnerContract() {
             🚪
           </span>
 
+
           <span>
             Đăng xuất
           </span>
 
         </button>
 
+
       </aside>
 
 
-      {/* ================= MAIN ================= */}
+      {/* =================================================
+          MAIN
+      ================================================= */}
 
       <main className="owner-main">
 
 
-        {/* HEADER */}
+        {/* =================================================
+            HEADER
+        ================================================= */}
 
         <header className="owner-header">
+
 
           <div>
 
             <h1>
               Hợp đồng
             </h1>
+
 
             <p>
               Thông tin hợp đồng thuê căn hộ
@@ -529,6 +1357,7 @@ function OwnerContract() {
                 {displayName}
               </strong>
 
+
               <span>
                 Chủ căn hộ
               </span>
@@ -537,14 +1366,18 @@ function OwnerContract() {
 
           </div>
 
+
         </header>
 
 
-        {/* ================= CONTRACTS ================= */}
+        {/* =================================================
+            CONTRACT LIST
+        ================================================= */}
 
         {contracts.length === 0 ? (
 
           <section className="contract-page-card">
+
 
             <div className="contract-header">
 
@@ -552,207 +1385,257 @@ function OwnerContract() {
                 📄
               </div>
 
+
               <div>
 
                 <h2>
                   Chưa có hợp đồng
                 </h2>
 
+
                 <p>
-                  Hiện tại bạn chưa có hợp đồng nào
-                  được ghi nhận trong hệ thống.
+                  Hiện tại bạn chưa có hợp đồng
+                  nào được ghi nhận trong hệ thống.
                 </p>
 
               </div>
 
             </div>
 
+
           </section>
 
         ) : (
 
-          contracts.map((contract) => (
+          contracts.map(
+            (contract) => {
 
-            <section
-              className="contract-page-card"
-              key={contract.id}
-            >
+              const rentPrice =
+                getRentPrice(
+                  contract
+                );
 
-              {/* ================= HEADER ================= */}
 
-              <div className="contract-header">
+              const duration =
+                getContractDuration(
+                  contract
+                );
 
-                <div className="contract-icon-large">
-                  📄
-                </div>
 
+              return (
 
-                <div>
+                <section
+                  className="contract-page-card"
+                  key={contract.id}
+                >
 
-                  <h2>
-                    Hợp đồng thuê{" "}
-                    {contract.apartment?.name ||
-                      contract.apartmentName ||
-                      ""}
-                  </h2>
 
-                  <p>
-                    Mã hợp đồng:{" "}
-                    {contract.id ||
-                      "Chưa có mã"}
-                  </p>
+                  {/* =================================================
+                      HEADER
+                  ================================================= */}
 
-                </div>
+                  <div className="contract-header">
 
 
-                <span className="active-badge">
+                    <div className="contract-icon-large">
+                      📄
+                    </div>
 
-                  {formatStatus(
-                    contract.status
-                  )}
 
-                </span>
+                    <div>
 
-              </div>
+                      <h2>
 
+                        Hợp đồng thuê{" "}
 
-              {/* ================= THÔNG TIN ================= */}
+                        {getApartmentName(
+                          contract
+                        )}
 
-              <div className="contract-info">
+                      </h2>
 
 
-                {/* CĂN HỘ */}
+                      <p>
 
-                <div className="contract-info-item">
+                        Mã hợp đồng:{" "}
 
-                  <span>
-                    🏢 Căn hộ
-                  </span>
+                        {contract.id ||
+                          "Chưa có mã"}
 
-                  <strong>
+                      </p>
 
-                    {contract.apartment?.name ||
-                      contract.apartmentName ||
-                      "Chưa có dữ liệu"}
+                    </div>
 
-                  </strong>
 
-                </div>
+                    <span className="active-badge">
 
+                      {formatStatus(
+                        contract.status
+                      )}
 
-                {/* NGÀY BẮT ĐẦU */}
+                    </span>
 
-                <div className="contract-info-item">
 
-                  <span>
-                    📅 Ngày bắt đầu
-                  </span>
+                  </div>
 
-                  <strong>
 
-                    {formatDate(
-                      contract.startDate
-                    )}
+                  {/* =================================================
+                      CONTRACT INFO
+                  ================================================= */}
 
-                  </strong>
+                  <div className="contract-info">
 
-                </div>
 
+                    {/* CĂN HỘ */}
 
-                {/* NGÀY KẾT THÚC */}
+                    <div className="contract-info-item">
 
-                <div className="contract-info-item">
+                      <span>
+                        🏢 Căn hộ
+                      </span>
 
-                  <span>
-                    📅 Ngày kết thúc
-                  </span>
 
-                  <strong>
+                      <strong>
 
-                    {formatDate(
-                      contract.endDate
-                    )}
+                        {getApartmentName(
+                          contract
+                        )}
 
-                  </strong>
+                      </strong>
 
-                </div>
+                    </div>
 
 
-                {/* TIỀN THUÊ */}
+                    {/* NGÀY BẮT ĐẦU */}
 
-                <div className="contract-info-item">
+                    <div className="contract-info-item">
 
-                  <span>
-                    💰 Tiền thuê
-                  </span>
+                      <span>
+                        📅 Ngày bắt đầu
+                      </span>
 
-                  <strong className="rent-price">
 
-                    {formatMoney(
-                      contract.rentPrice
-                    )}
+                      <strong>
 
-                  </strong>
+                        {formatDate(
+                          contract.startDate
+                        )}
 
-                </div>
+                      </strong>
 
-              </div>
+                    </div>
 
 
-              {/* ================= FOOTER ================= */}
+                    {/* NGÀY KẾT THÚC */}
 
-              <div className="contract-footer">
+                    <div className="contract-info-item">
 
+                      <span>
+                        📅 Ngày kết thúc
+                      </span>
 
-                <div>
 
-                  <span>
-                    Trạng thái hợp đồng
-                  </span>
+                      <strong>
 
-                  <strong>
+                        {formatDate(
+                          contract.endDate
+                        )}
 
-                    {formatStatus(
-                      contract.status
-                    )}
+                      </strong>
 
-                  </strong>
+                    </div>
 
-                </div>
 
+                    {/* TIỀN THUÊ */}
 
-                <div>
+                    <div className="contract-info-item">
 
-                  <span>
-                    Thời hạn
-                  </span>
+                      <span>
+                        💰 Tiền thuê
+                      </span>
 
-                  <strong>
 
-                    {contract.duration
-                      ? `${contract.duration} tháng`
-                      : contract.term
-                        ? `${contract.term} tháng`
-                        : "Chưa có dữ liệu"}
+                      <strong
+                        className="rent-price"
+                      >
 
-                  </strong>
+                        {rentPrice !== null
 
-                </div>
+                          ? formatMoney(
+                              rentPrice
+                            )
 
+                          : "Chưa có dữ liệu"}
 
-              </div>
+                      </strong>
 
-            </section>
+                    </div>
 
-          ))
+
+                  </div>
+
+
+                  {/* =================================================
+                      FOOTER
+                  ================================================= */}
+
+                  <div className="contract-footer">
+
+
+                    {/* TRẠNG THÁI */}
+
+                    <div>
+
+                      <span>
+                        Trạng thái hợp đồng
+                      </span>
+
+
+                      <strong>
+                        {formatStatus(
+                          contract.status
+                        )}
+                      </strong>
+
+                    </div>
+
+
+                    {/* THỜI HẠN */}
+
+                    <div>
+
+                      <span>
+                        Thời hạn
+                      </span>
+
+
+                      <strong>
+                        {duration}
+                      </strong>
+
+                    </div>
+
+
+                  </div>
+
+
+                </section>
+
+              );
+
+            }
+          )
 
         )}
+
 
       </main>
 
     </div>
 
   );
+
 }
+
 
 export default OwnerContract;
