@@ -35,8 +35,14 @@ function Owners() {
   const [ownerApartments, setOwnerApartments] =
     useState([]);
 
+  const [apartments, setApartments] =
+    useState([]);
+
   const [selectedApartment, setSelectedApartment] =
     useState("");
+
+  const [loadingApartments, setLoadingApartments] =
+    useState(false);
 
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -52,7 +58,7 @@ function Owners() {
 
       const data = await getOwners();
 
-      setOwners(data);
+      setOwners(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
 
@@ -68,6 +74,46 @@ function Owners() {
   useEffect(() => {
     loadOwners();
   }, []);
+
+  // ==============================
+  // LOAD ALL APARTMENTS
+  // ==============================
+
+  const loadApartments = async () => {
+    try {
+      setLoadingApartments(true);
+
+      const response = await fetch(
+        "http://localhost:8080/api/apartments"
+      );
+
+      if (!response.ok) {
+        throw new Error(
+          "Không thể tải danh sách căn hộ"
+        );
+      }
+
+      const data = await response.json();
+
+      setApartments(
+        Array.isArray(data) ? data : []
+      );
+    } catch (err) {
+      console.error(
+        "Error loading apartments:",
+        err
+      );
+
+      setApartments([]);
+
+      setError(
+        err.message ||
+          "Không thể tải danh sách căn hộ"
+      );
+    } finally {
+      setLoadingApartments(false);
+    }
+  };
 
   // ==============================
   // CREATE OWNER
@@ -107,7 +153,6 @@ function Owners() {
 
       // Load lại danh sách
       await loadOwners();
-
     } catch (err) {
       console.error(err);
 
@@ -129,11 +174,20 @@ function Owners() {
 
       setSelectedOwner(owner);
 
-      const data =
+      setSelectedApartment("");
+
+      // Lấy căn hộ của Owner
+      const ownerData =
         await getOwnerApartments(owner.id);
 
-      setOwnerApartments(data);
+      setOwnerApartments(
+        Array.isArray(ownerData)
+          ? ownerData
+          : []
+      );
 
+      // Lấy toàn bộ căn hộ
+      await loadApartments();
     } catch (err) {
       console.error(err);
 
@@ -145,12 +199,122 @@ function Owners() {
   };
 
   // ==============================
+  // CLOSE MODAL
+  // ==============================
+
+  const handleCloseModal = () => {
+    setSelectedOwner(null);
+    setOwnerApartments([]);
+    setSelectedApartment("");
+
+    setMessage("");
+    setError("");
+  };
+
+  // ==============================
+  // FLOOR NAME
+  // ==============================
+
+  const getFloorName = (apartment) => {
+    if (apartment?.floor?.name) {
+      return apartment.floor.name;
+    }
+
+    if (apartment?.floor?.floorNumber) {
+      return `Tầng ${apartment.floor.floorNumber}`;
+    }
+
+    if (apartment?.floor?.id) {
+      return `Tầng ${apartment.floor.id}`;
+    }
+
+    if (apartment?.floorId) {
+      return `Tầng ${apartment.floorId}`;
+    }
+
+    return "Chưa có tầng";
+  };
+
+  // ==============================
+  // STATUS TEXT
+  // ==============================
+
+  const getApartmentStatus = (status) => {
+    const normalized = String(
+      status || ""
+    ).toUpperCase();
+
+    switch (normalized) {
+      case "AVAILABLE":
+        return "Còn trống";
+
+      case "RENTED":
+        return "Đang thuê";
+
+      case "MAINTENANCE":
+        return "Bảo trì";
+
+      default:
+        return status || "-";
+    }
+  };
+
+  // ==============================
+  // APARTMENTS AVAILABLE FOR ASSIGN
+  // ==============================
+
+  const availableApartments =
+    apartments.filter((apartment) => {
+      const apartmentId = String(
+        apartment.id
+      );
+
+      // Kiểm tra đã thuộc Owner hiện tại chưa
+      const alreadyOwnedByCurrentOwner =
+        ownerApartments.some(
+          (item) =>
+            String(item.id) === apartmentId
+        );
+
+      if (alreadyOwnedByCurrentOwner) {
+        return false;
+      }
+
+      // Có owner rồi thì không cho gán
+      if (apartment.owner) {
+        return false;
+      }
+
+      if (apartment.ownerId) {
+        return false;
+      }
+
+      // Chỉ cho chọn căn đang còn trống
+      const status = String(
+        apartment.status || ""
+      ).toUpperCase();
+
+      return (
+        status === "AVAILABLE" ||
+        status === "VACANT" ||
+        status === "EMPTY"
+      );
+    });
+
+  // ==============================
   // ASSIGN APARTMENT
   // ==============================
 
   const handleAssignApartment = async () => {
     if (!selectedApartment) {
-      setError("Vui lòng nhập ID căn hộ");
+      setError("Vui lòng chọn căn hộ");
+      return;
+    }
+
+    if (!selectedOwner) {
+      setError(
+        "Không xác định được Owner"
+      );
       return;
     }
 
@@ -158,25 +322,45 @@ function Owners() {
       setError("");
       setMessage("");
 
+      const apartment =
+        apartments.find(
+          (item) =>
+            String(item.id) ===
+            String(selectedApartment)
+        );
+
+      if (!apartment) {
+        setError(
+          "Không tìm thấy căn hộ đã chọn"
+        );
+        return;
+      }
+
       await assignApartmentToOwner(
         selectedOwner.id,
         Number(selectedApartment)
       );
 
       setMessage(
-        `Đã gán căn hộ ID ${selectedApartment} cho ${selectedOwner.username}`
+        `Đã gán căn ${apartment.name} cho ${selectedOwner.username}`
       );
 
       // Load lại căn hộ của Owner
-      const data =
+      const ownerData =
         await getOwnerApartments(
           selectedOwner.id
         );
 
-      setOwnerApartments(data);
+      setOwnerApartments(
+        Array.isArray(ownerData)
+          ? ownerData
+          : []
+      );
+
+      // Load lại danh sách toàn bộ căn hộ
+      await loadApartments();
 
       setSelectedApartment("");
-
     } catch (err) {
       console.error(err);
 
@@ -218,7 +402,6 @@ function Owners() {
 
       </div>
 
-
       {/* ==============================
           MESSAGE
       ============================== */}
@@ -235,7 +418,6 @@ function Owners() {
         </div>
       )}
 
-
       {/* ==============================
           CREATE FORM
       ============================== */}
@@ -248,7 +430,9 @@ function Owners() {
           </h2>
 
           <form
-            onSubmit={handleCreateOwner}
+            onSubmit={
+              handleCreateOwner
+            }
           >
 
             <div className="form-group">
@@ -270,7 +454,6 @@ function Owners() {
 
             </div>
 
-
             <div className="form-group">
 
               <label>
@@ -289,7 +472,6 @@ function Owners() {
               />
 
             </div>
-
 
             <div className="form-group">
 
@@ -310,15 +492,15 @@ function Owners() {
 
             </div>
 
-
             <div className="form-actions">
 
               <button
                 type="button"
                 className="cancel-btn"
-                onClick={() =>
-                  setShowCreateForm(false)
-                }
+                onClick={() => {
+                  setShowCreateForm(false);
+                  setError("");
+                }}
               >
                 Hủy
               </button>
@@ -336,7 +518,6 @@ function Owners() {
 
         </div>
       )}
-
 
       {/* ==============================
           OWNER LIST
@@ -358,15 +539,18 @@ function Owners() {
 
         </div>
 
-
         {loading ? (
+
           <div className="loading">
             Đang tải dữ liệu...
           </div>
+
         ) : owners.length === 0 ? (
+
           <div className="empty">
             Chưa có Owner nào
           </div>
+
         ) : (
 
           <div className="table-wrapper">
@@ -377,9 +561,7 @@ function Owners() {
 
                 <tr>
 
-                  <th>
-                    ID
-                  </th>
+                  <th>ID</th>
 
                   <th>
                     Username
@@ -404,7 +586,6 @@ function Owners() {
                 </tr>
 
               </thead>
-
 
               <tbody>
 
@@ -479,7 +660,6 @@ function Owners() {
 
       </div>
 
-
       {/* ==============================
           ASSIGN MODAL
       ============================== */}
@@ -509,8 +689,8 @@ function Owners() {
 
               <button
                 className="close-btn"
-                onClick={() =>
-                  setSelectedOwner(null)
+                onClick={
+                  handleCloseModal
                 }
               >
                 ×
@@ -518,8 +698,9 @@ function Owners() {
 
             </div>
 
-
-            {/* CĂN HỘ ĐANG CÓ */}
+            {/* ==========================
+                CĂN HỘ ĐANG CÓ
+            ========================== */}
 
             <div className="current-apartments">
 
@@ -551,6 +732,12 @@ function Owners() {
                         </strong>
 
                         <span>
+                          {getFloorName(
+                            apartment
+                          )}
+                        </span>
+
+                        <span>
                           Diện tích:{" "}
                           {apartment.area} m²
                         </span>
@@ -558,7 +745,9 @@ function Owners() {
                       </div>
 
                       <span className="status">
-                        {apartment.status}
+                        {getApartmentStatus(
+                          apartment.status
+                        )}
                       </span>
 
                     </div>
@@ -570,8 +759,9 @@ function Owners() {
 
             </div>
 
-
-            {/* GÁN CĂN HỘ */}
+            {/* ==========================
+                GÁN CĂN HỘ
+            ========================== */}
 
             <div className="assign-section">
 
@@ -581,32 +771,63 @@ function Owners() {
 
               <div className="assign-input">
 
-                <input
-                  type="number"
-                  placeholder="Nhập ID căn hộ"
-                  value={
-                    selectedApartment
-                  }
+                <select
+                  value={selectedApartment}
                   onChange={(e) =>
                     setSelectedApartment(
                       e.target.value
                     )
                   }
-                />
+                  disabled={
+                    loadingApartments ||
+                    availableApartments.length ===
+                      0
+                  }
+                >
+
+                  <option value="">
+                    {loadingApartments
+                      ? "Đang tải căn hộ..."
+                      : availableApartments.length ===
+                        0
+                      ? "Không còn căn hộ trống"
+                      : "Chọn căn hộ"}
+                  </option>
+
+                  {availableApartments.map(
+                    (apartment) => (
+                      <option
+                        key={apartment.id}
+                        value={apartment.id}
+                      >
+                        {apartment.name} —{" "}
+                        {getFloorName(
+                          apartment
+                        )}{" "}
+                        — {apartment.area} m²
+                      </option>
+                    )
+                  )}
+
+                </select>
 
                 <button
                   onClick={
                     handleAssignApartment
                   }
+                  disabled={
+                    !selectedApartment ||
+                    loadingApartments
+                  }
                 >
-                  Gán
+                  Gán căn hộ
                 </button>
 
               </div>
 
               <p className="hint">
-                Ví dụ: nhập <strong>2</strong>{" "}
-                để gán căn hộ có ID = 2.
+                Chỉ hiển thị các căn hộ còn
+                trống và chưa được gán Owner.
               </p>
 
             </div>

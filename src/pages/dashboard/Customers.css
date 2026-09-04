@@ -1,85 +1,42 @@
 /* =====================================================
-   RENTHUB - ADMIN CUSTOMERS
-   PREMIUM / PROFESSIONAL DESIGN
-   React JSX + CSS
-   Không thay đổi logic / API / state
-===================================================== */
-
-
-/* =====================================================
-   BASE
-===================================================== */
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-
-  font-family:
-    Inter,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-
-  color: #172a4d;
-
-  background: #f5f7fb;
-}
-
-
-/* =====================================================
-   PAGE
+   RENTHUB - CUSTOMERS
+   CLEAN / SIMPLE / PROFESSIONAL
 ===================================================== */
 
 .customers-page {
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+  min-height: 100%;
+
+  padding: 30px 34px 50px;
+
+  box-sizing: border-box;
+
+  background: #f7f9fc;
 
   color: #172a4d;
-
-  background:
-    radial-gradient(
-      circle at 92% 4%,
-      rgba(255, 174, 39, 0.14),
-      transparent 25%
-    ),
-    radial-gradient(
-      circle at 5% 95%,
-      rgba(92, 76, 205, 0.09),
-      transparent 28%
-    );
-
-  min-height: 100%;
 }
 
+.customers-page *,
+.customers-page *::before,
+.customers-page *::after {
+  box-sizing: border-box;
+}
 
 /* =====================================================
    HEADER
 ===================================================== */
 
 .customers-topbar {
-  display: flex;
+  width: 100%;
 
+  display: flex;
+  align-items: center;
   justify-content: space-between;
 
-  align-items: center;
-
-  gap: 28px;
+  gap: 25px;
 
   margin-bottom: 28px;
 }
-
-
-/* =====================================================
-   TITLE
-===================================================== */
 
 .customers-title {
   min-width: 0;
@@ -90,253 +47,191 @@ body {
 
   color: #172a4d;
 
-  font-size: 36px;
-
-  font-weight: 850;
-
+  font-size: 34px;
   line-height: 1.1;
 
-  letter-spacing: -0.8px;
+  font-weight: 800;
+
+  letter-spacing: -0.7px;
 }
 
 .customers-title p {
-  margin:
-    9px 0 0;
+  margin: 8px 0 0;
 
-  color: #94a3b8;
+  color: #8c99aa;
 
-  font-size: 14px;
-
-  font-weight: 500;
-
-  line-height: 1.5;
+  font-size: 13px;
 }
 
-
 /* =====================================================
-   ADMIN ACCOUNT
+   ACCOUNT
 ===================================================== */
 
 .customers-account {
-  display: flex;
+  flex-shrink: 0;
 
+  display: flex;
   align-items: center;
 
   gap: 11px;
 
-  flex-shrink: 0;
+  padding: 7px 15px 7px 8px;
 
-  min-height: 52px;
+  background: #ffffff;
 
-  padding:
-    6px 15px 6px 8px;
-
-  background:
-    rgba(255, 255, 255, 0.95);
-
-  border:
-    1px solid
-    rgba(237, 240, 245, 0.95);
+  border: 1px solid #edf0f4;
 
   border-radius: 15px;
 
   box-shadow:
-    0 8px 24px
-    rgba(23, 42, 77, 0.055);
+    0 8px 22px
+    rgba(23, 42, 77, 0.035);
 }
 
 .customers-avatar {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
 
   flex-shrink: 0;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   border-radius: 50%;
 
-  background:
-    linear-gradient(
-      135deg,
-      #f59e0b 0%,
-      #cb7b42 42%,
-      #7b56c6 100%
-    );
+  background: #fff0d3;
 
-  color: #ffffff;
-
-  font-size: 17px;
-
-  box-shadow:
-    0 5px 14px
-    rgba(105, 79, 190, 0.14);
+  font-size: 18px;
 }
 
 .customers-account-info {
   display: flex;
-
   flex-direction: column;
 
-  gap: 3px;
+  gap: 2px;
 }
 
 .customers-account-info strong {
-  color: #172a4d;
+  color: #193451;
 
   font-size: 13px;
-
-  font-weight: 750;
+  font-weight: 800;
 }
 
 .customers-account-info span {
-  color: #94a3b8;
+  color: #98a3b3;
 
   font-size: 11px;
 }
-
 
 /* =====================================================
    ALERT
 ===================================================== */
 
 .customer-alert {
-  display: flex;
+  width: 100%;
 
+  min-height: 45px;
+
+  display: flex;
   align-items: center;
 
-  min-height: 46px;
+  gap: 9px;
 
   margin-bottom: 18px;
 
-  padding:
-    11px 16px;
+  padding: 10px 14px;
 
-  border-radius: 13px;
+  border-radius: 12px;
 
-  font-size: 13px;
-
-  font-weight: 600;
-
-  box-shadow:
-    0 6px 18px
-    rgba(23, 42, 77, 0.04);
+  font-size: 12px;
+  font-weight: 650;
 }
 
 .customer-alert.success {
-  background:
-    linear-gradient(
-      135deg,
-      #ecfdf5,
-      #f0fdf7
-    );
+  background: #edfdf3;
+  border: 1px solid #c8f1d5;
 
-  color: #047857;
-
-  border:
-    1px solid
-    rgba(16, 185, 129, 0.10);
+  color: #15803d;
 }
 
 .customer-alert.error {
-  background:
-    linear-gradient(
-      135deg,
-      #fef2f2,
-      #fff7f7
-    );
+  background: #fff2f2;
+  border: 1px solid #f8cccc;
 
-  color: #dc2626;
-
-  border:
-    1px solid
-    rgba(239, 68, 68, 0.10);
+  color: #c62828;
 }
 
+.alert-icon {
+  width: 23px;
+  height: 23px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  font-weight: 900;
+}
 
 /* =====================================================
    TOOLBAR
 ===================================================== */
 
 .customers-toolbar {
-  display: flex;
+  width: 100%;
 
+  display: flex;
+  align-items: center;
   justify-content: space-between;
 
-  align-items: center;
+  gap: 18px;
 
-  gap: 20px;
-
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
-
-/* =====================================================
-   SEARCH
-===================================================== */
-
 .customers-search {
-  width: 390px;
+  width: 520px;
+  max-width: 100%;
 
-  height: 52px;
+  height: 49px;
 
   display: flex;
-
   align-items: center;
 
   gap: 10px;
 
-  padding:
-    0 16px;
+  padding: 0 15px;
 
-  background:
-    rgba(255, 255, 255, 0.96);
+  background: #ffffff;
 
-  border:
-    1px solid
-    #edf0f5;
+  border: 1px solid #e5e9ef;
 
-  border-radius: 15px;
+  border-radius: 13px;
 
   box-shadow:
-    0 7px 22px
-    rgba(23, 42, 77, 0.045);
-
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.2s ease;
-}
-
-.customers-search:hover {
-  transform:
-    translateY(-1px);
+    0 6px 18px
+    rgba(23, 42, 77, 0.025);
 }
 
 .customers-search:focus-within {
-  border-color:
-    rgba(255, 158, 0, 0.35);
+  border-color: #ffb13b;
 
   box-shadow:
-    0 8px 25px
-    rgba(255, 158, 0, 0.08);
+    0 0 0 3px
+    rgba(255, 177, 59, 0.08);
 }
 
-.customers-search span {
-  width: 22px;
-
+.customers-search > span {
   flex-shrink: 0;
 
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 18px;
+  font-size: 17px;
 }
 
 .customers-search input {
@@ -345,7 +240,6 @@ body {
   min-width: 0;
 
   border: none;
-
   outline: none;
 
   background: transparent;
@@ -358,130 +252,99 @@ body {
 }
 
 .customers-search input::placeholder {
-  color: #a3adbb;
+  color: #a4aebb;
 }
 
-
 /* =====================================================
-   ADD CUSTOMER BUTTON
+   ADD BUTTON
 ===================================================== */
 
 .btn-add-customer {
-  min-width: 176px;
+  min-width: 170px;
 
-  height: 50px;
+  height: 48px;
 
   display: inline-flex;
-
   align-items: center;
-
   justify-content: center;
 
-  padding:
-    0 22px;
+  gap: 7px;
+
+  padding: 0 19px;
 
   border: none;
 
-  border-radius: 14px;
+  border-radius: 12px;
 
-  background:
-    linear-gradient(
-      135deg,
-      #ff9800 0%,
-      #ffb62e 100%
-    );
+  background: #ffab18;
 
   color: #ffffff;
 
   font-family: inherit;
 
-  font-size: 13px;
-
-  font-weight: 750;
+  font-size: 12px;
+  font-weight: 800;
 
   cursor: pointer;
 
   box-shadow:
-    0 9px 20px
-    rgba(255, 152, 0, 0.18);
+    0 7px 17px
+    rgba(255, 171, 24, 0.17);
 
   transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease,
-    filter 0.2s ease;
+    transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.btn-add-customer span {
+  font-size: 17px;
 }
 
 .btn-add-customer:hover {
-  transform:
-    translateY(-2px);
+  transform: translateY(-1px);
 
-  filter:
-    brightness(1.02);
-
-  box-shadow:
-    0 13px 27px
-    rgba(255, 152, 0, 0.22);
+  background: #f59e0b;
 }
-
-.btn-add-customer:active {
-  transform:
-    translateY(0);
-}
-
 
 /* =====================================================
-   TABLE CARD
+   CARDS
 ===================================================== */
 
-.customers-card {
+.customers-card,
+.customer-form-card {
   width: 100%;
 
-  overflow: hidden;
+  background: #ffffff;
 
-  background:
-    rgba(255, 255, 255, 0.97);
+  border: 1px solid #e7ebf0;
 
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.95);
-
-  border-radius: 23px;
+  border-radius: 18px;
 
   box-shadow:
-    0 12px 34px
-    rgba(23, 42, 77, 0.065);
+    0 8px 25px
+    rgba(23, 42, 77, 0.04);
 
-  backdrop-filter:
-    blur(12px);
-
-  -webkit-backdrop-filter:
-    blur(12px);
+  overflow: hidden;
 }
-
 
 /* =====================================================
    TABLE HEADER
 ===================================================== */
 
 .customers-card-header {
-  min-height: 94px;
+  min-height: 82px;
 
   display: flex;
-
   align-items: center;
+  justify-content: space-between;
 
-  padding:
-    23px 28px;
+  gap: 20px;
 
-  border-bottom:
-    1px solid #edf0f5;
+  padding: 19px 25px;
 
-  background:
-    linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.99),
-      rgba(249, 251, 254, 0.96)
-    );
+  border-bottom: 1px solid #edf0f3;
+
+  background: #ffffff;
 }
 
 .customers-card-header h2 {
@@ -489,255 +352,569 @@ body {
 
   color: #172a4d;
 
-  font-size: 20px;
+  font-size: 19px;
 
   font-weight: 800;
-
-  letter-spacing: -0.25px;
 }
 
 .customers-card-header p {
-  margin:
-    6px 0 0;
+  margin: 5px 0 0;
 
-  color: #94a3b8;
+  color: #9aa5b4;
 
-  font-size: 12px;
-
-  font-weight: 500;
+  font-size: 11px;
 }
 
+.customers-count {
+  min-width: 92px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 2px;
+
+  padding: 8px 14px;
+
+  background: #fafbfc;
+
+  border: 1px solid #edf0f4;
+
+  border-radius: 11px;
+}
+
+.customers-count strong {
+  color: #172a4d;
+
+  font-size: 17px;
+
+  line-height: 1.1;
+
+  font-weight: 850;
+}
+
+.customers-count span {
+  color: #9aa4b3;
+
+  font-size: 9px;
+}
 
 /* =====================================================
-   TABLE WRAPPER
+   TABLE
 ===================================================== */
 
 .table-wrapper {
   width: 100%;
 
   overflow-x: auto;
-
   overflow-y: hidden;
 
   scrollbar-width: thin;
-
-  scrollbar-color:
-    rgba(148, 163, 184, 0.35)
-    transparent;
 }
 
 .table-wrapper::-webkit-scrollbar {
   height: 7px;
 }
 
-.table-wrapper::-webkit-scrollbar-track {
-  background: transparent;
-}
-
 .table-wrapper::-webkit-scrollbar-thumb {
-  background:
-    rgba(148, 163, 184, 0.35);
+  background: rgba(148, 163, 184, 0.32);
 
   border-radius: 999px;
 }
 
-
-/* =====================================================
-   TABLE
-===================================================== */
-
 .customers-table {
   width: 100%;
 
-  min-width: 900px;
+  min-width: 1200px;
 
   border-collapse: separate;
 
   border-spacing: 0;
+
+  table-layout: fixed;
+}
+
+.customers-table thead {
+  background: #f8fafc;
 }
 
 .customers-table th {
-  padding:
-    16px 22px;
+  padding: 14px 15px;
 
-  background:
-    #f8fafc;
+  color: #69788d;
 
-  color: #64748b;
+  font-size: 10px;
 
-  font-size: 11px;
-
-  font-weight: 750;
-
-  letter-spacing: 0.15px;
+  font-weight: 820;
 
   text-align: left;
 
   white-space: nowrap;
 
-  border-bottom:
-    1px solid #e9eef4;
+  border-bottom: 1px solid #e9eef3;
 }
 
 .customers-table td {
-  padding:
-    20px 22px;
-
-  border-bottom:
-    1px solid #f1f4f8;
-
-  color: #64748b;
-
-  font-size: 13px;
-
-  line-height: 1.45;
+  padding: 16px 15px;
 
   vertical-align: middle;
+
+  color: #52637a;
+
+  font-size: 12px;
+
+  border-bottom: 1px solid #f0f3f6;
+
+  overflow: hidden;
 }
 
 .customers-table tbody tr {
-  background:
-    rgba(255, 255, 255, 0.94);
+  background: #ffffff;
 
-  transition:
-    background 0.18s ease,
-    box-shadow 0.18s ease;
+  transition: background 0.15s ease;
 }
 
 .customers-table tbody tr:hover {
-  background:
-    #fffaf2;
-
-  box-shadow:
-    inset 4px 0 0
-    rgba(255, 159, 0, 0.65);
+  background: #fcfdff;
 }
 
 .customers-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-
 /* =====================================================
-   TABLE COLUMNS
+   COLUMN WIDTHS
 ===================================================== */
 
-.customer-id {
-  width: 70px;
-
-  color: #9aa7b8 !important;
-
-  font-weight: 600;
+.customers-table th:nth-child(1),
+.customers-table td:nth-child(1) {
+  width: 68px;
 }
 
-.customer-name {
-  color: #172a4d !important;
-
-  font-weight: 750;
-
-  white-space: nowrap;
+.customers-table th:nth-child(2),
+.customers-table td:nth-child(2) {
+  width: 205px;
 }
 
+.customers-table th:nth-child(3),
 .customers-table td:nth-child(3) {
-  color: #64748b;
-
-  font-size: 12px;
-
-  white-space: nowrap;
+  width: 225px;
 }
 
+.customers-table th:nth-child(4),
 .customers-table td:nth-child(4) {
-  color: #64748b;
-
-  font-size: 12px;
-
-  white-space: nowrap;
+  width: 185px;
 }
 
+.customers-table th:nth-child(5),
 .customers-table td:nth-child(5) {
-  color: #64748b;
-
-  font-size: 12px;
+  width: 170px;
 }
 
+.customers-table th:nth-child(6),
+.customers-table td:nth-child(6) {
+  width: 125px;
+}
+
+.customers-table th:nth-child(7),
+.customers-table td:nth-child(7) {
+  width: 130px;
+}
+
+.customers-table th:nth-child(8),
+.customers-table td:nth-child(8) {
+  width: 130px;
+}
 
 /* =====================================================
-   ACTIONS
+   ID
 ===================================================== */
 
-.action-buttons {
+.customer-id span {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 40px;
+
+  padding: 6px 8px;
+
+  border-radius: 8px;
+
+  background: #f4f7fb;
+
+  color: #728198;
+
+  font-size: 10px;
+
+  font-weight: 800;
+}
+
+/* =====================================================
+   CUSTOMER
+===================================================== */
+
+.customer-person {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 0;
+}
+
+.customer-mini-avatar {
+  width: 38px;
+  height: 38px;
+
+  min-width: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #fff1d8;
+
+  color: #dd8b09;
+
+  font-size: 13px;
+
+  font-weight: 850;
+}
+
+.customer-person-info {
+  min-width: 0;
+}
+
+.customer-person strong {
+  display: block;
+
+  max-width: 165px;
+
+  overflow: hidden;
+
+  color: #243b59;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.customer-person small {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #9ba6b4;
+
+  font-size: 10px;
+}
+
+/* =====================================================
+   CONTACT
+===================================================== */
+
+.contact-line {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  min-width: 0;
+
+  margin: 3px 0;
+}
+
+.contact-line > span:last-child {
+  min-width: 0;
+
+  overflow: hidden;
+
+  color: #627289;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.contact-icon {
+  width: 17px;
+
+  min-width: 17px;
+
+  color: #98a6b8;
+
+  font-size: 10px;
+
+  text-align: center;
+}
+
+/* =====================================================
+   ADDRESS
+===================================================== */
+
+.customer-address-cell {
+  max-width: 170px;
+
+  color: #64748b;
+
+  line-height: 1.45;
+
+  word-break: break-word;
+}
+
+/* =====================================================
+   APARTMENT
+===================================================== */
+
+.apartment-info-cell {
   display: flex;
 
   align-items: center;
 
   gap: 8px;
+
+  min-width: 0;
+}
+
+.apartment-mini-icon {
+  width: 33px;
+  height: 33px;
+
+  min-width: 33px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 9px;
+
+  background: #eef5ff;
+
+  font-size: 15px;
+}
+
+.apartment-info-content {
+  min-width: 0;
+}
+
+.apartment-info-cell strong {
+  display: block;
+
+  color: #2b405e;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.apartment-info-cell small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #9ba6b4;
+
+  font-size: 10px;
+}
+
+.muted-cell {
+  color: #a4aeba;
+
+  font-size: 11px;
+
+  font-style: italic;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   CONTRACT
+===================================================== */
+
+.contract-info-cell {
+  min-width: 0;
+}
+
+.contract-info-cell strong {
+  display: block;
+
+  color: #344b6a;
+
+  font-size: 13px;
+
+  font-weight: 850;
+}
+
+.contract-info-cell small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #9ba6b4;
+
+  font-size: 10px;
+}
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.customer-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  min-height: 29px;
+
+  padding: 6px 9px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+
+  min-width: 6px;
+
+  border-radius: 50%;
+}
+
+.customer-status.active {
+  background: #e9fbef;
+
+  color: #15803d;
+}
+
+.customer-status.active .status-dot {
+  background: #22c55e;
+}
+
+.customer-status.inactive {
+  background: #fff1f1;
+
+  color: #c24141;
+}
+
+.customer-status.inactive .status-dot {
+  background: #ef4444;
+}
+
+.customer-status.empty {
+  background: #f4f6f8;
+
+  color: #8994a5;
+}
+
+.customer-status.empty .status-dot {
+  background: #aab4c1;
+}
+
+.customer-status.neutral {
+  background: #eef4ff;
+
+  color: #4169a1;
+}
+
+.customer-status.neutral .status-dot {
+  background: #6b8dcc;
+}
+
+/* =====================================================
+   ACTION
+===================================================== */
+
+.action-buttons {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  white-space: nowrap;
 }
 
 .btn-edit,
 .btn-delete {
-  min-width: 58px;
+  min-width: 52px;
 
-  min-height: 38px;
+  min-height: 34px;
 
-  padding:
-    8px 13px;
+  padding: 0 10px;
 
-  border: none;
-
-  border-radius: 10px;
+  border-radius: 8px;
 
   font-family: inherit;
 
-  font-size: 12px;
+  font-size: 10px;
 
-  font-weight: 700;
+  font-weight: 800;
 
   cursor: pointer;
 
   transition:
-    transform 0.18s ease,
-    background 0.18s ease,
-    box-shadow 0.18s ease;
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
 }
 
 .btn-edit {
-  background:
-    #eef5ff;
+  border: 1px solid #dbe8ff;
 
-  color: #2563eb;
+  background: #f2f7ff;
+
+  color: #2865bc;
 }
 
 .btn-edit:hover {
-  background:
-    #dbeafe;
+  transform: translateY(-1px);
 
-  transform:
-    translateY(-1px);
+  border-color: #bfd6ff;
 
-  box-shadow:
-    0 5px 13px
-    rgba(37, 99, 235, 0.09);
+  background: #e9f2ff;
 }
 
 .btn-delete {
-  background:
-    #fff0f0;
+  border: 1px solid #f2d5d5;
 
-  color: #ef4444;
+  background: #fff5f5;
+
+  color: #c03b3b;
 }
 
 .btn-delete:hover {
-  background:
-    #fee2e2;
+  transform: translateY(-1px);
 
-  transform:
-    translateY(-1px);
+  border-color: #edbbbb;
 
-  box-shadow:
-    0 5px 13px
-    rgba(239, 68, 68, 0.08);
+  background: #ffeded;
 }
-
 
 /* =====================================================
    LOADING / EMPTY
@@ -745,161 +922,491 @@ body {
 
 .customer-loading,
 .customer-empty {
-  height: 125px;
+  height: 210px;
 
-  padding:
-    30px !important;
-
-  text-align: center !important;
-
-  color: #94a3b8 !important;
-
-  font-size: 13px !important;
-
-  background:
-    #ffffff !important;
+  text-align: center;
 }
 
+.loading-state,
+.empty-state {
+  height: 100%;
+
+  display: inline-flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+}
+
+.loading-spinner {
+  width: 25px;
+  height: 25px;
+
+  border: 3px solid #edf1f5;
+
+  border-top-color: #f2a21c;
+
+  border-radius: 50%;
+
+  animation:
+    customerSpin
+    0.8s
+    linear
+    infinite;
+}
+
+.empty-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #f5f7fa;
+
+  font-size: 21px;
+}
+
+.empty-state strong {
+  color: #53647a;
+
+  font-size: 13px;
+}
+
+.empty-state span {
+  color: #a1aab7;
+
+  font-size: 11px;
+}
+
+@keyframes customerSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* =====================================================
-   FORM CARD
+   FORM
 ===================================================== */
 
 .customer-form-card {
-  width: 100%;
-
-  padding:
-    29px;
-
-  background:
-    rgba(255, 255, 255, 0.97);
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.95);
-
-  border-radius: 23px;
-
-  box-shadow:
-    0 12px 34px
-    rgba(23, 42, 77, 0.065);
-
-  backdrop-filter:
-    blur(12px);
-
-  -webkit-backdrop-filter:
-    blur(12px);
+  padding: 28px;
 }
 
-.customer-form-card h2 {
-  margin:
-    0 0 24px;
+.customer-form-heading {
+  margin-bottom: 22px;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid #edf0f3;
+}
+
+.customer-form-heading h2 {
+  margin: 0;
 
   color: #172a4d;
 
   font-size: 21px;
 
   font-weight: 800;
-
-  letter-spacing: -0.25px;
 }
 
+.customer-form-heading p {
+  margin: 6px 0 0;
 
-/* =====================================================
-   FORM
-===================================================== */
+  color: #97a2b0;
+
+  font-size: 12px;
+}
 
 .customer-form {
   display: grid;
 
   grid-template-columns:
-    repeat(2, minmax(0, 1fr));
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
 
-  gap: 19px;
+  gap: 18px 20px;
 }
 
 .customer-form-group {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 8px;
+  min-width: 0;
 }
 
 .customer-form-group label {
-  color: #475569;
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #455872;
 
   font-size: 12px;
 
-  font-weight: 700;
+  font-weight: 750;
 }
 
-.customer-form-group input {
+.customer-form-group label span {
+  margin-left: 3px;
+
+  color: #ef4444;
+}
+
+.customer-form-group input,
+.customer-form-group select {
   width: 100%;
 
-  height: 48px;
+  height: 46px;
 
-  padding:
-    0 14px;
+  padding: 0 13px;
 
-  border:
-    1px solid #e2e8f0;
+  border: 1px solid #e2e7ed;
 
-  border-radius: 12px;
+  border-radius: 10px;
 
   outline: none;
 
-  background:
-    #fbfcfe;
+  background: #ffffff;
 
-  color: #172a4d;
+  color: #23395d;
 
   font-family: inherit;
 
   font-size: 13px;
 
   transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease,
-    background 0.2s ease;
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
-.customer-form-group input:hover {
-  background:
-    #ffffff;
-}
-
-.customer-form-group input:focus {
-  background:
-    #ffffff;
-
-  border-color:
-    #ffb32b;
+.customer-form-group input:focus,
+.customer-form-group select:focus {
+  border-color: #ffb13b;
 
   box-shadow:
-    0 0 0 4px
-    rgba(255, 159, 0, 0.10);
+    0 0 0 3px
+    rgba(255, 177, 59, 0.09);
 }
 
 .customer-form-group input::placeholder {
-  color: #adb7c4;
+  color: #a9b2bf;
 }
 
+.customer-form-group select {
+  cursor: pointer;
+}
 
-/* =====================================================
-   ERROR
-===================================================== */
+.customer-form-group select:disabled,
+.customer-form-group input:disabled {
+  background: #f5f7f9;
+
+  color: #a0a9b5;
+
+  cursor: not-allowed;
+}
 
 .form-error {
-  color: #ef4444;
+  display: block;
+
+  margin-top: 6px;
+
+  color: #dc2626;
+
+  font-size: 10px;
+
+  font-weight: 600;
+}
+
+/* =====================================================
+   RENTAL
+===================================================== */
+
+.customer-rental-section {
+  grid-column: 1 / -1;
+
+  margin-top: 4px;
+
+  padding: 20px;
+
+  background: #fafbfc;
+
+  border: 1px solid #e8edf2;
+
+  border-radius: 14px;
+}
+
+.customer-rental-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  margin-bottom: 17px;
+
+  padding-bottom: 14px;
+
+  border-bottom: 1px solid #edf0f3;
+}
+
+.customer-rental-header h3 {
+  margin: 0;
+
+  color: #253b58;
+
+  font-size: 16px;
+
+  font-weight: 800;
+}
+
+.customer-rental-header p {
+  margin: 5px 0 0;
+
+  color: #98a3b2;
 
   font-size: 11px;
 
-  font-weight: 600;
-
-  line-height: 1.35;
+  line-height: 1.5;
 }
 
+/* =====================================================
+   AVAILABLE COUNT
+===================================================== */
+
+.available-apartment-count {
+  flex-shrink: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 7px 11px;
+
+  background: #f0fdf4;
+
+  border: 1px solid #d7efde;
+
+  border-radius: 999px;
+
+  color: #277345;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.available-apartment-count strong {
+  color: #15803d;
+
+  font-size: 14px;
+
+  font-weight: 850;
+}
+
+.available-count-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #22c55e;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(34, 197, 94, 0.10);
+}
+
+/* =====================================================
+   RENTAL GRID
+===================================================== */
+
+.customer-rental-grid {
+  display: grid;
+
+  grid-template-columns:
+    1.4fr
+    1fr
+    1fr
+    1.15fr;
+
+  gap: 16px;
+}
+
+/* =====================================================
+   HELP
+===================================================== */
+
+.form-help {
+  display: block;
+
+  margin-top: 6px;
+
+  font-size: 10px;
+
+  line-height: 1.4;
+}
+
+.form-help.warning {
+  color: #bf7c11;
+}
+
+/* =====================================================
+   RENT INPUT
+===================================================== */
+
+.rent-input-wrapper {
+  position: relative;
+}
+
+.rent-input-wrapper input {
+  padding-right: 30px;
+}
+
+.rent-input-wrapper > span {
+  position: absolute;
+
+  top: 50%;
+  right: 12px;
+
+  transform:
+    translateY(-50%);
+
+  color: #8e9aaa;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  pointer-events: none;
+}
+
+/* =====================================================
+   RENT NOTE
+===================================================== */
+
+.rental-note {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+  margin-top: 16px;
+
+  padding: 10px 12px;
+
+  background: #f0fdf4;
+
+  border: 1px solid #d5efdd;
+
+  border-radius: 10px;
+}
+
+.rental-note > span {
+  width: 22px;
+  height: 22px;
+
+  min-width: 22px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #dcfce7;
+
+  color: #15803d;
+
+  font-size: 11px;
+
+  font-weight: 900;
+}
+
+.rental-note p {
+  margin: 1px 0 0;
+
+  color: #55705d;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+.rental-note strong {
+  color: #24713d;
+}
+
+/* =====================================================
+   CURRENT RENTAL - EDIT
+===================================================== */
+
+.current-rental-info {
+  grid-column: 1 / -1;
+
+  padding: 15px 16px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e9edf2;
+
+  border-radius: 12px;
+}
+
+.current-rental-title {
+  margin-bottom: 9px;
+
+  color: #758398;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.4px;
+}
+
+.current-rental-value {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  flex-wrap: wrap;
+}
+
+.current-rental-value > span {
+  font-size: 16px;
+}
+
+.current-rental-value strong {
+  color: #29415f;
+
+  font-size: 12px;
+}
+
+.current-rental-value small {
+  color: #9aa5b4;
+
+  font-size: 10px;
+}
 
 /* =====================================================
    FORM BUTTONS
@@ -914,129 +1421,101 @@ body {
 
   align-items: center;
 
-  gap: 10px;
+  gap: 9px;
 
-  margin-top: 4px;
+  margin-top: 3px;
 
-  padding-top: 5px;
+  padding-top: 18px;
+
+  border-top: 1px solid #edf0f3;
 }
 
 .btn-cancel,
 .btn-submit {
   min-height: 43px;
 
-  padding:
-    10px 20px;
+  padding: 0 18px;
 
-  border: none;
-
-  border-radius: 11px;
+  border-radius: 10px;
 
   font-family: inherit;
 
-  font-size: 12px;
+  font-size: 11px;
 
-  font-weight: 700;
+  font-weight: 800;
 
   cursor: pointer;
 
   transition:
-    transform 0.18s ease,
-    background 0.18s ease,
-    box-shadow 0.18s ease;
+    transform 0.15s ease,
+    background 0.15s ease;
 }
 
 .btn-cancel {
-  background:
-    #f1f5f9;
+  border: 1px solid #e1e6ec;
+
+  background: #ffffff;
 
   color: #64748b;
 }
 
 .btn-cancel:hover {
-  background:
-    #e8edf3;
-
-  transform:
-    translateY(-1px);
+  background: #f8fafc;
 }
 
 .btn-submit {
-  background:
-    linear-gradient(
-      135deg,
-      #ff9800,
-      #ffb42a
-    );
+  border: none;
+
+  background: #172a4d;
 
   color: #ffffff;
 
   box-shadow:
-    0 7px 16px
-    rgba(255, 152, 0, 0.15);
+    0 6px 14px
+    rgba(23, 42, 77, 0.12);
 }
 
 .btn-submit:hover {
-  transform:
-    translateY(-1px);
+  transform: translateY(-1px);
 
-  box-shadow:
-    0 10px 20px
-    rgba(255, 152, 0, 0.20);
+  background: #10233f;
 }
 
-
 /* =====================================================
-   FOCUS
-===================================================== */
-
-button:focus-visible,
-input:focus-visible {
-  outline:
-    3px solid
-    rgba(255, 152, 0, 0.16);
-
-  outline-offset: 2px;
-}
-
-
-/* =====================================================
-   RESPONSIVE - 1100
+   RESPONSIVE
 ===================================================== */
 
 @media (max-width: 1100px) {
 
   .customers-page {
-    max-width: 100%;
+    padding:
+      26px
+      26px
+      44px;
   }
 
   .customers-title h1 {
-    font-size: 33px;
+    font-size: 31px;
   }
 
-  .customers-search {
-    width: 320px;
-  }
-
-  .customers-table {
-    min-width: 850px;
+  .customer-rental-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
   }
 
 }
 
-
-/* =====================================================
-   RESPONSIVE - 850
-===================================================== */
-
-@media (max-width: 850px) {
+@media (max-width: 900px) {
 
   .customers-topbar {
-    flex-direction: column;
-
     align-items: flex-start;
 
-    gap: 16px;
+    flex-direction: column;
+
+    gap: 15px;
   }
 
   .customers-account {
@@ -1044,11 +1523,9 @@ input:focus-visible {
   }
 
   .customers-toolbar {
-    flex-direction: column;
-
     align-items: stretch;
 
-    gap: 12px;
+    flex-direction: column;
   }
 
   .customers-search {
@@ -1056,39 +1533,58 @@ input:focus-visible {
   }
 
   .btn-add-customer {
-    width: 100%;
+    width: fit-content;
+  }
+
+  .customers-card-header {
+    align-items: flex-start;
+
+    flex-direction: column;
   }
 
   .customer-form {
     grid-template-columns: 1fr;
   }
 
-  .customer-form-buttons {
-    grid-column: auto;
+}
 
-    justify-content: stretch;
+@media (max-width: 700px) {
+
+  .customer-rental-grid {
+    grid-template-columns: 1fr;
   }
 
-  .btn-cancel,
-  .btn-submit {
-    flex: 1;
+  .customer-rental-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .available-apartment-count {
+    align-self: flex-start;
+  }
+
+  .customer-rental-section {
+    padding: 17px;
   }
 
 }
 
-
-/* =====================================================
-   RESPONSIVE - 560
-===================================================== */
-
 @media (max-width: 560px) {
 
+  .customers-page {
+    padding:
+      20px
+      16px
+      34px;
+  }
+
   .customers-title h1 {
-    font-size: 29px;
+    font-size: 27px;
   }
 
   .customers-title p {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .customers-account {
@@ -1097,85 +1593,28 @@ input:focus-visible {
     width: 100%;
   }
 
-  .customers-card-header {
-    min-height: 82px;
-
-    padding:
-      19px;
-  }
-
-  .customers-card-header h2 {
-    font-size: 18px;
-  }
-
-  .customers-card-header p {
-    font-size: 11px;
-  }
-
-  .customer-form-card {
-    padding:
-      20px;
-
-    border-radius: 19px;
-  }
-
-  .customer-form-card h2 {
-    font-size: 19px;
-  }
-
-  .action-buttons {
-    gap: 6px;
-  }
-
-  .btn-edit,
-  .btn-delete {
-    min-width: 52px;
-
-    padding:
-      7px 10px;
-  }
-
-}
-
-
-/* =====================================================
-   MOBILE - 430
-===================================================== */
-
-@media (max-width: 430px) {
-
-  .customers-toolbar {
-    margin-bottom: 17px;
-  }
-
-  .customers-search {
-    height: 48px;
-
-    border-radius: 13px;
-  }
-
   .btn-add-customer {
-    height: 48px;
-
-    border-radius: 13px;
+    width: 100%;
   }
 
   .customers-card {
-    border-radius: 18px;
+    border-radius: 16px;
   }
 
   .customers-card-header {
-    padding:
-      17px;
+    padding: 18px;
   }
 
   .customer-form-card {
-    padding:
-      17px;
+    padding: 19px;
+
+    border-radius: 16px;
   }
 
   .customer-form-buttons {
-    flex-direction: column;
+    flex-direction: column-reverse;
+
+    align-items: stretch;
   }
 
   .btn-cancel,
@@ -1185,16 +1624,11 @@ input:focus-visible {
 
 }
 
-
 /* =====================================================
    REDUCED MOTION
 ===================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-
-  html {
-    scroll-behavior: auto;
-  }
 
   *,
   *::before,

@@ -1,27 +1,43 @@
-﻿import { useState, useEffect } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import apartmentService from "../../services/apartmentService";
 import "./Apartments.css";
 
 function Apartments() {
   const [apartments, setApartments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
-  const [editingId, setEditingId] = useState(null);
-  const [alert, setAlert] = useState(null);
-  const [search, setSearch] = useState("");
 
-  const [formData, setFormData] = useState({
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("ALL");
+  const [floorFilter, setFloorFilter] = useState("ALL");
+
+  const [editingId, setEditingId] = useState(null);
+  const [editForm, setEditForm] = useState({
     name: "",
     area: "",
     status: "AVAILABLE",
-    floorId: "",
   });
 
-  const [errors, setErrors] = useState({});
+  const [alert, setAlert] = useState(null);
 
-  // =========================
+  // =====================================================
+  // ALERT
+  // =====================================================
+
+  const showAlert = (message, type = "success") => {
+    setAlert({
+      message,
+      type,
+    });
+
+    window.setTimeout(() => {
+      setAlert(null);
+    }, 3000);
+  };
+
+  // =====================================================
   // GET APARTMENTS
-  // =========================
+  // =====================================================
+
   const fetchApartments = async () => {
     try {
       setLoading(true);
@@ -31,8 +47,9 @@ function Apartments() {
       setApartments(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error fetching apartments:", error);
+
       showAlert(
-        error.message || "Không thể tải danh sách căn hộ",
+        error?.message || "Không thể tải danh sách căn hộ",
         "error"
       );
     } finally {
@@ -44,213 +61,103 @@ function Apartments() {
     fetchApartments();
   }, []);
 
-  // =========================
-  // ALERT
-  // =========================
-  const showAlert = (message, type = "success") => {
-    setAlert({
-      message,
-      type,
-    });
+  // =====================================================
+  // FLOOR LIST
+  // =====================================================
 
-    setTimeout(() => {
-      setAlert(null);
-    }, 3000);
-  };
+  const floors = useMemo(() => {
+    const map = new Map();
 
-  // =========================
-  // VALIDATE
-  // =========================
-  const validateForm = () => {
-    const newErrors = {};
+    apartments.forEach((apartment) => {
+      const floorId =
+        apartment.floor?.id ??
+        apartment.floorId ??
+        null;
 
-    if (!formData.name.trim()) {
-      newErrors.name = "Vui lòng nhập tên căn hộ";
-    }
-
-    if (!formData.area) {
-      newErrors.area = "Vui lòng nhập diện tích";
-    } else if (Number(formData.area) <= 0) {
-      newErrors.area = "Diện tích phải lớn hơn 0";
-    }
-
-    if (!formData.floorId) {
-      newErrors.floorId = "Vui lòng nhập ID tầng";
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // =========================
-  // INPUT
-  // =========================
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-    }
-  };
-
-  // =========================
-  // CREATE / UPDATE
-  // =========================
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
-    try {
-      const data = {
-        name: formData.name,
-        area: Number(formData.area),
-        status: formData.status,
-        floorId: Number(formData.floorId),
-      };
-
-      if (editingId) {
-        await apartmentService.updateApartment(editingId, data);
-
-        showAlert(
-          "Cập nhật căn hộ thành công",
-          "success"
-        );
-      } else {
-        await apartmentService.createApartment(data);
-
-        showAlert(
-          "Thêm căn hộ thành công",
-          "success"
-        );
+      if (floorId === null || floorId === undefined) {
+        return;
       }
 
-      handleCancel();
-      fetchApartments();
-    } catch (error) {
-      console.error(error);
+      const floorName =
+        apartment.floor?.name ||
+        apartment.floor?.floorNumber ||
+        `Tầng ${floorId}`;
 
-      showAlert(
-        error.message || "Có lỗi xảy ra khi lưu căn hộ",
-        "error"
-      );
-    }
-  };
-
-  // =========================
-  // EDIT
-  // =========================
-  const handleEdit = (apartment) => {
-    setFormData({
-      name: apartment.name || "",
-      area: apartment.area || "",
-      status: apartment.status || "AVAILABLE",
-      floorId:
-        apartment.floor?.id ||
-        apartment.floorId ||
-        "",
+      map.set(String(floorId), {
+        id: floorId,
+        name:
+          typeof floorName === "number"
+            ? `Tầng ${floorName}`
+            : String(floorName),
+      });
     });
 
-    setEditingId(apartment.id);
-    setShowForm(true);
-    setErrors({});
-  };
-
-  // =========================
-  // DELETE
-  // =========================
-  const handleDelete = async (id) => {
-    const confirmed = window.confirm(
-      "Bạn có chắc muốn xóa căn hộ này không?"
+    return Array.from(map.values()).sort(
+      (a, b) => Number(a.id) - Number(b.id)
     );
+  }, [apartments]);
 
-    if (!confirmed) {
-      return;
+  // =====================================================
+  // FLOOR NAME
+  // =====================================================
+
+  const getFloorName = (apartment) => {
+    if (apartment.floor?.name) {
+      return apartment.floor.name;
     }
 
-    try {
-      await apartmentService.deleteApartment(id);
-
-      showAlert(
-        "Xóa căn hộ thành công",
-        "success"
-      );
-
-      fetchApartments();
-    } catch (error) {
-      console.error(error);
-
-      showAlert(
-        error.message || "Không thể xóa căn hộ",
-        "error"
-      );
+    if (apartment.floor?.floorNumber) {
+      return `Tầng ${apartment.floor.floorNumber}`;
     }
+
+    if (apartment.floor?.id) {
+      return `Tầng ${apartment.floor.id}`;
+    }
+
+    if (apartment.floorId) {
+      return `Tầng ${apartment.floorId}`;
+    }
+
+    return "-";
   };
 
-  // =========================
-  // CANCEL
-  // =========================
-  const handleCancel = () => {
-    setShowForm(false);
-    setEditingId(null);
+  // =====================================================
+  // OWNER NAME
+  // =====================================================
 
-    setFormData({
-      name: "",
-      area: "",
-      status: "AVAILABLE",
-      floorId: "",
-    });
+  const getOwnerName = (apartment) => {
+    if (apartment.owner?.fullName) {
+      return apartment.owner.fullName;
+    }
 
-    setErrors({});
+    if (apartment.owner?.name) {
+      return apartment.owner.name;
+    }
+
+    if (apartment.owner?.username) {
+      return apartment.owner.username;
+    }
+
+    return "Chưa gán";
   };
 
-  // =========================
-  // FILTER
-  // =========================
-  const filteredApartments = apartments.filter(
-    (apartment) => {
-      const keyword = search.toLowerCase();
-
-      return (
-        String(apartment.id || "")
-          .toLowerCase()
-          .includes(keyword) ||
-        String(apartment.name || "")
-          .toLowerCase()
-          .includes(keyword) ||
-        String(
-          apartment.floor?.name ||
-            apartment.floor?.id ||
-            apartment.floorId ||
-            ""
-        )
-          .toLowerCase()
-          .includes(keyword)
-      );
-    }
-  );
-
-  // =========================
+  // =====================================================
   // STATUS
-  // =========================
+  // =====================================================
+
+  const normalizeStatus = (status) => {
+    return String(status || "")
+      .trim()
+      .toUpperCase();
+  };
+
   const getStatusText = (status) => {
-    switch (status) {
+    switch (normalizeStatus(status)) {
       case "AVAILABLE":
         return "Còn trống";
 
       case "RENTED":
-        return "Đã cho thuê";
+        return "Đang thuê";
 
       case "MAINTENANCE":
         return "Bảo trì";
@@ -261,7 +168,7 @@ function Apartments() {
   };
 
   const getStatusClass = (status) => {
-    switch (status) {
+    switch (normalizeStatus(status)) {
       case "AVAILABLE":
         return "status-available";
 
@@ -272,21 +179,234 @@ function Apartments() {
         return "status-maintenance";
 
       default:
-        return "";
+        return "status-default";
     }
   };
+
+  // =====================================================
+  // FILTER
+  // =====================================================
+
+  const filteredApartments = useMemo(() => {
+    const keyword = search.trim().toLowerCase();
+
+    return apartments.filter((apartment) => {
+      const apartmentId = String(
+        apartment.id || ""
+      ).toLowerCase();
+
+      const apartmentName = String(
+        apartment.name || ""
+      ).toLowerCase();
+
+      const floorName = String(
+        getFloorName(apartment) || ""
+      ).toLowerCase();
+
+      const ownerName = String(
+        getOwnerName(apartment) || ""
+      ).toLowerCase();
+
+      const matchesSearch =
+        !keyword ||
+        apartmentId.includes(keyword) ||
+        apartmentName.includes(keyword) ||
+        floorName.includes(keyword) ||
+        ownerName.includes(keyword);
+
+      const matchesStatus =
+        statusFilter === "ALL" ||
+        normalizeStatus(apartment.status) === statusFilter;
+
+      const currentFloorId =
+        apartment.floor?.id ??
+        apartment.floorId ??
+        null;
+
+      const matchesFloor =
+        floorFilter === "ALL" ||
+        String(currentFloorId) === String(floorFilter);
+
+      return (
+        matchesSearch &&
+        matchesStatus &&
+        matchesFloor
+      );
+    });
+  }, [
+    apartments,
+    search,
+    statusFilter,
+    floorFilter,
+  ]);
+
+  // =====================================================
+  // STATISTICS
+  // =====================================================
+
+  const apartmentStats = useMemo(() => {
+    const total = apartments.length;
+
+    const available = apartments.filter(
+      (item) =>
+        normalizeStatus(item.status) === "AVAILABLE"
+    ).length;
+
+    const rented = apartments.filter(
+      (item) =>
+        normalizeStatus(item.status) === "RENTED"
+    ).length;
+
+    const maintenance = apartments.filter(
+      (item) =>
+        normalizeStatus(item.status) ===
+        "MAINTENANCE"
+    ).length;
+
+    return {
+      total,
+      available,
+      rented,
+      maintenance,
+    };
+  }, [apartments]);
+
+  // =====================================================
+  // EDIT
+  // =====================================================
+
+  const handleEdit = (apartment) => {
+    setEditingId(apartment.id);
+
+    setEditForm({
+      name: apartment.name || "",
+      area: apartment.area ?? "",
+      status: apartment.status || "AVAILABLE",
+    });
+  };
+
+  // =====================================================
+  // CANCEL EDIT
+  // =====================================================
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
+
+    setEditForm({
+      name: "",
+      area: "",
+      status: "AVAILABLE",
+    });
+  };
+
+  // =====================================================
+  // SAVE EDIT
+  // =====================================================
+
+  const handleSaveEdit = async (apartment) => {
+    if (!editForm.name.trim()) {
+      showAlert(
+        "Tên căn hộ không được để trống",
+        "error"
+      );
+      return;
+    }
+
+    if (
+      !editForm.area ||
+      Number(editForm.area) <= 0
+    ) {
+      showAlert(
+        "Diện tích phải lớn hơn 0",
+        "error"
+      );
+      return;
+    }
+
+    try {
+      const floorId =
+        apartment.floor?.id ??
+        apartment.floorId;
+
+      if (!floorId) {
+        showAlert(
+          "Căn hộ chưa có thông tin tầng",
+          "error"
+        );
+        return;
+      }
+
+      const data = {
+        name: editForm.name.trim(),
+        area: Number(editForm.area),
+        status: editForm.status,
+        floorId: Number(floorId),
+      };
+
+      await apartmentService.updateApartment(
+        apartment.id,
+        data
+      );
+
+      showAlert(
+        "Cập nhật căn hộ thành công"
+      );
+
+      handleCancelEdit();
+
+      await fetchApartments();
+    } catch (error) {
+      console.error(
+        "Error updating apartment:",
+        error
+      );
+
+      showAlert(
+        error?.message ||
+          "Không thể cập nhật căn hộ",
+        "error"
+      );
+    }
+  };
+
+  // =====================================================
+  // EDIT INPUT
+  // =====================================================
+
+  const handleEditInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setEditForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // =====================================================
+  // CLEAR FILTER
+  // =====================================================
+
+  const clearFilters = () => {
+    setSearch("");
+    setStatusFilter("ALL");
+    setFloorFilter("ALL");
+  };
+
+  // =====================================================
+  // RENDER
+  // =====================================================
 
   return (
     <div className="apartment-page">
 
       {/* ================= HEADER ================= */}
-      <div className="apartment-header">
 
+      <div className="apartment-header">
         <div>
-          <h1>Căn hộ cho thuê</h1>
+          <h1>Căn hộ</h1>
 
           <p>
-            Quản lý thông tin các căn hộ trong hệ thống
+            Danh sách các căn hộ trong chung cư
           </p>
         </div>
 
@@ -300,10 +420,10 @@ function Apartments() {
             <span>Admin</span>
           </div>
         </div>
-
       </div>
 
       {/* ================= ALERT ================= */}
+
       {alert && (
         <div
           className={`apartment-alert ${
@@ -316,307 +436,385 @@ function Apartments() {
         </div>
       )}
 
-      {/* ================= SEARCH + ADD ================= */}
-      {!showForm && (
-        <div className="apartment-toolbar">
+      {/* ================= STATS ================= */}
 
-          <div className="apartment-search">
-            <span>🔍</span>
+      <div className="apartment-stats">
 
-            <input
-              type="text"
-              placeholder="Tìm kiếm căn hộ..."
-              value={search}
-              onChange={(e) =>
-                setSearch(e.target.value)
-              }
-            />
+        <div className="stat-card">
+          <div className="stat-icon stat-icon-total">
+            🏢
           </div>
 
+          <div>
+            <span>Tổng căn hộ</span>
+            <strong>
+              {apartmentStats.total}
+            </strong>
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-icon stat-icon-available">
+            ✓
+          </div>
+
+          <div>
+            <span>Còn trống</span>
+            <strong>
+              {apartmentStats.available}
+            </strong>
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-icon stat-icon-rented">
+            👤
+          </div>
+
+          <div>
+            <span>Đang thuê</span>
+            <strong>
+              {apartmentStats.rented}
+            </strong>
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-icon stat-icon-maintenance">
+            🔧
+          </div>
+
+          <div>
+            <span>Bảo trì</span>
+            <strong>
+              {apartmentStats.maintenance}
+            </strong>
+          </div>
+        </div>
+
+      </div>
+
+      {/* ================= FILTER ================= */}
+
+      <div className="apartment-filter-card">
+
+        <div className="apartment-search">
+          <span>🔍</span>
+
+          <input
+            type="text"
+            placeholder="Tìm theo tên căn hộ, tầng hoặc Owner..."
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+          />
+        </div>
+
+        <select
+          value={floorFilter}
+          onChange={(e) =>
+            setFloorFilter(e.target.value)
+          }
+          className="apartment-filter-select"
+        >
+          <option value="ALL">
+            Tất cả tầng
+          </option>
+
+          {floors.map((floor) => (
+            <option
+              key={floor.id}
+              value={floor.id}
+            >
+              {floor.name}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={statusFilter}
+          onChange={(e) =>
+            setStatusFilter(e.target.value)
+          }
+          className="apartment-filter-select"
+        >
+          <option value="ALL">
+            Tất cả trạng thái
+          </option>
+
+          <option value="AVAILABLE">
+            Còn trống
+          </option>
+
+          <option value="RENTED">
+            Đang thuê
+          </option>
+
+          <option value="MAINTENANCE">
+            Bảo trì
+          </option>
+        </select>
+
+        {(search ||
+          statusFilter !== "ALL" ||
+          floorFilter !== "ALL") && (
           <button
-            className="apartment-add-btn"
-            onClick={() => {
-              setShowForm(true);
-              setErrors({});
-            }}
+            type="button"
+            className="clear-filter-btn"
+            onClick={clearFilters}
           >
-            + Thêm căn hộ
+            Xóa lọc
           </button>
+        )}
 
-        </div>
-      )}
+      </div>
 
-      {/* ================= FORM ================= */}
-      {showForm ? (
-        <div className="apartment-form-card">
+      {/* ================= TABLE ================= */}
 
-          <div className="form-title">
-            <div>
-              <h2>
-                {editingId
-                  ? "Cập nhật căn hộ"
-                  : "Thêm căn hộ mới"}
-              </h2>
+      <div className="apartment-table-card">
 
-              <p>
-                Nhập thông tin căn hộ bên dưới
-              </p>
-            </div>
+        <div className="table-header">
+          <div>
+            <h2>Danh sách căn hộ</h2>
+
+            <p>
+              Hiển thị{" "}
+              <strong>
+                {filteredApartments.length}
+              </strong>{" "}
+              / {apartments.length} căn hộ
+            </p>
           </div>
-
-          <form onSubmit={handleSubmit}>
-
-            <div className="form-grid">
-
-              {/* NAME */}
-              <div className="apartment-form-group">
-                <label>Tên căn hộ</label>
-
-                <input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  placeholder="Ví dụ: A101"
-                  className={
-                    errors.name ? "input-error" : ""
-                  }
-                />
-
-                {errors.name && (
-                  <span className="field-error">
-                    {errors.name}
-                  </span>
-                )}
-              </div>
-
-              {/* AREA */}
-              <div className="apartment-form-group">
-                <label>Diện tích (m²)</label>
-
-                <input
-                  type="number"
-                  name="area"
-                  value={formData.area}
-                  onChange={handleInputChange}
-                  placeholder="Ví dụ: 70"
-                  className={
-                    errors.area ? "input-error" : ""
-                  }
-                />
-
-                {errors.area && (
-                  <span className="field-error">
-                    {errors.area}
-                  </span>
-                )}
-              </div>
-
-              {/* FLOOR */}
-              <div className="apartment-form-group">
-                <label>ID tầng</label>
-
-                <input
-                  type="number"
-                  name="floorId"
-                  value={formData.floorId}
-                  onChange={handleInputChange}
-                  placeholder="Ví dụ: 1"
-                  className={
-                    errors.floorId ? "input-error" : ""
-                  }
-                />
-
-                {errors.floorId && (
-                  <span className="field-error">
-                    {errors.floorId}
-                  </span>
-                )}
-              </div>
-
-              {/* STATUS */}
-              <div className="apartment-form-group">
-                <label>Trạng thái</label>
-
-                <select
-                  name="status"
-                  value={formData.status}
-                  onChange={handleInputChange}
-                >
-                  <option value="AVAILABLE">
-                    Còn trống
-                  </option>
-
-                  <option value="RENTED">
-                    Đã cho thuê
-                  </option>
-
-                  <option value="MAINTENANCE">
-                    Bảo trì
-                  </option>
-                </select>
-              </div>
-
-            </div>
-
-            <div className="form-actions">
-
-              <button
-                type="button"
-                className="cancel-btn"
-                onClick={handleCancel}
-              >
-                Hủy
-              </button>
-
-              <button
-                type="submit"
-                className="save-btn"
-              >
-                {editingId
-                  ? "Cập nhật"
-                  : "Tạo căn hộ"}
-              </button>
-
-            </div>
-
-          </form>
-
         </div>
-      ) : (
-        /* ================= TABLE ================= */
-        <div className="apartment-table-card">
 
-          <div className="table-header">
+        <div className="table-wrapper">
 
-            <div>
-              <h2>Danh sách căn hộ</h2>
+          <table className="apartment-table">
 
-              <p>
-                {filteredApartments.length} căn hộ
-              </p>
-            </div>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Căn hộ</th>
+                <th>Diện tích</th>
+                <th>Tầng</th>
+                <th>Owner</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
 
-          </div>
+            <tbody>
 
-          <div className="table-wrapper">
-
-            <table className="apartment-table">
-
-              <thead>
+              {loading ? (
                 <tr>
-                  <th>ID</th>
-                  <th>Căn hộ</th>
-                  <th>Diện tích</th>
-                  <th>Tầng</th>
-                  <th>Trạng thái</th>
-                  <th>Hành động</th>
+                  <td
+                    colSpan="7"
+                    className="empty-row"
+                  >
+                    Đang tải dữ liệu...
+                  </td>
                 </tr>
-              </thead>
+              ) : filteredApartments.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan="7"
+                    className="empty-row"
+                  >
+                    {apartments.length === 0
+                      ? "Chưa có dữ liệu căn hộ"
+                      : "Không tìm thấy căn hộ phù hợp"}
+                  </td>
+                </tr>
+              ) : (
+                filteredApartments.map(
+                  (apartment) => {
+                    const isEditing =
+                      editingId === apartment.id;
 
-              <tbody>
+                    return (
+                      <tr
+                        key={apartment.id}
+                        className={
+                          isEditing
+                            ? "editing-row"
+                            : ""
+                        }
+                      >
 
-                {loading ? (
-                  <tr>
-                    <td
-                      colSpan="6"
-                      className="empty-row"
-                    >
-                      Đang tải dữ liệu...
-                    </td>
-                  </tr>
-                ) : filteredApartments.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan="6"
-                      className="empty-row"
-                    >
-                      Không có căn hộ nào
-                    </td>
-                  </tr>
-                ) : (
-                  filteredApartments.map(
-                    (apartment) => (
-                      <tr key={apartment.id}>
+                        {/* ID */}
 
                         <td className="id-cell">
                           #{apartment.id}
                         </td>
 
+                        {/* APARTMENT */}
+
                         <td>
-                          <div className="apartment-name">
-                            <div className="apartment-icon">
-                              🏢
+                          {isEditing ? (
+                            <input
+                              type="text"
+                              name="name"
+                              value={editForm.name}
+                              onChange={
+                                handleEditInputChange
+                              }
+                              className="table-edit-input"
+                            />
+                          ) : (
+                            <div className="apartment-name">
+                              <div className="apartment-icon">
+                                🏢
+                              </div>
+
+                              <strong>
+                                {apartment.name}
+                              </strong>
                             </div>
-
-                            <strong>
-                              {apartment.name}
-                            </strong>
-                          </div>
+                          )}
                         </td>
+
+                        {/* AREA */}
 
                         <td>
-                          {apartment.area} m²
+                          {isEditing ? (
+                            <input
+                              type="number"
+                              name="area"
+                              value={editForm.area}
+                              onChange={
+                                handleEditInputChange
+                              }
+                              min="1"
+                              step="0.1"
+                              className="table-edit-input area-input"
+                            />
+                          ) : (
+                            `${apartment.area ?? "-"} m²`
+                          )}
                         </td>
 
+                        {/* FLOOR */}
+
                         <td>
-                          {apartment.floor?.name ||
-                            apartment.floor?.id ||
-                            apartment.floorId ||
-                            "-"}
+                          {getFloorName(apartment)}
                         </td>
+
+                        {/* OWNER */}
 
                         <td>
                           <span
-                            className={`status-badge ${getStatusClass(
-                              apartment.status
-                            )}`}
+                            className={
+                              getOwnerName(apartment) ===
+                              "Chưa gán"
+                                ? "owner-unassigned"
+                                : "owner-name"
+                            }
                           >
-                            {getStatusText(
-                              apartment.status
+                            {getOwnerName(
+                              apartment
                             )}
                           </span>
                         </td>
 
+                        {/* STATUS */}
+
+                        <td>
+                          {isEditing ? (
+                            <select
+                              name="status"
+                              value={
+                                editForm.status
+                              }
+                              onChange={
+                                handleEditInputChange
+                              }
+                              className="table-edit-select"
+                            >
+                              <option value="AVAILABLE">
+                                Còn trống
+                              </option>
+
+                              <option value="RENTED">
+                                Đang thuê
+                              </option>
+
+                              <option value="MAINTENANCE">
+                                Bảo trì
+                              </option>
+                            </select>
+                          ) : (
+                            <span
+                              className={`status-badge ${getStatusClass(
+                                apartment.status
+                              )}`}
+                            >
+                              {getStatusText(
+                                apartment.status
+                              )}
+                            </span>
+                          )}
+                        </td>
+
+                        {/* ACTION */}
+
                         <td>
                           <div className="action-buttons">
 
-                            <button
-                              className="edit-btn"
-                              onClick={() =>
-                                handleEdit(apartment)
-                              }
-                            >
-                              Sửa
-                            </button>
+                            {isEditing ? (
+                              <>
+                                <button
+                                  type="button"
+                                  className="save-inline-btn"
+                                  onClick={() =>
+                                    handleSaveEdit(
+                                      apartment
+                                    )
+                                  }
+                                >
+                                  Lưu
+                                </button>
 
-                            <button
-                              className="delete-btn"
-                              onClick={() =>
-                                handleDelete(
-                                  apartment.id
-                                )
-                              }
-                            >
-                              Xóa
-                            </button>
+                                <button
+                                  type="button"
+                                  className="cancel-inline-btn"
+                                  onClick={
+                                    handleCancelEdit
+                                  }
+                                >
+                                  Hủy
+                                </button>
+                              </>
+                            ) : (
+                              <button
+                                type="button"
+                                className="edit-btn"
+                                onClick={() =>
+                                  handleEdit(
+                                    apartment
+                                  )
+                                }
+                              >
+                                Sửa
+                              </button>
+                            )}
 
                           </div>
                         </td>
 
                       </tr>
-                    )
-                  )
-                )}
+                    );
+                  }
+                )
+              )}
 
-              </tbody>
+            </tbody>
 
-            </table>
-
-          </div>
+          </table>
 
         </div>
-      )}
+
+      </div>
 
     </div>
   );

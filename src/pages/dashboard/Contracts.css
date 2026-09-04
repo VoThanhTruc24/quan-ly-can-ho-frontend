@@ -1231,3 +1231,72 @@ html::-webkit-scrollbar-thumb {
   }
 
 }
+/* =====================================================
+   CONTRACT PAGE - ONLY EDIT / DELETE
+===================================================== */
+
+/* Không còn nút thêm hợp đồng */
+.contract-toolbar {
+  justify-content: flex-start;
+}
+
+.contract-search {
+  width: 520px;
+}
+
+/* Header danh sách gọn hơn */
+.contract-data-header {
+  min-height: 82px;
+  padding: 20px 28px;
+}
+
+.contract-data-header h2 {
+  font-size: 20px;
+}
+
+.contract-data-header p {
+  margin-top: 5px;
+}
+
+/* Form chỉ dùng cho sửa */
+.contract-form-card {
+  margin-top: 0;
+}
+
+.contract-form-header h2 {
+  margin: 0;
+}
+
+/* Nút cập nhật */
+.contract-form-actions {
+  margin-top: 24px;
+}
+
+.contract-btn-primary {
+  min-width: 185px;
+}
+
+/* =====================================================
+   EMPTY MESSAGE
+===================================================== */
+
+.contract-empty span {
+  display: block;
+  margin-top: 5px;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 900px) {
+  .contract-search {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .contract-search {
+    width: 100%;
+  }
+}
