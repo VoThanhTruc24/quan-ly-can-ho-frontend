@@ -9,6 +9,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 
+import ChatAI from "../../components/ChatAI/ChatAI";
+
 
 const API_BASE_URL =
   "http://localhost:8080/api";
@@ -1884,6 +1886,8 @@ function OwnerHome() {
 
 
       </main>
+
+      <ChatAI />
 
     </div>
 
