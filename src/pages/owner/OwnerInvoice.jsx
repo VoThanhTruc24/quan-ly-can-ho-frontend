@@ -1985,10 +1985,6 @@ function OwnerInvoice() {
 
                       <div>
 
-                        <div className="vnpay-small-brand">
-                          PAYMENT GATEWAY
-                        </div>
-
 
                         <h3>
                           Thanh toán qua VNPay
@@ -1997,10 +1993,7 @@ function OwnerInvoice() {
                       </div>
 
 
-                      <span className="vnpay-secure">
-                        🔒 An toàn
-                      </span>
-
+                     
                     </div>
 
 
@@ -2009,7 +2002,7 @@ function OwnerInvoice() {
                     <div className="vnpay-demo-note">
 
                       <span>
-                        ℹ️
+                        
                       </span>
 
 
@@ -2115,7 +2108,7 @@ function OwnerInvoice() {
                       <div className="bank-required-message">
 
                         <div className="bank-required-icon">
-                          🏦
+                          
                         </div>
 
 
@@ -2240,17 +2233,8 @@ function OwnerInvoice() {
 
                         <div className="otp-demo-note">
 
-                          <span>
-                            🔑
-                          </span>
-
-
-                          <p>
-                            Mã OTP kiểm thử:
-                            <strong>
-                              {" "}123456
-                            </strong>
-                          </p>
+                         
+                          
 
                         </div>
 
@@ -2347,7 +2331,7 @@ function OwnerInvoice() {
                   <div className="unsupported-payment-card">
 
                     <div className="unsupported-payment-icon">
-                      💗
+                      
                     </div>
 
 
@@ -2379,7 +2363,7 @@ function OwnerInvoice() {
                   <div className="unsupported-payment-card">
 
                     <div className="unsupported-payment-icon">
-                      🏦
+                      
                     </div>
 
 
@@ -2411,7 +2395,7 @@ function OwnerInvoice() {
                   <div className="unsupported-payment-card">
 
                     <div className="unsupported-payment-icon">
-                      💵
+                      
                     </div>
 
 
